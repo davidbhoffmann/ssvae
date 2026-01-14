@@ -26,7 +26,7 @@ import argparse
 import numpy as np
 import torch
 import torch.nn as nn
-from random import random
+import random as python_random
 import matplotlib.pyplot as plt
 import seaborn as sns
 from itertools import product
@@ -35,6 +35,24 @@ from tqdm import tqdm
 from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device
 from utils import get_data_loaders, train_epoch, test_epoch, corrupt_labels
 from metrics import evaluate_all_metrics
+
+
+def set_random_seed(seed):
+    """
+    Set random seed for reproducibility across all libraries
+
+    Args:
+        seed: Random seed value
+    """
+    python_random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed(seed)
+        torch.cuda.manual_seed_all(seed)
+        # Make CUDA operations deterministic
+        torch.backends.cudnn.deterministic = True
+        torch.backends.cudnn.benchmark = False
 
 
 # Default hyperparameters
@@ -57,6 +75,8 @@ DEFAULT_CONFIG = {
     "corruption_rates": [0.0, 0.1, 0.2],  # 3 levels
     "alpha_values": [0.1, 0.5, 1.0],  # 3 levels (9 combinations total per dataset)
     "datasets": ["MNIST", "FashionMNIST"],
+    "num_seeds": 10,  # Number of random seeds per configuration
+    "random_seeds": list(range(42, 52)),  # Seeds: 42, 43, 44, ..., 51
     # Path parameters
     "data_path": "../data",
     "results_path": "../results/combined",
@@ -65,7 +85,7 @@ DEFAULT_CONFIG = {
 
 
 def run_single_combined_experiment(
-    dataset_name, label_fraction, corruption_rate, alpha, config
+    dataset_name, label_fraction, corruption_rate, alpha, seed, config
 ):
     """
     Run a single experiment with specific label fraction, corruption rate, and alpha
@@ -75,11 +95,15 @@ def run_single_combined_experiment(
         label_fraction: Fraction of labeled data (e.g., 0.1 for 10%)
         corruption_rate: Fraction of labels to corrupt (e.g., 0.1 for 10%)
         alpha: Alpha parameter for ELBO (tradeoff between supervised/unsupervised)
+        seed: Random seed for reproducibility
         config: Configuration dictionary
 
     Returns:
         results: Dictionary containing metrics and performance
     """
+    # Set random seed for reproducibility
+    set_random_seed(seed)
+
     # Determine device
     if config["device"] == "auto":
         device = get_device()
@@ -89,7 +113,7 @@ def run_single_combined_experiment(
     print(f"\n{'='*80}")
     print(
         f"Dataset: {dataset_name} | Labels: {label_fraction*100:.1f}% | "
-        f"Corruption: {corruption_rate*100:.1f}% | Alpha: {alpha:.2f}"
+        f"Corruption: {corruption_rate*100:.1f}% | Alpha: {alpha:.2f} | Seed: {seed}"
     )
     print(f"Device: {device}")
     print(f"{'='*80}\n")
@@ -221,6 +245,7 @@ def run_single_combined_experiment(
         "label_fraction": label_fraction,
         "corruption_rate": corruption_rate,
         "alpha": alpha,
+        "seed": seed,
         "final_test_elbo": final_test_elbo,
         "final_test_accuracy": final_test_accuracy,
         "train_elbos": train_elbos,
@@ -247,13 +272,14 @@ def run_single_combined_experiment(
 def run_combined_sweep(dataset_name, config):
     """
     Run full 3D parameter sweep varying label fraction, corruption, and alpha
+    Each configuration is run with multiple random seeds for statistical robustness
 
     Args:
         dataset_name: 'MNIST' or 'FashionMNIST'
         config: Configuration dictionary
 
     Returns:
-        results_list: List of results for all parameter combinations
+        results_list: List of results for all parameter combinations and seeds
     """
     print(f"\n{'#'*80}")
     print(f"COMBINED 3D PARAMETER SWEEP - {dataset_name}")
@@ -262,18 +288,26 @@ def run_combined_sweep(dataset_name, config):
     print(f"  Label Fractions: {config['label_fractions']}")
     print(f"  Corruption Rates: {config['corruption_rates']}")
     print(f"  Alpha Values: {config['alpha_values']}")
+    print(
+        f"  Random Seeds: {config['num_seeds']} seeds ({config['random_seeds'][0]} to {config['random_seeds'][-1]})"
+    )
 
     total_experiments = (
         len(config["label_fractions"])
         * len(config["corruption_rates"])
         * len(config["alpha_values"])
+        * config["num_seeds"]
     )
     print(f"  Total Experiments: {total_experiments}\n")
 
     results_list = []
 
-    # Generate all combinations
-    param_combinations = list(
+    # Create checkpoints directory
+    checkpoints_dir = os.path.join(config["results_path"], "checkpoints")
+    os.makedirs(checkpoints_dir, exist_ok=True)
+
+    # Generate all combinations by configuration (not including seeds yet)
+    config_combinations = list(
         product(
             config["label_fractions"],
             config["corruption_rates"],
@@ -281,16 +315,63 @@ def run_combined_sweep(dataset_name, config):
         )
     )
 
-    exp_pbar = tqdm(param_combinations, desc=f"{dataset_name} Experiments", position=0)
-    for label_frac, corrupt_rate, alpha in exp_pbar:
-        exp_pbar.set_description(
-            f"{dataset_name} | Labels:{label_frac*100:.1f}% Noise:{corrupt_rate*100:.0f}% α:{alpha:.2f}"
+    total_configs = len(config_combinations)
+    print(
+        f"\nRunning {total_configs} configurations, each with {config['num_seeds']} seeds...\n"
+    )
+
+    config_pbar = tqdm(
+        config_combinations, desc=f"{dataset_name} Configurations", position=0
+    )
+    for config_idx, (label_frac, corrupt_rate, alpha) in enumerate(config_pbar, 1):
+        config_pbar.set_description(
+            f"{dataset_name} Config {config_idx}/{total_configs} | Labels:{label_frac*100:.1f}% Noise:{corrupt_rate*100:.0f}% α:{alpha:.2f}"
         )
 
-        results = run_single_combined_experiment(
-            dataset_name, label_frac, corrupt_rate, alpha, config
+        # Check if this configuration already has a checkpoint
+        checkpoint_file = os.path.join(
+            checkpoints_dir,
+            f"{dataset_name}_lf{label_frac:.3f}_cr{corrupt_rate:.2f}_a{alpha:.2f}.json",
         )
-        results_list.append(results)
+
+        if os.path.exists(checkpoint_file):
+            print(
+                f"\nLoading checkpoint for config: Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
+            )
+            with open(checkpoint_file, "r") as f:
+                config_results = json.load(f)
+            results_list.extend(config_results)
+            continue
+
+        # Run all seeds for this configuration
+        config_results = []
+        seed_pbar = tqdm(
+            config["random_seeds"], desc=f"  Seeds", position=1, leave=False
+        )
+        for seed in seed_pbar:
+            seed_pbar.set_description(f"  Seed {seed}")
+
+            results = run_single_combined_experiment(
+                dataset_name, label_frac, corrupt_rate, alpha, seed, config
+            )
+            config_results.append(results)
+
+        # Save checkpoint for this configuration
+        serializable_config_results = []
+        for r in config_results:
+            r_copy = r.copy()
+            r_copy["train_elbos"] = [float(x) for x in r["train_elbos"]]
+            r_copy["test_elbos"] = [float(x) for x in r["test_elbos"]]
+            r_copy["test_accuracies"] = [float(x) for x in r["test_accuracies"]]
+            serializable_config_results.append(r_copy)
+
+        with open(checkpoint_file, "w") as f:
+            json.dump(serializable_config_results, f, indent=2)
+
+        print(f"\n✓ Checkpoint saved: {checkpoint_file}")
+
+        # Add to overall results
+        results_list.extend(config_results)
 
     return results_list
 
@@ -298,29 +379,49 @@ def run_combined_sweep(dataset_name, config):
 def plot_combined_results(results, dataset_name, save_path):
     """
     Create comprehensive visualizations for 3D parameter sweep
+    Aggregates results across random seeds (mean ± std)
 
     Args:
         results: List of results from all experiments
         dataset_name: Name of the dataset
         save_path: Path to save plots
     """
-    # Convert results to structured format
+    # Group results by configuration (excluding seed) and compute statistics
+    from collections import defaultdict
+
+    config_results = defaultdict(list)
+    for r in results:
+        key = (r["label_fraction"], r["corruption_rate"], r["alpha"])
+        config_results[key].append(r)
+
+    # Compute mean and std for each configuration
     data = {
         "label_fraction": [],
         "corruption_rate": [],
         "alpha": [],
-        "accuracy": [],
-        "beta_vae": [],
-        "mig": [],
+        "accuracy_mean": [],
+        "accuracy_std": [],
+        "beta_vae_mean": [],
+        "beta_vae_std": [],
+        "mig_mean": [],
+        "mig_std": [],
     }
 
-    for r in results:
-        data["label_fraction"].append(r["label_fraction"])
-        data["corruption_rate"].append(r["corruption_rate"])
-        data["alpha"].append(r["alpha"])
-        data["accuracy"].append(r["final_test_accuracy"])
-        data["beta_vae"].append(r["disentanglement_metrics"]["beta_vae"])
-        data["mig"].append(r["disentanglement_metrics"]["mig"])
+    for (lf, cr, alpha), runs in config_results.items():
+        data["label_fraction"].append(lf)
+        data["corruption_rate"].append(cr)
+        data["alpha"].append(alpha)
+
+        accs = [r["final_test_accuracy"] for r in runs]
+        betas = [r["disentanglement_metrics"]["beta_vae"] for r in runs]
+        migs = [r["disentanglement_metrics"]["mig"] for r in runs]
+
+        data["accuracy_mean"].append(np.mean(accs))
+        data["accuracy_std"].append(np.std(accs))
+        data["beta_vae_mean"].append(np.mean(betas))
+        data["beta_vae_std"].append(np.std(betas))
+        data["mig_mean"].append(np.mean(migs))
+        data["mig_std"].append(np.std(migs))
 
     # Create heatmaps for each alpha value
     unique_alphas = sorted(set(data["alpha"]))
@@ -339,18 +440,19 @@ def plot_combined_results(results, dataset_name, save_path):
         label_fracs = sorted(set(np.array(data["label_fraction"])[mask]))
         corrupt_rates = sorted(set(np.array(data["corruption_rate"])[mask]))
 
-        # Create matrices
+        # Create matrices for mean values
         acc_matrix = np.zeros((len(corrupt_rates), len(label_fracs)))
         beta_matrix = np.zeros((len(corrupt_rates), len(label_fracs)))
         mig_matrix = np.zeros((len(corrupt_rates), len(label_fracs)))
 
-        for j, r in enumerate(results):
-            if r["alpha"] == alpha_val:
-                lf_idx = label_fracs.index(r["label_fraction"])
-                cr_idx = corrupt_rates.index(r["corruption_rate"])
-                acc_matrix[cr_idx, lf_idx] = r["final_test_accuracy"]
-                beta_matrix[cr_idx, lf_idx] = r["disentanglement_metrics"]["beta_vae"]
-                mig_matrix[cr_idx, lf_idx] = r["disentanglement_metrics"]["mig"]
+        # Fill matrices with aggregated mean values
+        for idx in range(len(data["alpha"])):
+            if data["alpha"][idx] == alpha_val:
+                lf_idx = label_fracs.index(data["label_fraction"][idx])
+                cr_idx = corrupt_rates.index(data["corruption_rate"][idx])
+                acc_matrix[cr_idx, lf_idx] = data["accuracy_mean"][idx]
+                beta_matrix[cr_idx, lf_idx] = data["beta_vae_mean"][idx]
+                mig_matrix[cr_idx, lf_idx] = data["mig_mean"][idx]
 
         # Plot heatmaps
         # Accuracy
@@ -366,7 +468,7 @@ def plot_combined_results(results, dataset_name, save_path):
             yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
         )
         axes[i, 0].set_title(
-            f"{dataset_name}: Accuracy (α={alpha_val:.1f})",
+            f"{dataset_name}: Accuracy (α={alpha_val:.1f}) - Mean across seeds",
             fontsize=12,
             fontweight="bold",
         )
@@ -384,7 +486,7 @@ def plot_combined_results(results, dataset_name, save_path):
             yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
         )
         axes[i, 1].set_title(
-            f"{dataset_name}: Beta-VAE Score (α={alpha_val:.1f})",
+            f"{dataset_name}: Beta-VAE Score (α={alpha_val:.1f}) - Mean across seeds",
             fontsize=12,
             fontweight="bold",
         )
@@ -402,7 +504,7 @@ def plot_combined_results(results, dataset_name, save_path):
             yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
         )
         axes[i, 2].set_title(
-            f"{dataset_name}: MIG Score (α={alpha_val:.1f})",
+            f"{dataset_name}: MIG Score (α={alpha_val:.1f}) - Mean across seeds",
             fontsize=12,
             fontweight="bold",
         )
@@ -431,14 +533,17 @@ def plot_combined_results(results, dataset_name, save_path):
             np.array(data["label_fraction"]) == max_label_frac
         )
         alphas = np.array(data["alpha"])[mask]
-        accs = np.array(data["accuracy"])[mask]
-        ax1.plot(
+        accs_mean = np.array(data["accuracy_mean"])[mask]
+        accs_std = np.array(data["accuracy_std"])[mask]
+        ax1.errorbar(
             alphas,
-            accs,
-            "o-",
+            accs_mean,
+            yerr=accs_std,
+            fmt="o-",
             label=f"Corrupt: {cr*100:.0f}%",
             linewidth=2,
             markersize=8,
+            capsize=5,
         )
     ax1.set_xlabel("Alpha", fontsize=12)
     ax1.set_ylabel("Test Accuracy", fontsize=12)
@@ -457,15 +562,18 @@ def plot_combined_results(results, dataset_name, save_path):
             np.array(data["corruption_rate"]) == 0.0
         )
         lfs = np.array(data["label_fraction"])[mask]
-        betas = np.array(data["beta_vae"])[mask]
+        betas_mean = np.array(data["beta_vae_mean"])[mask]
+        betas_std = np.array(data["beta_vae_std"])[mask]
         sort_idx = np.argsort(lfs)
-        ax2.plot(
+        ax2.errorbar(
             np.array(lfs)[sort_idx] * 100,
-            np.array(betas)[sort_idx],
-            "o-",
+            np.array(betas_mean)[sort_idx],
+            yerr=np.array(betas_std)[sort_idx],
+            fmt="o-",
             label=f"α={alpha_val:.1f}",
             linewidth=2,
             markersize=8,
+            capsize=5,
         )
     ax2.set_xlabel("Label Fraction (%)", fontsize=12)
     ax2.set_ylabel("Beta-VAE Score", fontsize=12)
@@ -485,15 +593,18 @@ def plot_combined_results(results, dataset_name, save_path):
             np.array(data["label_fraction"]) == max_label_frac
         )
         crs = np.array(data["corruption_rate"])[mask]
-        migs = np.array(data["mig"])[mask]
+        migs_mean = np.array(data["mig_mean"])[mask]
+        migs_std = np.array(data["mig_std"])[mask]
         sort_idx = np.argsort(crs)
-        ax3.plot(
+        ax3.errorbar(
             np.array(crs)[sort_idx] * 100,
-            np.array(migs)[sort_idx],
-            "o-",
+            np.array(migs_mean)[sort_idx],
+            yerr=np.array(migs_std)[sort_idx],
+            fmt="o-",
             label=f"α={alpha_val:.1f}",
             linewidth=2,
             markersize=8,
+            capsize=5,
         )
     ax3.set_xlabel("Corruption Rate (%)", fontsize=12)
     ax3.set_ylabel("MIG Score", fontsize=12)
@@ -538,6 +649,9 @@ def main(args):
         ]
     if args.alpha_values:
         config["alpha_values"] = [float(x) for x in args.alpha_values.split(",")]
+    if args.num_seeds:
+        config["num_seeds"] = args.num_seeds
+        config["random_seeds"] = list(range(42, 42 + args.num_seeds))
 
     # Create directories
     os.makedirs(config["results_path"], exist_ok=True)
@@ -583,6 +697,9 @@ def main(args):
     print("ALL COMBINED EXPERIMENTS COMPLETED!")
     print("=" * 80)
     print(f"\nResults saved to: {config['results_path']}")
+    print(
+        f"Checkpoints saved to: {os.path.join(config['results_path'], 'checkpoints')}"
+    )
 
 
 if __name__ == "__main__":
@@ -626,6 +743,11 @@ if __name__ == "__main__":
         "--alpha_values",
         type=str,
         help='Comma-separated alpha values (e.g., "0.1,0.5,1.0")',
+    )
+    parser.add_argument(
+        "--num_seeds",
+        type=int,
+        help=f'Number of random seeds per configuration (default: {DEFAULT_CONFIG["num_seeds"]})',
     )
 
     args = parser.parse_args()
