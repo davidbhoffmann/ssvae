@@ -71,10 +71,10 @@ DEFAULT_CONFIG = {
     "eps": 1e-9,
     "device": "auto",  # 'auto', 'cuda', 'mps', or 'cpu'
     # Experiment parameters - 3D sweep
-    "label_fractions": [0.1, 0.05, 0.01],  # 3 levels
-    "corruption_rates": [0.0, 0.1, 0.2],  # 3 levels
-    "alpha_values": [0.1, 0.5, 1.0],  # 3 levels (9 combinations total per dataset)
-    "datasets": ["MNIST", "FashionMNIST"],
+    "label_fractions": [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.01, 0.001, 0.0001, 0],
+    "corruption_rates": [0.0, 0.001, 0.01, 0.05, 0.1, 0.2, 0.4, 0.8],
+    "alpha_values": [0.5],  # 3 levels (9 combinations total per dataset)
+    "datasets": ["MNIST"],  # , "FashionMNIST"
     "num_seeds": 10,  # Number of random seeds per configuration
     "random_seeds": list(range(42, 52)),  # Seeds: 42, 43, 44, ..., 51
     # Path parameters
@@ -301,10 +301,14 @@ def run_combined_sweep(dataset_name, config):
     print(f"  Total Experiments: {total_experiments}\n")
 
     results_list = []
+    failed_configs = []
 
     # Create checkpoints directory
     checkpoints_dir = os.path.join(config["results_path"], "checkpoints")
     os.makedirs(checkpoints_dir, exist_ok=True)
+    
+    # Create error log file
+    error_log_file = os.path.join(config["results_path"], f"{dataset_name}_errors.log")
 
     # Generate all combinations by configuration (not including seeds yet)
     config_combinations = list(
@@ -327,53 +331,98 @@ def run_combined_sweep(dataset_name, config):
         config_pbar.set_description(
             f"{dataset_name} Config {config_idx}/{total_configs} | Labels:{label_frac*100:.1f}% Noise:{corrupt_rate*100:.0f}% α:{alpha:.2f}"
         )
-
-        # Check if this configuration already has a checkpoint
-        checkpoint_file = os.path.join(
-            checkpoints_dir,
-            f"{dataset_name}_lf{label_frac:.3f}_cr{corrupt_rate:.2f}_a{alpha:.2f}.json",
-        )
-
-        if os.path.exists(checkpoint_file):
-            print(
-                f"\nLoading checkpoint for config: Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
+        
+        try:
+            # Check if this configuration already has a checkpoint
+            checkpoint_file = os.path.join(
+                checkpoints_dir,
+                f"{dataset_name}_lf{label_frac:.3f}_cr{corrupt_rate:.2f}_a{alpha:.2f}.json",
             )
-            with open(checkpoint_file, "r") as f:
-                config_results = json.load(f)
+
+            if os.path.exists(checkpoint_file):
+                print(
+                    f"\nLoading checkpoint for config: Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
+                )
+                with open(checkpoint_file, "r") as f:
+                    config_results = json.load(f)
+                results_list.extend(config_results)
+                continue
+
+            # Run all seeds for this configuration
+            config_results = []
+            seed_pbar = tqdm(
+                config["random_seeds"], desc=f"  Seeds", position=1, leave=False
+            )
+            for seed in seed_pbar:
+                seed_pbar.set_description(f"  Seed {seed}")
+
+                results = run_single_combined_experiment(
+                    dataset_name, label_frac, corrupt_rate, alpha, seed, config
+                )
+                config_results.append(results)
+
+            # Save checkpoint for this configuration
+            serializable_config_results = []
+            for r in config_results:
+                r_copy = r.copy()
+                r_copy["train_elbos"] = [float(x) for x in r["train_elbos"]]
+                r_copy["test_elbos"] = [float(x) for x in r["test_elbos"]]
+                r_copy["test_accuracies"] = [float(x) for x in r["test_accuracies"]]
+                serializable_config_results.append(r_copy)
+
+            with open(checkpoint_file, "w") as f:
+                json.dump(serializable_config_results, f, indent=2)
+
+            print(f"\n✓ Checkpoint saved: {checkpoint_file}")
+
+            # Add to overall results
             results_list.extend(config_results)
-            continue
+            
+        except Exception as e:
+            # Log the error
+            error_msg = f"\n{'='*80}\n"
+            error_msg += f"ERROR in configuration:\n"
+            error_msg += f"  Dataset: {dataset_name}\n"
+            error_msg += f"  Label Fraction: {label_frac*100:.1f}%\n"
+            error_msg += f"  Corruption Rate: {corrupt_rate*100:.1f}%\n"
+            error_msg += f"  Alpha: {alpha:.2f}\n"
+            error_msg += f"  Time: {time.strftime('%Y-%m-%d %H:%M:%S')}\n"
+            error_msg += f"  Error: {str(e)}\n"
+            error_msg += f"  Error Type: {type(e).__name__}\n"
+            error_msg += f"{'='*80}\n"
+            
+            # Write to error log
+            with open(error_log_file, "a") as f:
+                f.write(error_msg)
+            
+            # Print error message
+            print(f"\n❌ ERROR: Configuration failed!")
+            print(f"   Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}")
+            print(f"   Error: {str(e)}")
+            print(f"   See {error_log_file} for details")
+            print(f"   Continuing with next configuration...\n")
+            
+            # Track failed config
+            failed_configs.append({
+                "label_fraction": label_frac,
+                "corruption_rate": corrupt_rate,
+                "alpha": alpha,
+                "error": str(e),
+                "error_type": type(e).__name__
+            })
 
-        # Run all seeds for this configuration
-        config_results = []
-        seed_pbar = tqdm(
-            config["random_seeds"], desc=f"  Seeds", position=1, leave=False
-        )
-        for seed in seed_pbar:
-            seed_pbar.set_description(f"  Seed {seed}")
+    # Print summary of failed configurations
+    if failed_configs:
+        print(f"\n{'!'*80}")
+        print(f"WARNING: {len(failed_configs)} configuration(s) failed:")
+        for fc in failed_configs:
+            print(f"  - Labels={fc['label_fraction']*100:.1f}%, "
+                  f"Corruption={fc['corruption_rate']*100:.1f}%, "
+                  f"Alpha={fc['alpha']:.2f} ({fc['error_type']})")
+        print(f"Check {error_log_file} for details")
+        print(f"{'!'*80}\n")
 
-            results = run_single_combined_experiment(
-                dataset_name, label_frac, corrupt_rate, alpha, seed, config
-            )
-            config_results.append(results)
-
-        # Save checkpoint for this configuration
-        serializable_config_results = []
-        for r in config_results:
-            r_copy = r.copy()
-            r_copy["train_elbos"] = [float(x) for x in r["train_elbos"]]
-            r_copy["test_elbos"] = [float(x) for x in r["test_elbos"]]
-            r_copy["test_accuracies"] = [float(x) for x in r["test_accuracies"]]
-            serializable_config_results.append(r_copy)
-
-        with open(checkpoint_file, "w") as f:
-            json.dump(serializable_config_results, f, indent=2)
-
-        print(f"\n✓ Checkpoint saved: {checkpoint_file}")
-
-        # Add to overall results
-        results_list.extend(config_results)
-
-    return results_list
+    return results_list, failed_configs
 
 
 def plot_combined_results(results, dataset_name, save_path):
@@ -664,6 +713,7 @@ def main(args):
         datasets = config["datasets"]
 
     all_results = {}
+    all_failed_configs = {}
 
     for dataset_name in datasets:
         print(f"\n\n{'='*80}")
