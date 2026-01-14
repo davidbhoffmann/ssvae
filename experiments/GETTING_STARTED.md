@@ -2,56 +2,92 @@
 
 ## Quick Start (3 Steps)
 
-### Step 1: Install Dependencies
+### Step 1: Setup Environment
 
+**If using conda (recommended):**
+```bash
+# Activate your environment
+conda activate vae
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+**Or using pip directly:**
 ```bash
 pip install -r requirements.txt
 ```
 
-**Note**: If you encounter issues with probtorch, install it separately:
-```bash
-pip install probtorch
-```
+**Note**: All dependencies including `tqdm` (for progress bars) will be installed automatically.
 
 ### Step 2: Run Quick Test
 
 ```bash
-cd experiments
-python quick_test.py
+conda run -n vae python quick_test.py
+# Or if not using conda: python quick_test.py
 ```
 
 This will:
 - Download MNIST dataset (if not already present)
 - Train a small SSVAE for 10 epochs
+- Show **live progress bar** with training metrics
 - Verify all components work correctly
 
-**Expected output**: Test accuracy ~0.85-0.95 after 10 epochs
-
-### Step 3: Run Full Experiments
-
-```bash
-python label_robustness_experiment.py --dataset MNIST --num_epochs 50
+**Expected output**: 
+```
+Quick Test: 100%|██████████| 10/10 [00:15<00:00, Train ELBO=8.28e-01, Test Acc=0.721, ...]
+✓ Test completed successfully!
+Final Results:
+  Test Accuracy: 0.721
 ```
 
-For a faster test, or:
+### Step 3: Run Experiments
 
+You have three experiment options:
+
+**A) Label Robustness (Separate Sparsity & Noise):**
 ```bash
-python label_robustness_experiment.py
+conda run -n vae python label_robustness_experiment.py --dataset MNIST --num_epochs 50
 ```
+Tests label sparsity and noise separately (~1-2 hours on MPS/CUDA).
 
-For the full experiment suite (both datasets, all conditions).
+**B) Combined 3D Sweep (Labels × Noise × Alpha):**
+```bash
+conda run -n vae 
+
+```
+Explores full 3D parameter space (3×3×3 = 27 experiments ~2-4 hours).
+
+**C) Quick Combined Test:**
+```bash
+conda run -n vae python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 5 \
+    --label_fractions 0.1,0.05 \
+    --corruption_rates 0.0,0.1 \
+    --alpha_values 0.1,0.5
+```
+Fast test of combined experiment (2×2×2 = 8 experiments, ~10-15 min).
 
 ---
 
 ## What Gets Run
 
-### Label Sparsity Experiment
-Tests with decreasing labeled data:
+### Experiment 1: Label Robustness (`label_robustness_experiment.py`)
+
+**Label Sparsity:** Tests with decreasing labeled data:
 - 10% → 5% → 2% → 1% → 0.5% → 0.1%
 
-### Label Noise Experiment  
-Tests with increasing corruption:
+**Label Noise:** Tests with increasing corruption:
 - 0% → 5% → 10% → 15% → 20% → 25% → 30%
+
+### Experiment 2: Combined 3D Sweep (`combined_robustness_experiment.py`)
+
+Explores interactions between three factors:
+- **Label Fraction**: Amount of labeled data (default: 10%, 5%, 2%)
+- **Corruption Rate**: Label noise level (default: 0%, 10%, 20%)
+- **Alpha Parameter**: ELBO weighting (default: 0.1, 0.5, 1.0)
+
+Total combinations: 3 × 3 × 3 = **27 experiments per dataset**
 
 ### Metrics Computed
 For each configuration:
@@ -64,16 +100,26 @@ For each configuration:
 
 ## Results
 
-Results are saved to `../results/`:
+Results are saved to `results/` directory:
 
+**Label Robustness Experiment:**
 ```
 results/
-├── MNIST_sparsity_results.json          # Raw data
-├── MNIST_noise_results.json             # Raw data
-├── MNIST_robustness_analysis.png        # Plots
+├── MNIST_sparsity_results.json          # Raw data (label sparsity)
+├── MNIST_noise_results.json             # Raw data (label noise)
+├── MNIST_robustness_analysis.png        # 6-panel plot
 ├── FashionMNIST_sparsity_results.json
 ├── FashionMNIST_noise_results.json
 └── FashionMNIST_robustness_analysis.png
+```
+
+**Combined Experiment:**
+```
+results/
+├── combined_MNIST_results.json          # 3D sweep raw data
+├── combined_MNIST_results.png           # Heatmaps + interaction plots
+├── combined_FashionMNIST_results.json
+└── combined_FashionMNIST_results.png
 ```
 
 ### Analyze Results
@@ -92,92 +138,169 @@ This notebook will:
 
 ## Time Estimates
 
-| Configuration | CPU Time | GPU Time |
-|--------------|----------|----------|
-| Quick test (10 epochs) | ~3-5 min | ~1 min |
-| Single experiment (100 epochs) | ~30-60 min | ~5-15 min |
-| Sparsity analysis (6 runs) | ~3-6 hours | ~30-90 min |
-| Noise analysis (7 runs) | ~3.5-7 hours | ~35-105 min |
-| **Full suite (both datasets)** | **~13-26 hours** | **~2-6 hours** |
+**Device Auto-Detection:** All scripts automatically use CUDA (NVIDIA) > MPS (Apple Silicon) > CPU.
 
-**Recommendation**: Start with quick test and single dataset!
+| Configuration | CPU | MPS/CUDA |
+|--------------|-----|----------|
+| Quick test (10 epochs) | ~3-5 min | ~30-60 sec |
+| Single experiment (100 epochs) | ~30-60 min | ~5-15 min |
+| Label sparsity (6 runs × 100 epochs) | ~3-6 hours | ~30-90 min |
+| Label noise (7 runs × 100 epochs) | ~3.5-7 hours | ~35-105 min |
+| **Combined 3D (27 runs × 75 epochs)** | **~8-16 hours** | **~2-4 hours** |
+| Full suite (both datasets) | ~26-52 hours | ~4-10 hours |
+
+**Recommendations**: 
+- Start with `quick_test.py` (30-60 seconds)
+- Then try quick combined test (10-15 minutes)
+- Use single dataset before running both
+
+---
+
+## Live Progress Tracking
+
+All experiments now show **real-time progress bars** with live metrics:
+
+```
+MNIST | Labels:10.0% Noise:0% α:0.10: 8/27 [06:00<13:30, 42.6s/it]
+└─ Training (α=0.10): 65%|██████▌| 32/50 [00:08<00:04, Train ELBO=8.45e-01, Test Acc=0.685]
+```
+
+**What you see:**
+- Overall experiment progress (e.g., 8/27 combinations)
+- Current parameter configuration
+- Epoch progress within current experiment
+- Live training metrics (ELBO, accuracy)
+- Time elapsed and estimated time remaining
+
+See [PROGRESS_BARS.md](PROGRESS_BARS.md) for details.
 
 ---
 
 ## Example Workflows
 
-### Workflow 1: Quick Exploration
+### Workflow 1: Quick Exploration (Recommended)
 ```bash
-# 1. Test implementation
-python quick_test.py
+# 1. Test implementation (~30-60 sec)
+conda run -n vae python quick_test.py
 
-# 2. Run on MNIST only (faster)
-python label_robustness_experiment.py --dataset MNIST --num_epochs 50
+# 2. Quick combined test (~10-15 min)
+conda run -n vae python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 5 \
+    --label_fractions 0.1,0.05 \
+    --corruption_rates 0.0,0.1 \
+    --alpha_values 0.1,0.5
 
 # 3. Analyze results
 jupyter notebook analyze_results.ipynb
 ```
-**Time**: ~1-2 hours (CPU) or ~15-30 min (GPU)
+**Time**: ~15-20 minutes total (MPS/CUDA) or ~45-60 min (CPU)
 
-### Workflow 2: Sparsity Analysis Only
+### Workflow 2: Full 3D Parameter Sweep
 ```bash
-python label_robustness_experiment.py --sparsity_only --num_epochs 75
+conda run -n vae python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 75
 ```
-**Focus**: How much labeled data is needed?
+**Focus**: Understand interactions between labels, noise, and alpha.  
+**Time**: ~2-4 hours (MPS/CUDA)
 
-### Workflow 3: Noise Analysis Only
+### Workflow 3: Label Robustness Only
 ```bash
-python label_robustness_experiment.py --noise_only --label_fraction 0.1
+conda run -n vae python label_robustness_experiment.py \
+    --dataset MNIST --num_epochs 100
 ```
-**Focus**: How much label corruption can be tolerated?
+**Focus**: Traditional sparsity and noise analysis (separate).  
+**Time**: ~1-2 hours (MPS/CUDA)
 
-### Workflow 4: Full Analysis
+### Workflow 4: Complete Suite (All Datasets)
 ```bash
 # Run overnight or on cluster
-python label_robustness_experiment.py --num_epochs 100
+conda run -n vae python combined_robustness_experiment.py --num_epochs 100
+# Then:
+conda run -n vae python label_robustness_experiment.py --num_epochs 100
 ```
-**Result**: Complete robustness characterization
+**Result**: Full characterization with both experiment types.  
+**Time**: ~6-14 hours (MPS/CUDA)
 
 ---
 
 ## Customization Examples
 
-### Smaller Model (Faster)
+### Custom Alpha Values (Combined Experiment)
 ```bash
-python label_robustness_experiment.py \
+conda run -n vae python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 50 \
+    --alpha_values 0.01,0.05,0.1,0.2,0.5,1.0
+```
+Test wider range of ELBO weightings (6 alphas × 3 labels × 3 noise = 54 experiments).
+
+### Dense Parameter Grid
+```bash
+conda run -n vae python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 50 \
+    --label_fractions 0.1,0.08,0.05,0.03,0.02,0.01 \
+    --corruption_rates 0.0,0.05,0.1,0.15,0.2,0.25,0.3 \
+    --alpha_values 0.1,0.3,0.5,0.7,1.0
+```
+Fine-grained sweep (6 × 7 × 5 = 210 experiments, ~15-30 hours MPS/CUDA).
+
+### Specific Device Selection
+```bash
+# Force CPU (useful for debugging)
+conda run -n vae python combined_robustness_experiment.py --device cpu
+
+# Force CUDA
+conda run -n vae python combined_robustness_experiment.py --device cuda
+
+# Force MPS (Apple Silicon)
+conda run -n vae python combined_robustness_experiment.py --device mps
+```
+
+### Faster Testing
+```bash
+# Smaller model, fewer epochs
+conda run -n vae python combined_robustness_experiment.py \
     --num_style 32 \
-    --num_epochs 50 \
+    --num_epochs 25 \
     --dataset MNIST
-```
-
-### More Thorough Training
-```bash
-python label_robustness_experiment.py \
-    --num_epochs 200 \
-    --dataset FashionMNIST
-```
-
-### Specific Label Conditions
-Edit `label_robustness_experiment.py`:
-
-```python
-# Line ~26-27, modify:
-'label_fractions': [0.2, 0.1, 0.05, 0.01],  # Custom fractions
-'corruption_rates': [0.0, 0.1, 0.2, 0.3],    # Custom corruptions
 ```
 
 ---
 
 ## Command-Line Options
 
+### All Experiments
 ```
---dataset {MNIST,FashionMNIST}    Choose dataset
---num_epochs INT                  Training epochs per run
---num_style INT                   Latent dimensions
---cuda {true,false}               Force GPU on/off
---label_fraction FLOAT            For noise experiment
+--dataset {MNIST,FashionMNIST}    Choose dataset (default: both)
+--num_epochs INT                  Training epochs per experiment (default: 100)
+--num_style INT                   Latent dimensions (default: 50)
+--device {auto,cuda,mps,cpu}      Force specific device (default: auto)
+```
+
+### Label Robustness Experiment Only
+```
+--label_fraction FLOAT            For noise experiment (default: 0.1)
 --sparsity_only                   Skip noise experiment
 --noise_only                      Skip sparsity experiment
+```
+
+### Combined Experiment Only
+```
+--label_fractions STR             Comma-separated list (default: 0.1,0.05,0.02)
+--corruption_rates STR            Comma-separated list (default: 0.0,0.1,0.2)
+--alpha_values STR                Comma-separated list (default: 0.1,0.5,1.0)
+```
+
+**Examples:**
+```bash
+# Single dataset, 50 epochs
+conda run -n vae python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 50
+
+# Custom parameter ranges
+conda run -n vae python combined_robustness_experiment.py \
+    --label_fractions 0.2,0.1,0.05 \
+    --corruption_rates 0.0,0.15,0.3 \
+    --alpha_values 0.05,0.1,0.5
 ```
 
 ---
@@ -262,17 +385,29 @@ python label_robustness_experiment.py --dataset MNIST
 ## Ready to Start!
 
 ```bash
-# Install
+# 1. Setup (one time)
+conda activate vae
 pip install -r requirements.txt
 
-# Test
-python quick_test.py
+# 2. Quick test (~30-60 seconds)
+conda run -n vae python quick_test.py
 
-# Run
-python label_robustness_experiment.py --dataset MNIST --num_epochs 50
+# 3. Run experiments (choose one):
 
-# Analyze
+# Option A: Quick combined test (~10-15 min)
+conda run -n vae python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 5 \
+    --label_fractions 0.1,0.05 --corruption_rates 0.0,0.1 --alpha_values 0.1,0.5
+
+# Option B: Full 3D sweep (~2-4 hours)
+conda run -n vae python combined_robustness_experiment.py --dataset MNIST
+
+# Option C: Traditional robustness (~1-2 hours)
+conda run -n vae python label_robustness_experiment.py --dataset MNIST
+
+# 4. Analyze
 jupyter notebook analyze_results.ipynb
 ```
 
+**All experiments show live progress bars!** 📊  
 **Good luck with your experiments!** 🚀
