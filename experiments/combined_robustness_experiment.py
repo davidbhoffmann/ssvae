@@ -306,7 +306,7 @@ def run_combined_sweep(dataset_name, config):
     # Create checkpoints directory
     checkpoints_dir = os.path.join(config["results_path"], "checkpoints")
     os.makedirs(checkpoints_dir, exist_ok=True)
-    
+
     # Create error log file
     error_log_file = os.path.join(config["results_path"], f"{dataset_name}_errors.log")
 
@@ -331,7 +331,7 @@ def run_combined_sweep(dataset_name, config):
         config_pbar.set_description(
             f"{dataset_name} Config {config_idx}/{total_configs} | Labels:{label_frac*100:.1f}% Noise:{corrupt_rate*100:.0f}% α:{alpha:.2f}"
         )
-        
+
         try:
             # Check if this configuration already has a checkpoint
             checkpoint_file = os.path.join(
@@ -377,7 +377,7 @@ def run_combined_sweep(dataset_name, config):
 
             # Add to overall results
             results_list.extend(config_results)
-            
+
         except Exception as e:
             # Log the error
             error_msg = f"\n{'='*80}\n"
@@ -390,35 +390,41 @@ def run_combined_sweep(dataset_name, config):
             error_msg += f"  Error: {str(e)}\n"
             error_msg += f"  Error Type: {type(e).__name__}\n"
             error_msg += f"{'='*80}\n"
-            
+
             # Write to error log
             with open(error_log_file, "a") as f:
                 f.write(error_msg)
-            
+
             # Print error message
             print(f"\n❌ ERROR: Configuration failed!")
-            print(f"   Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}")
+            print(
+                f"   Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
+            )
             print(f"   Error: {str(e)}")
             print(f"   See {error_log_file} for details")
             print(f"   Continuing with next configuration...\n")
-            
+
             # Track failed config
-            failed_configs.append({
-                "label_fraction": label_frac,
-                "corruption_rate": corrupt_rate,
-                "alpha": alpha,
-                "error": str(e),
-                "error_type": type(e).__name__
-            })
+            failed_configs.append(
+                {
+                    "label_fraction": label_frac,
+                    "corruption_rate": corrupt_rate,
+                    "alpha": alpha,
+                    "error": str(e),
+                    "error_type": type(e).__name__,
+                }
+            )
 
     # Print summary of failed configurations
     if failed_configs:
         print(f"\n{'!'*80}")
         print(f"WARNING: {len(failed_configs)} configuration(s) failed:")
         for fc in failed_configs:
-            print(f"  - Labels={fc['label_fraction']*100:.1f}%, "
-                  f"Corruption={fc['corruption_rate']*100:.1f}%, "
-                  f"Alpha={fc['alpha']:.2f} ({fc['error_type']})")
+            print(
+                f"  - Labels={fc['label_fraction']*100:.1f}%, "
+                f"Corruption={fc['corruption_rate']*100:.1f}%, "
+                f"Alpha={fc['alpha']:.2f} ({fc['error_type']})"
+            )
         print(f"Check {error_log_file} for details")
         print(f"{'!'*80}\n")
 
@@ -721,8 +727,9 @@ def main(args):
         print(f"{'='*80}\n")
 
         # Run combined sweep
-        results = run_combined_sweep(dataset_name, config)
+        results, failed_configs = run_combined_sweep(dataset_name, config)
         all_results[dataset_name] = results
+        all_failed_configs[dataset_name] = failed_configs
 
         # Save results
         results_file = os.path.join(
@@ -750,6 +757,19 @@ def main(args):
     print(
         f"Checkpoints saved to: {os.path.join(config['results_path'], 'checkpoints')}"
     )
+    
+    # Print summary of all failures
+    total_failures = sum(len(fails) for fails in all_failed_configs.values())
+    if total_failures > 0:
+        print(f"\n{'!'*80}")
+        print(f"SUMMARY: {total_failures} total configuration(s) failed across all datasets")
+        for dataset, failed in all_failed_configs.items():
+            if failed:
+                print(f"\n{dataset}: {len(failed)} failed configuration(s)")
+                print(f"  See {os.path.join(config['results_path'], f'{dataset}_errors.log')} for details")
+        print(f"{'!'*80}")
+    else:
+        print("\n✓ All configurations completed successfully!")
 
 
 if __name__ == "__main__":
