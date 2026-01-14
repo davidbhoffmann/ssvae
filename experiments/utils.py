@@ -210,7 +210,15 @@ def train_epoch(
 
 
 def test_epoch(
-    data, enc, dec, num_samples, num_batch, num_pixels, device='cpu', infer=True, alpha=0.1
+    data,
+    enc,
+    dec,
+    num_samples,
+    num_batch,
+    num_pixels,
+    device="cpu",
+    infer=True,
+    alpha=0.1,
 ):
     """
     Test for one epoch

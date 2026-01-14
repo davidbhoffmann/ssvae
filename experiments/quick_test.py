@@ -15,6 +15,7 @@ if sys.version_info >= (3, 10):
 
 import os
 import torch
+from tqdm import tqdm
 
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -102,7 +103,8 @@ def main():
     label_fraction = 0.1  # Use 10% labeled data
     corruption_rate = 0.0  # No corruption
 
-    for epoch in range(CONFIG["num_epochs"]):
+    pbar = tqdm(range(CONFIG["num_epochs"]), desc="Quick Test")
+    for epoch in pbar:
         # Train
         train_elbo, label_mask = train_epoch(
             train_loader,
@@ -132,11 +134,13 @@ def main():
             infer=True,
         )
 
-        print(
-            f'Epoch {epoch+1:2d}/{CONFIG["num_epochs"]:2d} | '
-            f"Train ELBO: {train_elbo:8.2e} | "
-            f"Test ELBO: {test_elbo:8.2e} | "
-            f"Test Acc: {test_accuracy:.3f}"
+        # Update progress bar
+        pbar.set_postfix(
+            {
+                "Train ELBO": f"{train_elbo:.3e}",
+                "Test Acc": f"{test_accuracy:.3f}",
+                "Test ELBO": f"{test_elbo:.3e}",
+            }
         )
 
     print("=" * 80)

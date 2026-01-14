@@ -28,6 +28,7 @@ import torch.nn as nn
 from random import random
 import matplotlib.pyplot as plt
 import seaborn as sns
+from tqdm import tqdm
 
 from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device
 from utils import get_data_loaders, train_epoch, test_epoch, corrupt_labels
@@ -122,7 +123,11 @@ def run_single_experiment(dataset_name, label_fraction, corruption_rate, config)
     test_elbos = []
     test_accuracies = []
 
-    for epoch in range(config["num_epochs"]):
+    pbar = tqdm(
+        range(config["num_epochs"]),
+        desc=f"Labels:{label_fraction*100:.1f}% Noise:{corruption_rate*100:.0f}%",
+    )
+    for epoch in pbar:
         train_start = time.time()
 
         # Train
@@ -162,13 +167,14 @@ def run_single_experiment(dataset_name, label_fraction, corruption_rate, config)
         test_elbos.append(test_elbo)
         test_accuracies.append(test_accuracy)
 
-        # Print progress every 10 epochs
-        if (epoch + 1) % 10 == 0:
-            print(
-                f'[Epoch {epoch+1}/{config["num_epochs"]}] '
-                f"Train ELBO: {train_elbo:.4e} ({train_end-train_start:.1f}s) | "
-                f"Test ELBO: {test_elbo:.4e}, Acc: {test_accuracy:.3f} ({test_end-test_start:.1f}s)"
-            )
+        # Update progress bar
+        pbar.set_postfix(
+            {
+                "Train ELBO": f"{train_elbo:.3e}",
+                "Test Acc": f"{test_accuracy:.3f}",
+                "Test ELBO": f"{test_elbo:.3e}",
+            }
+        )
 
     # Final evaluation
     print("\nFinal evaluation...")
@@ -240,7 +246,9 @@ def run_label_sparsity_experiment(dataset_name, config):
 
     results_list = []
 
-    for label_fraction in config["label_fractions"]:
+    for label_fraction in tqdm(
+        config["label_fractions"], desc=f"{dataset_name} Label Sparsity"
+    ):
         results = run_single_experiment(
             dataset_name, label_fraction, corruption_rate=0.0, config=config
         )
@@ -269,7 +277,9 @@ def run_label_noise_experiment(dataset_name, config, label_fraction=0.1):
 
     results_list = []
 
-    for corruption_rate in config["corruption_rates"]:
+    for corruption_rate in tqdm(
+        config["corruption_rates"], desc=f"{dataset_name} Noise Robustness"
+    ):
         results = run_single_experiment(
             dataset_name, label_fraction, corruption_rate=corruption_rate, config=config
         )
