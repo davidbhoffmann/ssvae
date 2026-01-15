@@ -17,9 +17,14 @@ echo "Node: $SLURM_NODELIST"
 echo "Start time: $(date)"
 echo ""
 
-# Load conda and activate environment
-eval "$(conda shell.bash hook)"
+# Initialize conda for bash shell
+eval "$(/scratch/shared/beegfs/dhoffmann/miniconda3/condabin/conda shell.bash hook)"
 conda activate vae
+
+# Verify conda environment
+echo "Python location: $(which python)"
+echo "Python version: $(python --version)"
+echo ""
 
 # Verify GPU availability
 echo "Checking GPU availability..."
@@ -27,18 +32,14 @@ nvidia-smi
 echo ""
 
 # Navigate to experiment directory
+echo /usr/bin/nvidia-smi
 cd /scratch/shared/beegfs/dhoffmann/projects/ssvae/experiments
 
 # Run the experiment
 echo "Starting combined robustness experiment..."
 echo ""
 
-python combined_robustness_experiment.py \
-    --num_epochs 75 \
-    --num_batch 128 \
-    --num_samples 8 \
-    --device cuda
+python combined_robustness_experiment.py
 
 echo ""
 echo "Experiment completed at: $(date)"
-echo "Results saved in: results/combined_robustness/"

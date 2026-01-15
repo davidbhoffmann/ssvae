@@ -61,7 +61,7 @@ DEFAULT_CONFIG = {
     "num_pixels": 784,
     "num_hidden": 256,
     "num_digits": 10,
-    "num_style": 50,
+    "num_style": 10,
     # Training parameters
     "num_samples": 8,
     "num_batch": 128,
@@ -71,9 +71,9 @@ DEFAULT_CONFIG = {
     "eps": 1e-9,
     "device": "auto",  # 'auto', 'cuda', 'mps', or 'cpu'
     # Experiment parameters - 3D sweep
-    "label_fractions": [1, 0.8, 0.4, 0.2, 0.1, 0.05, 0.01, 0.001, 0.0001, 0],
-    "corruption_rates": [0.0, 0.001, 0.01, 0.05, 0.1, 0.2, 0.4, 0.8],
-    "alpha_values": [0.5],  # 3 levels (9 combinations total per dataset)
+    "n_labels": [10, 50, 100, 600, 1000, 3000, 10000],
+    "corruption_rates": [0.0],
+    "alpha_values": [0.1, 1, 10, 25, 50, 75, 100],
     "datasets": ["MNIST"],  # , "FashionMNIST"
     "num_seeds": 10,  # Number of random seeds per configuration
     "random_seeds": list(range(42, 52)),  # Seeds: 42, 43, 44, ..., 51
@@ -85,14 +85,14 @@ DEFAULT_CONFIG = {
 
 
 def run_single_combined_experiment(
-    dataset_name, label_fraction, corruption_rate, alpha, seed, config
+    dataset_name, n_labels, corruption_rate, alpha, seed, config
 ):
     """
     Run a single experiment with specific label fraction, corruption rate, and alpha
 
     Args:
         dataset_name: 'MNIST' or 'FashionMNIST'
-        label_fraction: Fraction of labeled data (e.g., 0.1 for 10%)
+        n_labels: Number of labeled datapoints (e.g., 0.1 for 10%)
         corruption_rate: Fraction of labels to corrupt (e.g., 0.1 for 10%)
         alpha: Alpha parameter for ELBO (tradeoff between supervised/unsupervised)
         seed: Random seed for reproducibility
@@ -112,7 +112,7 @@ def run_single_combined_experiment(
 
     print(f"\n{'='*80}")
     print(
-        f"Dataset: {dataset_name} | Labels: {label_fraction*100:.1f}% | "
+        f"Dataset: {dataset_name} | Labels: {n_labels}% | "
         f"Corruption: {corruption_rate*100:.1f}% | Alpha: {alpha:.2f} | Seed: {seed}"
     )
     print(f"Device: {device}")
@@ -172,7 +172,7 @@ def run_single_combined_experiment(
             dec,
             optimizer,
             label_mask,
-            label_fraction=label_fraction,
+            label_fraction=n_labels / len(train_loader.dataset),  # Convert to fraction
             num_samples=config["num_samples"],
             num_batch=config["num_batch"],
             num_pixels=config["num_pixels"],
@@ -242,7 +242,7 @@ def run_single_combined_experiment(
     # Store results
     results = {
         "dataset": dataset_name,
-        "label_fraction": label_fraction,
+        "n_labels": n_labels,
         "corruption_rate": corruption_rate,
         "alpha": alpha,
         "seed": seed,
@@ -285,7 +285,7 @@ def run_combined_sweep(dataset_name, config):
     print(f"COMBINED 3D PARAMETER SWEEP - {dataset_name}")
     print(f"{'#'*80}")
     print(f"\nParameter Space:")
-    print(f"  Label Fractions: {config['label_fractions']}")
+    print(f"  Number of Labels: {config['n_labels']}")
     print(f"  Corruption Rates: {config['corruption_rates']}")
     print(f"  Alpha Values: {config['alpha_values']}")
     print(
@@ -293,7 +293,7 @@ def run_combined_sweep(dataset_name, config):
     )
 
     total_experiments = (
-        len(config["label_fractions"])
+        len(config["n_labels"])
         * len(config["corruption_rates"])
         * len(config["alpha_values"])
         * config["num_seeds"]
@@ -313,7 +313,7 @@ def run_combined_sweep(dataset_name, config):
     # Generate all combinations by configuration (not including seeds yet)
     config_combinations = list(
         product(
-            config["label_fractions"],
+            config["n_labels"],
             config["corruption_rates"],
             config["alpha_values"],
         )
@@ -327,21 +327,21 @@ def run_combined_sweep(dataset_name, config):
     config_pbar = tqdm(
         config_combinations, desc=f"{dataset_name} Configurations", position=0
     )
-    for config_idx, (label_frac, corrupt_rate, alpha) in enumerate(config_pbar, 1):
+    for config_idx, (n_labels, corrupt_rate, alpha) in enumerate(config_pbar, 1):
         config_pbar.set_description(
-            f"{dataset_name} Config {config_idx}/{total_configs} | Labels:{label_frac*100:.1f}% Noise:{corrupt_rate*100:.0f}% α:{alpha:.2f}"
+            f"{dataset_name} Config {config_idx}/{total_configs} | Labels:{n_labels}% Noise:{corrupt_rate*100:.0f}% α:{alpha:.2f}"
         )
 
         try:
             # Check if this configuration already has a checkpoint
             checkpoint_file = os.path.join(
                 checkpoints_dir,
-                f"{dataset_name}_lf{label_frac:.3f}_cr{corrupt_rate:.2f}_a{alpha:.2f}.json",
+                f"{dataset_name}_lf{n_labels}_cr{corrupt_rate:.2f}_a{alpha:.2f}.json",
             )
 
             if os.path.exists(checkpoint_file):
                 print(
-                    f"\nLoading checkpoint for config: Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
+                    f"\nLoading checkpoint for config: Labels={n_labels}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
                 )
                 with open(checkpoint_file, "r") as f:
                     config_results = json.load(f)
@@ -357,7 +357,7 @@ def run_combined_sweep(dataset_name, config):
                 seed_pbar.set_description(f"  Seed {seed}")
 
                 results = run_single_combined_experiment(
-                    dataset_name, label_frac, corrupt_rate, alpha, seed, config
+                    dataset_name, n_labels, corrupt_rate, alpha, seed, config
                 )
                 config_results.append(results)
 
@@ -383,7 +383,7 @@ def run_combined_sweep(dataset_name, config):
             error_msg = f"\n{'='*80}\n"
             error_msg += f"ERROR in configuration:\n"
             error_msg += f"  Dataset: {dataset_name}\n"
-            error_msg += f"  Label Fraction: {label_frac*100:.1f}%\n"
+            error_msg += f"  Label Fraction: {n_labels}%\n"
             error_msg += f"  Corruption Rate: {corrupt_rate*100:.1f}%\n"
             error_msg += f"  Alpha: {alpha:.2f}\n"
             error_msg += f"  Time: {time.strftime('%Y-%m-%d %H:%M:%S')}\n"
@@ -396,9 +396,9 @@ def run_combined_sweep(dataset_name, config):
                 f.write(error_msg)
 
             # Print error message
-            print(f"\n❌ ERROR: Configuration failed!")
+            print(f"\nERROR: Configuration failed!")
             print(
-                f"   Labels={label_frac*100:.1f}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
+                f"   Labels={n_labels}%, Corruption={corrupt_rate*100:.1f}%, Alpha={alpha:.2f}"
             )
             print(f"   Error: {str(e)}")
             print(f"   See {error_log_file} for details")
@@ -407,7 +407,7 @@ def run_combined_sweep(dataset_name, config):
             # Track failed config
             failed_configs.append(
                 {
-                    "label_fraction": label_frac,
+                    "n_labels": label_frac,
                     "corruption_rate": corrupt_rate,
                     "alpha": alpha,
                     "error": str(e),
@@ -421,7 +421,7 @@ def run_combined_sweep(dataset_name, config):
         print(f"WARNING: {len(failed_configs)} configuration(s) failed:")
         for fc in failed_configs:
             print(
-                f"  - Labels={fc['label_fraction']*100:.1f}%, "
+                f"  - Labels={fc['n_labels']}%, "
                 f"Corruption={fc['corruption_rate']*100:.1f}%, "
                 f"Alpha={fc['alpha']:.2f} ({fc['error_type']})"
             )
@@ -446,12 +446,12 @@ def plot_combined_results(results, dataset_name, save_path):
 
     config_results = defaultdict(list)
     for r in results:
-        key = (r["label_fraction"], r["corruption_rate"], r["alpha"])
+        key = (r["n_labels"], r["corruption_rate"], r["alpha"])
         config_results[key].append(r)
 
     # Compute mean and std for each configuration
     data = {
-        "label_fraction": [],
+        "n_labels": [],
         "corruption_rate": [],
         "alpha": [],
         "accuracy_mean": [],
@@ -463,7 +463,7 @@ def plot_combined_results(results, dataset_name, save_path):
     }
 
     for (lf, cr, alpha), runs in config_results.items():
-        data["label_fraction"].append(lf)
+        data["n_labels"].append(lf)
         data["corruption_rate"].append(cr)
         data["alpha"].append(alpha)
 
@@ -492,18 +492,18 @@ def plot_combined_results(results, dataset_name, save_path):
         mask = np.array(data["alpha"]) == alpha_val
 
         # Get unique values
-        label_fracs = sorted(set(np.array(data["label_fraction"])[mask]))
+        n_labels = sorted(set(np.array(data["n_labels"])[mask]))
         corrupt_rates = sorted(set(np.array(data["corruption_rate"])[mask]))
 
         # Create matrices for mean values
-        acc_matrix = np.zeros((len(corrupt_rates), len(label_fracs)))
-        beta_matrix = np.zeros((len(corrupt_rates), len(label_fracs)))
-        mig_matrix = np.zeros((len(corrupt_rates), len(label_fracs)))
+        acc_matrix = np.zeros((len(corrupt_rates), len(n_labels)))
+        beta_matrix = np.zeros((len(corrupt_rates), len(n_labels)))
+        mig_matrix = np.zeros((len(corrupt_rates), len(n_labels)))
 
         # Fill matrices with aggregated mean values
         for idx in range(len(data["alpha"])):
             if data["alpha"][idx] == alpha_val:
-                lf_idx = label_fracs.index(data["label_fraction"][idx])
+                lf_idx = n_labels.index(data["n_labels"][idx])
                 cr_idx = corrupt_rates.index(data["corruption_rate"][idx])
                 acc_matrix[cr_idx, lf_idx] = data["accuracy_mean"][idx]
                 beta_matrix[cr_idx, lf_idx] = data["beta_vae_mean"][idx]
@@ -519,7 +519,7 @@ def plot_combined_results(results, dataset_name, save_path):
             cmap="RdYlGn",
             vmin=0,
             vmax=1,
-            xticklabels=[f"{lf*100:.1f}%" for lf in label_fracs],
+            xticklabels=[f"{lf}%" for lf in n_labels],
             yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
         )
         axes[i, 0].set_title(
@@ -537,7 +537,7 @@ def plot_combined_results(results, dataset_name, save_path):
             annot=True,
             fmt=".3f",
             cmap="viridis",
-            xticklabels=[f"{lf*100:.1f}%" for lf in label_fracs],
+            xticklabels=[f"{lf}%" for lf in n_labels],
             yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
         )
         axes[i, 1].set_title(
@@ -555,7 +555,7 @@ def plot_combined_results(results, dataset_name, save_path):
             annot=True,
             fmt=".3f",
             cmap="plasma",
-            xticklabels=[f"{lf*100:.1f}%" for lf in label_fracs],
+            xticklabels=[f"{lf}%" for lf in n_labels],
             yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
         )
         axes[i, 2].set_title(
@@ -582,10 +582,10 @@ def plot_combined_results(results, dataset_name, save_path):
 
     # Plot 1: Alpha vs Accuracy for different corruption rates (at max label fraction)
     ax1 = fig.add_subplot(131)
-    max_label_frac = max(data["label_fraction"])
+    max_n_labels = max(data["n_labels"])
     for cr in sorted(set(data["corruption_rate"])):
         mask = (np.array(data["corruption_rate"]) == cr) & (
-            np.array(data["label_fraction"]) == max_label_frac
+            np.array(data["n_labels"]) == max_n_labels
         )
         alphas = np.array(data["alpha"])[mask]
         accs_mean = np.array(data["accuracy_mean"])[mask]
@@ -603,7 +603,7 @@ def plot_combined_results(results, dataset_name, save_path):
     ax1.set_xlabel("Alpha", fontsize=12)
     ax1.set_ylabel("Test Accuracy", fontsize=12)
     ax1.set_title(
-        f"{dataset_name}: Alpha Effect on Accuracy\n(Label Fraction: {max_label_frac*100:.0f}%)",
+        f"{dataset_name}: Alpha Effect on Accuracy\n(Number of Labels: {max_n_labels})",
         fontsize=12,
         fontweight="bold",
     )
@@ -616,12 +616,12 @@ def plot_combined_results(results, dataset_name, save_path):
         mask = (np.array(data["alpha"]) == alpha_val) & (
             np.array(data["corruption_rate"]) == 0.0
         )
-        lfs = np.array(data["label_fraction"])[mask]
+        n_labels = np.array(data["n_labels"])[mask]
         betas_mean = np.array(data["beta_vae_mean"])[mask]
         betas_std = np.array(data["beta_vae_std"])[mask]
-        sort_idx = np.argsort(lfs)
+        sort_idx = np.argsort(n_labels)
         ax2.errorbar(
-            np.array(lfs)[sort_idx] * 100,
+            np.array(n_labels)[sort_idx] * 100,
             np.array(betas_mean)[sort_idx],
             yerr=np.array(betas_std)[sort_idx],
             fmt="o-",
@@ -630,10 +630,10 @@ def plot_combined_results(results, dataset_name, save_path):
             markersize=8,
             capsize=5,
         )
-    ax2.set_xlabel("Label Fraction (%)", fontsize=12)
+    ax2.set_xlabel("Number of Labels", fontsize=12)
     ax2.set_ylabel("Beta-VAE Score", fontsize=12)
     ax2.set_title(
-        f"{dataset_name}: Label Fraction Effect on Disentanglement\n(No Corruption)",
+        f"{dataset_name}: Number of Labels Effect on Disentanglement\n(No Corruption)",
         fontsize=12,
         fontweight="bold",
     )
@@ -641,11 +641,11 @@ def plot_combined_results(results, dataset_name, save_path):
     ax2.grid(True, alpha=0.3)
     ax2.set_xscale("log")
 
-    # Plot 3: Corruption vs MIG for different alphas (at max label fraction)
+    # Plot 3: Corruption vs MIG for different alphas (at max number of labels)
     ax3 = fig.add_subplot(133)
     for alpha_val in sorted(set(data["alpha"])):
         mask = (np.array(data["alpha"]) == alpha_val) & (
-            np.array(data["label_fraction"]) == max_label_frac
+            np.array(data["n_labels"]) == max_n_labels
         )
         crs = np.array(data["corruption_rate"])[mask]
         migs_mean = np.array(data["mig_mean"])[mask]
@@ -664,7 +664,7 @@ def plot_combined_results(results, dataset_name, save_path):
     ax3.set_xlabel("Corruption Rate (%)", fontsize=12)
     ax3.set_ylabel("MIG Score", fontsize=12)
     ax3.set_title(
-        f"{dataset_name}: Corruption Effect on MIG\n(Label Fraction: {max_label_frac*100:.0f}%)",
+        f"{dataset_name}: Corruption Effect on MIG\n(Number of Labels: {max_n_labels})",
         fontsize=12,
         fontweight="bold",
     )
@@ -696,8 +696,8 @@ def main(args):
         config["device"] = args.device
 
     # Override parameter ranges if specified
-    if args.label_fractions:
-        config["label_fractions"] = [float(x) for x in args.label_fractions.split(",")]
+    if args.n_labels:
+        config["n_labels"] = [int(x) for x in args.n_labels.split(",")]
     if args.corruption_rates:
         config["corruption_rates"] = [
             float(x) for x in args.corruption_rates.split(",")
@@ -757,16 +757,20 @@ def main(args):
     print(
         f"Checkpoints saved to: {os.path.join(config['results_path'], 'checkpoints')}"
     )
-    
+
     # Print summary of all failures
     total_failures = sum(len(fails) for fails in all_failed_configs.values())
     if total_failures > 0:
         print(f"\n{'!'*80}")
-        print(f"SUMMARY: {total_failures} total configuration(s) failed across all datasets")
+        print(
+            f"SUMMARY: {total_failures} total configuration(s) failed across all datasets"
+        )
         for dataset, failed in all_failed_configs.items():
             if failed:
                 print(f"\n{dataset}: {len(failed)} failed configuration(s)")
-                print(f"  See {os.path.join(config['results_path'], f'{dataset}_errors.log')} for details")
+                print(
+                    f"  See {os.path.join(config['results_path'], f'{dataset}_errors.log')} for details"
+                )
         print(f"{'!'*80}")
     else:
         print("\n✓ All configurations completed successfully!")
@@ -800,9 +804,9 @@ if __name__ == "__main__":
         help="Device to use (default: auto)",
     )
     parser.add_argument(
-        "--label_fractions",
+        "--n_labels",
         type=str,
-        help='Comma-separated label fractions (e.g., "0.1,0.05,0.01")',
+        help='Comma-separated number of labels (e.g., "100,500,1000")',
     )
     parser.add_argument(
         "--corruption_rates",
