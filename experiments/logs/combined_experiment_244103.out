@@ -1,0 +1,1248 @@
+=========================================
+SSVAE Combined Robustness Experiment
+=========================================
+Job ID: 244103
+Node: c2-g4-01
+Start time: Fri 16 Jan 14:10:56 GMT 2026
+
+Python location: /scratch/shared/beegfs/dhoffmann/miniconda3/envs/vae/bin/python
+Python version: Python 3.10.19
+
+Checking GPU availability...
+Fri Jan 16 14:11:02 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla P40                      Off |   00000000:3D:00.0 Off |                    0 |
+| N/A   48C    P8             11W /  250W |       0MiB /  23040MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+/usr/bin/nvidia-smi
+Starting combined robustness experiment...
+
+
+
+================================================================================
+STARTING COMBINED SWEEP FOR MNIST
+================================================================================
+
+
+################################################################################
+COMBINED 3D PARAMETER SWEEP - MNIST
+################################################################################
+
+Parameter Space:
+  Number of Labels: [100, 600, 1000, 3000]
+  Corruption Rates: [0.0, 0.01, 0.1, 0.2, 0.5]
+  Alpha Values: [50.0]
+  Random Seeds: 10 seeds (42 to 51)
+  Total Experiments: 200
+
+
+Running 20 configurations, each with 10 seeds...
+
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 42
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.635
+  Test ELBO: -4.0496e-01
+  Beta-VAE Score: 0.1467
+  Factor-VAE Score: 0.3229
+  MIG Score: 0.0258
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 43
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.035
+  Test ELBO: -4.1942e-01
+  Beta-VAE Score: 0.1889
+  Factor-VAE Score: 0.5909
+  MIG Score: 0.0427
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 44
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2491e-01
+  Beta-VAE Score: 0.1678
+  Factor-VAE Score: 0.6448
+  MIG Score: 0.1484
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 45
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.038
+  Test ELBO: -4.1523e-01
+  Beta-VAE Score: 0.1567
+  Factor-VAE Score: 0.5179
+  MIG Score: 0.1030
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 46
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.444
+  Test ELBO: -4.0502e-01
+  Beta-VAE Score: 0.1833
+  Factor-VAE Score: 0.3359
+  MIG Score: 0.2377
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 47
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.367
+  Test ELBO: -4.0639e-01
+  Beta-VAE Score: 0.1478
+  Factor-VAE Score: 0.4281
+  MIG Score: 0.0240
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 48
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.207
+  Test ELBO: -4.0561e-01
+  Beta-VAE Score: 0.1700
+  Factor-VAE Score: 0.4474
+  MIG Score: 0.1326
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 49
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.083
+  Test ELBO: -4.1878e-01
+  Beta-VAE Score: 0.2056
+  Factor-VAE Score: 0.6150
+  MIG Score: 0.0252
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 50
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.437
+  Test ELBO: -4.0716e-01
+  Beta-VAE Score: 0.1489
+  Factor-VAE Score: 0.4424
+  MIG Score: 0.0172
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 50.00 | Seed: 51
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2019e-01
+  Beta-VAE Score: 0.2022
+  Factor-VAE Score: 0.6122
+  MIG Score: 0.1222
+
+✓ Checkpoint saved: ../results/combined/checkpoints/MNIST_lf100_cr0.00_a50.00.json
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 42
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.631
+  Test ELBO: -4.0532e-01
+  Beta-VAE Score: 0.1633
+  Factor-VAE Score: 0.3367
+  MIG Score: 0.0160
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 43
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.035
+  Test ELBO: -4.1942e-01
+  Beta-VAE Score: 0.1889
+  Factor-VAE Score: 0.5909
+  MIG Score: 0.0427
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 44
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2491e-01
+  Beta-VAE Score: 0.1678
+  Factor-VAE Score: 0.6448
+  MIG Score: 0.1484
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 45
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.038
+  Test ELBO: -4.1523e-01
+  Beta-VAE Score: 0.1567
+  Factor-VAE Score: 0.5179
+  MIG Score: 0.1030
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 46
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.446
+  Test ELBO: -4.0470e-01
+  Beta-VAE Score: 0.1789
+  Factor-VAE Score: 0.3261
+  MIG Score: 0.2239
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 47
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.417
+  Test ELBO: -4.0629e-01
+  Beta-VAE Score: 0.1456
+  Factor-VAE Score: 0.4019
+  MIG Score: 0.0035
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 48
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.240
+  Test ELBO: -4.0583e-01
+  Beta-VAE Score: 0.1789
+  Factor-VAE Score: 0.4479
+  MIG Score: 0.1213
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 49
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.083
+  Test ELBO: -4.1878e-01
+  Beta-VAE Score: 0.2056
+  Factor-VAE Score: 0.6150
+  MIG Score: 0.0252
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 50
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.449
+  Test ELBO: -4.0705e-01
+  Beta-VAE Score: 0.1367
+  Factor-VAE Score: 0.4267
+  MIG Score: 0.0152
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 1.0% | Alpha: 50.00 | Seed: 51
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2019e-01
+  Beta-VAE Score: 0.2022
+  Factor-VAE Score: 0.6122
+  MIG Score: 0.1222
+
+✓ Checkpoint saved: ../results/combined/checkpoints/MNIST_lf100_cr0.01_a50.00.json
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 42
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.582
+  Test ELBO: -4.0566e-01
+  Beta-VAE Score: 0.1622
+  Factor-VAE Score: 0.3578
+  MIG Score: 0.0206
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 43
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.035
+  Test ELBO: -4.1942e-01
+  Beta-VAE Score: 0.1889
+  Factor-VAE Score: 0.5909
+  MIG Score: 0.0427
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 44
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2491e-01
+  Beta-VAE Score: 0.1678
+  Factor-VAE Score: 0.6448
+  MIG Score: 0.1484
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 45
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.038
+  Test ELBO: -4.1523e-01
+  Beta-VAE Score: 0.1567
+  Factor-VAE Score: 0.5179
+  MIG Score: 0.1030
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 46
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.436
+  Test ELBO: -4.0524e-01
+  Beta-VAE Score: 0.1811
+  Factor-VAE Score: 0.3517
+  MIG Score: 0.2167
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 47
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.343
+  Test ELBO: -4.0646e-01
+  Beta-VAE Score: 0.1344
+  Factor-VAE Score: 0.4385
+  MIG Score: 0.0012
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 48
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.263
+  Test ELBO: -4.0548e-01
+  Beta-VAE Score: 0.1600
+  Factor-VAE Score: 0.4559
+  MIG Score: 0.1766
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 49
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.083
+  Test ELBO: -4.1878e-01
+  Beta-VAE Score: 0.2056
+  Factor-VAE Score: 0.6150
+  MIG Score: 0.0252
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 50
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.427
+  Test ELBO: -4.0723e-01
+  Beta-VAE Score: 0.1478
+  Factor-VAE Score: 0.4452
+  MIG Score: 0.0030
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 10.0% | Alpha: 50.00 | Seed: 51
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2019e-01
+  Beta-VAE Score: 0.2022
+  Factor-VAE Score: 0.6122
+  MIG Score: 0.1222
+
+✓ Checkpoint saved: ../results/combined/checkpoints/MNIST_lf100_cr0.10_a50.00.json
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 42
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.598
+  Test ELBO: -4.0599e-01
+  Beta-VAE Score: 0.1667
+  Factor-VAE Score: 0.3746
+  MIG Score: 0.0166
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 43
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.035
+  Test ELBO: -4.1942e-01
+  Beta-VAE Score: 0.1889
+  Factor-VAE Score: 0.5909
+  MIG Score: 0.0427
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 44
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2491e-01
+  Beta-VAE Score: 0.1678
+  Factor-VAE Score: 0.6448
+  MIG Score: 0.1484
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 45
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.038
+  Test ELBO: -4.1523e-01
+  Beta-VAE Score: 0.1567
+  Factor-VAE Score: 0.5179
+  MIG Score: 0.1030
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 46
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.413
+  Test ELBO: -4.0539e-01
+  Beta-VAE Score: 0.1689
+  Factor-VAE Score: 0.3609
+  MIG Score: 0.2311
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 47
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.343
+  Test ELBO: -4.0646e-01
+  Beta-VAE Score: 0.1356
+  Factor-VAE Score: 0.4393
+  MIG Score: 0.0037
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 48
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.203
+  Test ELBO: -4.0556e-01
+  Beta-VAE Score: 0.1711
+  Factor-VAE Score: 0.4530
+  MIG Score: 0.0969
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 49
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.083
+  Test ELBO: -4.1878e-01
+  Beta-VAE Score: 0.2056
+  Factor-VAE Score: 0.6150
+  MIG Score: 0.0252
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 50
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.403
+  Test ELBO: -4.0729e-01
+  Beta-VAE Score: 0.1644
+  Factor-VAE Score: 0.4808
+  MIG Score: 0.0482
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 20.0% | Alpha: 50.00 | Seed: 51
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2019e-01
+  Beta-VAE Score: 0.2022
+  Factor-VAE Score: 0.6122
+  MIG Score: 0.1222
+
+✓ Checkpoint saved: ../results/combined/checkpoints/MNIST_lf100_cr0.20_a50.00.json
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 42
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.466
+  Test ELBO: -4.0715e-01
+  Beta-VAE Score: 0.1767
+  Factor-VAE Score: 0.4310
+  MIG Score: 0.0042
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 43
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.035
+  Test ELBO: -4.1942e-01
+  Beta-VAE Score: 0.1889
+  Factor-VAE Score: 0.5909
+  MIG Score: 0.0427
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 44
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2491e-01
+  Beta-VAE Score: 0.1678
+  Factor-VAE Score: 0.6448
+  MIG Score: 0.1484
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 45
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.038
+  Test ELBO: -4.1523e-01
+  Beta-VAE Score: 0.1567
+  Factor-VAE Score: 0.5179
+  MIG Score: 0.1030
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 46
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.220
+  Test ELBO: -4.0581e-01
+  Beta-VAE Score: 0.1967
+  Factor-VAE Score: 0.4440
+  MIG Score: 0.1564
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 47
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.204
+  Test ELBO: -4.0785e-01
+  Beta-VAE Score: 0.1656
+  Factor-VAE Score: 0.5098
+  MIG Score: 0.1219
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 48
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.148
+  Test ELBO: -4.0637e-01
+  Beta-VAE Score: 0.1789
+  Factor-VAE Score: 0.5103
+  MIG Score: 0.1359
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 49
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.083
+  Test ELBO: -4.1878e-01
+  Beta-VAE Score: 0.2056
+  Factor-VAE Score: 0.6150
+  MIG Score: 0.0252
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 50
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.241
+  Test ELBO: -4.0820e-01
+  Beta-VAE Score: 0.1522
+  Factor-VAE Score: 0.5398
+  MIG Score: 0.0600
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 50.0% | Alpha: 50.00 | Seed: 51
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.098
+  Test ELBO: -4.2019e-01
+  Beta-VAE Score: 0.2022
+  Factor-VAE Score: 0.6122
+  MIG Score: 0.1222
+
+✓ Checkpoint saved: ../results/combined/checkpoints/MNIST_lf100_cr0.50_a50.00.json
+
+Loading checkpoint for config: Labels=600%, Corruption=0.0%, Alpha=50.00
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 42
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.581
+  Test ELBO: -4.0424e-01
+  Beta-VAE Score: 0.1389
+  Factor-VAE Score: 0.2930
+  MIG Score: 0.0229
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 43
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.384
+  Test ELBO: -4.0500e-01
+  Beta-VAE Score: 0.1522
+  Factor-VAE Score: 0.3779
+  MIG Score: 0.0415
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 44
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.492
+  Test ELBO: -4.0510e-01
+  Beta-VAE Score: 0.1378
+  Factor-VAE Score: 0.3167
+  MIG Score: 0.0069
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 45
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.038
+  Test ELBO: -4.1523e-01
+  Beta-VAE Score: 0.1567
+  Factor-VAE Score: 0.5179
+  MIG Score: 0.1030
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 46
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.446
+  Test ELBO: -4.0470e-01
+  Beta-VAE Score: 0.1789
+  Factor-VAE Score: 0.3261
+  MIG Score: 0.2239
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 47
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.387
+  Test ELBO: -4.0554e-01
+  Beta-VAE Score: 0.1311
+  Factor-VAE Score: 0.3943
+  MIG Score: 0.0179
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 48
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.311
+  Test ELBO: -4.0451e-01
+  Beta-VAE Score: 0.1656
+  Factor-VAE Score: 0.4454
+  MIG Score: 0.1578
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 49
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.377
+  Test ELBO: -4.0567e-01
+  Beta-VAE Score: 0.1944
+  Factor-VAE Score: 0.4457
+  MIG Score: 0.0931
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 50
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.534
+  Test ELBO: -4.0557e-01
+  Beta-VAE Score: 0.1467
+  Factor-VAE Score: 0.3218
+  MIG Score: 0.0060
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 1.0% | Alpha: 50.00 | Seed: 51
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.438
+  Test ELBO: -4.0564e-01
+  Beta-VAE Score: 0.1711
+  Factor-VAE Score: 0.3632
+  MIG Score: 0.0739
+
+✓ Checkpoint saved: ../results/combined/checkpoints/MNIST_lf600_cr0.01_a50.00.json
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 10.0% | Alpha: 50.00 | Seed: 42
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.591
+  Test ELBO: -4.0445e-01
+  Beta-VAE Score: 0.1467
+  Factor-VAE Score: 0.2948
+  MIG Score: 0.0241
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 10.0% | Alpha: 50.00 | Seed: 43
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.327
+  Test ELBO: -4.0585e-01
+  Beta-VAE Score: 0.1456
+  Factor-VAE Score: 0.4165
+  MIG Score: 0.0224
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 10.0% | Alpha: 50.00 | Seed: 44
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.501
+  Test ELBO: -4.0499e-01
+  Beta-VAE Score: 0.1322
+  Factor-VAE Score: 0.3298
+  MIG Score: 0.0033
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 10.0% | Alpha: 50.00 | Seed: 45
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.038
+  Test ELBO: -4.1523e-01
+  Beta-VAE Score: 0.1567
+  Factor-VAE Score: 0.5179
+  MIG Score: 0.1030
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 10.0% | Alpha: 50.00 | Seed: 46
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
+
+Final evaluation...
+Computing disentanglement metrics...
+
+Results:
+  Test Accuracy: 0.436
+  Test ELBO: -4.0524e-01
+  Beta-VAE Score: 0.1811
+  Factor-VAE Score: 0.3517
+  MIG Score: 0.2167
+
+================================================================================
+Dataset: MNIST | Labels: 600% | Corruption: 10.0% | Alpha: 50.00 | Seed: 47
+Device: cuda
+================================================================================
+
+Using single GPU
+Using single GPU
