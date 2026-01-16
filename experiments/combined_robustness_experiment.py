@@ -32,8 +32,22 @@ import seaborn as sns
 from itertools import product
 from tqdm import tqdm
 
-from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device, setup_multi_gpu, get_base_model
-from utils import get_data_loaders, train_epoch, test_epoch, corrupt_labels, UniversalEncoder
+from ssvae_model import (
+    Encoder,
+    Decoder,
+    elbo,
+    move_tensors_to_device,
+    get_device,
+    setup_multi_gpu,
+    get_base_model,
+)
+from utils import (
+    get_data_loaders,
+    train_epoch,
+    test_epoch,
+    corrupt_labels,
+    UniversalEncoder,
+)
 from metrics import evaluate_all_metrics
 
 
@@ -64,8 +78,8 @@ DEFAULT_CONFIG = {
     "num_style": 10,
     # Training parameters
     "num_samples": 8,
-    "num_batch": 128,
-    "num_epochs": 75,  # Moderate training for parameter sweep
+    "num_batch": 256,
+    "num_epochs": 20,  # Moderate training for parameter sweep
     "learning_rate": 1e-3,
     "beta1": 0.90,
     "eps": 1e-9,
@@ -77,11 +91,11 @@ DEFAULT_CONFIG = {
     "num_workers": 4,  # Number of data loading workers (increase for faster loading)
     "pin_memory": True,  # Pin memory for faster GPU transfer
     # Performance settings
-    "eval_frequency": 1,  # Evaluate every N epochs (set >1 to speed up training)
+    "eval_frequency": 10,  # Evaluate every N epochs (set >1 to speed up training)
     # Experiment parameters - 3D sweep
-    "n_labels": [10, 50, 100, 600, 1000, 3000, 10000], #  
+    "n_labels": [100, 600, 1000, 3000],  #
     "corruption_rates": [0.0],
-    "alpha_values": [0.1, 0.2, 0.5, 1, 10, 25, 50, 75, 100],
+    "alpha_values": [0.1, 0.5, 1, 50, 100],
     "datasets": ["MNIST"],  # , "FashionMNIST"
     "num_seeds": 10,  # Number of random seeds per configuration
     "random_seeds": list(range(42, 52)),  # Seeds: 42, 43, 44, ..., 51
@@ -157,7 +171,7 @@ def run_single_combined_experiment(
     dec.to(device)
     move_tensors_to_device(enc, device)
     move_tensors_to_device(dec, device)
-    
+
     # Setup multi-GPU if enabled and available
     is_multi_gpu = False
     if config.get("use_multi_gpu", True) and torch.cuda.is_available():
@@ -208,8 +222,10 @@ def run_single_combined_experiment(
         train_elbos.append(train_elbo)
 
         # Test only at specified frequency or last epoch
-        should_evaluate = (epoch % eval_frequency == 0) or (epoch == config["num_epochs"] - 1)
-        
+        should_evaluate = (epoch % eval_frequency == 0) or (
+            epoch == config["num_epochs"] - 1
+        )
+
         if should_evaluate:
             test_start = time.time()
             test_elbo, test_accuracy = test_epoch(
@@ -406,7 +422,9 @@ def run_combined_sweep(dataset_name, config):
                 serializable_config_results.append(r_copy)
 
             with open(checkpoint_file, "w") as f:
-                json.dump(serializable_config_results, f, indent=2, cls=UniversalEncoder)
+                json.dump(
+                    serializable_config_results, f, indent=2, cls=UniversalEncoder
+                )
 
             print(f"\n✓ Checkpoint saved: {checkpoint_file}")
 
@@ -742,7 +760,7 @@ def main(args):
     if args.num_seeds:
         config["num_seeds"] = args.num_seeds
         config["random_seeds"] = list(range(42, 42 + args.num_seeds))
-    
+
     # Performance and multi-GPU settings
     config["num_workers"] = args.num_workers
     config["use_multi_gpu"] = not args.no_multi_gpu
