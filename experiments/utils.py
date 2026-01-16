@@ -8,6 +8,14 @@ import numpy as np
 from random import random
 from torchvision import datasets, transforms
 import os
+import json
+
+class UniversalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.floating, torch.DoubleTensor, torch.FloatTensor)): return float(obj)
+        if isinstance(obj, (np.integer, torch.LongTensor)): return int(obj)
+        if isinstance(obj, (np.ndarray, torch.Tensor)): return obj.tolist()
+        return super().default(obj)
 
 
 def corrupt_labels(labels, corruption_rate=0.1, num_classes=10):

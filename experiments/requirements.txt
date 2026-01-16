@@ -4,7 +4,7 @@
 # Core dependencies
 torch>=1.7.0
 torchvision>=0.8.0
-probtorch
+git+https://github.com/probtorch/probtorch.git
 
 # Scientific computing
 numpy>=1.19.0

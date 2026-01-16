@@ -33,7 +33,7 @@ from itertools import product
 from tqdm import tqdm
 
 from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device
-from utils import get_data_loaders, train_epoch, test_epoch, corrupt_labels
+from utils import get_data_loaders, train_epoch, test_epoch, corrupt_labels, UniversalEncoder
 from metrics import evaluate_all_metrics
 
 
@@ -71,9 +71,9 @@ DEFAULT_CONFIG = {
     "eps": 1e-9,
     "device": "auto",  # 'auto', 'cuda', 'mps', or 'cpu'
     # Experiment parameters - 3D sweep
-    "n_labels": [10, 50, 100, 600, 1000, 3000, 10000],
+    "n_labels": [10, 50, 100, 600, 1000, 3000, 10000], #  
     "corruption_rates": [0.0],
-    "alpha_values": [0.1, 1, 10, 25, 50, 75, 100],
+    "alpha_values": [0.1, 0.2, 0.5, 1, 10, 25, 50, 75, 100],
     "datasets": ["MNIST"],  # , "FashionMNIST"
     "num_seeds": 10,  # Number of random seeds per configuration
     "random_seeds": list(range(42, 52)),  # Seeds: 42, 43, 44, ..., 51
@@ -371,7 +371,7 @@ def run_combined_sweep(dataset_name, config):
                 serializable_config_results.append(r_copy)
 
             with open(checkpoint_file, "w") as f:
-                json.dump(serializable_config_results, f, indent=2)
+                json.dump(serializable_config_results, f, indent=2, cls=UniversalEncoder)
 
             print(f"\n✓ Checkpoint saved: {checkpoint_file}")
 
@@ -407,7 +407,7 @@ def run_combined_sweep(dataset_name, config):
             # Track failed config
             failed_configs.append(
                 {
-                    "n_labels": label_frac,
+                    "n_labels": n_labels,
                     "corruption_rate": corrupt_rate,
                     "alpha": alpha,
                     "error": str(e),
@@ -744,7 +744,7 @@ def main(args):
                 r_copy["test_elbos"] = [float(x) for x in r["test_elbos"]]
                 r_copy["test_accuracies"] = [float(x) for x in r["test_accuracies"]]
                 serializable_results.append(r_copy)
-            json.dump(serializable_results, f, indent=2)
+            json.dump(serializable_results, f, indent=2, cls=UniversalEncoder)
         print(f"Saved results to {results_file}")
 
         # Plot results

@@ -66,6 +66,14 @@ conda run -n vae python combined_robustness_experiment.py \
     --corruption_rates 0.0,0.1 \
     --alpha_values 0.1,0.5
 ```
+
+```bash
+python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 75 \
+    --n_labels 10,50,100,600,1000,3000,10000 \
+    --corruption_rates 0.0,0.01,0.05,0.1,0.2,0.4,0.8 \
+    --alpha_values 50
+```
 Fast test of combined experiment (2×2×2 = 8 experiments, ~10-15 min).
 
 ---
