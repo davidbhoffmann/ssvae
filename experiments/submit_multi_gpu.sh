@@ -21,8 +21,19 @@ echo ""
 
 # Initialize conda for bash shell
 # NOTE: Update this path to match your conda installation
-eval "$(/scratch/shared/beegfs/dhoffmann/miniconda3/condabin/conda shell.bash hook)"
-conda activate vae
+# Common locations:
+#   - /scratch/shared/beegfs/dhoffmann/miniconda3/condabin/conda
+#   - ~/miniconda3/bin/conda
+#   - /opt/conda/bin/conda
+CONDA_PATH="${CONDA_PATH:-/scratch/shared/beegfs/dhoffmann/miniconda3/condabin/conda}"
+if [ -f "$CONDA_PATH" ]; then
+    eval "$($CONDA_PATH shell.bash hook)"
+    conda activate vae
+else
+    echo "Warning: Conda not found at $CONDA_PATH"
+    echo "Set CONDA_PATH environment variable or edit this script"
+    exit 1
+fi
 
 # Verify conda environment
 echo "Python location: $(which python)"
@@ -41,7 +52,15 @@ export NUMEXPR_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 # Navigate to experiment directory
 # NOTE: Update this path to match your project location
-cd /scratch/shared/beegfs/dhoffmann/projects/ssvae/experiments
+# Example: /scratch/shared/beegfs/dhoffmann/projects/ssvae/experiments
+PROJECT_DIR="${PROJECT_DIR:-/scratch/shared/beegfs/dhoffmann/projects/ssvae/experiments}"
+if [ -d "$PROJECT_DIR" ]; then
+    cd "$PROJECT_DIR"
+else
+    echo "Warning: Project directory not found at $PROJECT_DIR"
+    echo "Set PROJECT_DIR environment variable or edit this script"
+    exit 1
+fi
 
 # Create logs directory if it doesn't exist
 mkdir -p logs

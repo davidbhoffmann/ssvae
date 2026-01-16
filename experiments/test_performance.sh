@@ -9,7 +9,12 @@ echo ""
 # Check for GPUs
 echo "Checking GPU availability..."
 if command -v nvidia-smi &> /dev/null; then
-    GPU_COUNT=$(nvidia-smi --query-gpu=count --format=csv,noheader | head -n 1)
+    # Get GPU count using nvidia-smi properly
+    GPU_COUNT=$(nvidia-smi --list-gpus 2>/dev/null | wc -l)
+    if [ "$GPU_COUNT" -eq 0 ]; then
+        # Fallback method
+        GPU_COUNT=$(nvidia-smi --query-gpu=name --format=csv,noheader 2>/dev/null | wc -l)
+    fi
     echo "Found $GPU_COUNT GPU(s)"
     nvidia-smi --query-gpu=index,name,memory.total --format=csv
     echo ""

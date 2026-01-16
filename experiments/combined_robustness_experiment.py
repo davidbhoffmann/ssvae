@@ -237,12 +237,14 @@ def run_single_combined_experiment(
                 }
             )
         else:
-            # If not evaluating, just update with training metrics
+            # If not evaluating, use placeholder (will be same length as train_elbos)
+            # Note: These are not actual evaluations, just placeholders for consistency
             test_elbos.append(test_elbos[-1] if test_elbos else 0.0)
             test_accuracies.append(test_accuracies[-1] if test_accuracies else 0.0)
             pbar.set_postfix(
                 {
                     "Train ELBO": f"{train_elbo:.3e}",
+                    "Test Acc": f"(skipped)",
                 }
             )
 

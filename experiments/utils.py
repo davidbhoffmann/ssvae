@@ -93,7 +93,7 @@ def get_data_loaders(
         dataset_name: 'MNIST' or 'FashionMNIST'
         data_path: Path to store/load data
         batch_size: Batch size for dataloaders
-        num_workers: Number of workers for data loading (default: 4)
+        num_workers: Number of workers for data loading (default: 4, increased from 0 for better performance)
         download: Whether to download data if not present
         pin_memory: Whether to use pinned memory for faster GPU transfer
 
