@@ -32,7 +32,7 @@ import seaborn as sns
 from itertools import product
 from tqdm import tqdm
 
-from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device
+from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device, setup_multi_gpu, get_base_model
 from utils import get_data_loaders, train_epoch, test_epoch, corrupt_labels, UniversalEncoder
 from metrics import evaluate_all_metrics
 
@@ -70,6 +70,14 @@ DEFAULT_CONFIG = {
     "beta1": 0.90,
     "eps": 1e-9,
     "device": "auto",  # 'auto', 'cuda', 'mps', or 'cpu'
+    # Multi-GPU settings
+    "use_multi_gpu": True,  # Enable multi-GPU if available
+    "gpu_ids": None,  # None = use all GPUs, or list like [0, 1, 2, 3]
+    # Data loading settings
+    "num_workers": 4,  # Number of data loading workers (increase for faster loading)
+    "pin_memory": True,  # Pin memory for faster GPU transfer
+    # Performance settings
+    "eval_frequency": 1,  # Evaluate every N epochs (set >1 to speed up training)
     # Experiment parameters - 3D sweep
     "n_labels": [10, 50, 100, 600, 1000, 3000, 10000], #  
     "corruption_rates": [0.0],
@@ -118,12 +126,14 @@ def run_single_combined_experiment(
     print(f"Device: {device}")
     print(f"{'='*80}\n")
 
-    # Get data loaders
+    # Get data loaders with optimized settings
     train_loader, test_loader = get_data_loaders(
         dataset_name=dataset_name,
         data_path=config["data_path"],
         batch_size=config["num_batch"],
+        num_workers=config.get("num_workers", 4),
         download=True,
+        pin_memory=config.get("pin_memory", True),
     )
 
     # Initialize models
@@ -147,10 +157,20 @@ def run_single_combined_experiment(
     dec.to(device)
     move_tensors_to_device(enc, device)
     move_tensors_to_device(dec, device)
+    
+    # Setup multi-GPU if enabled and available
+    is_multi_gpu = False
+    if config.get("use_multi_gpu", True) and torch.cuda.is_available():
+        gpu_ids = config.get("gpu_ids", None)
+        enc, is_multi_gpu_enc = setup_multi_gpu(enc, gpu_ids)
+        dec, is_multi_gpu_dec = setup_multi_gpu(dec, gpu_ids)
+        is_multi_gpu = is_multi_gpu_enc or is_multi_gpu_dec
 
-    # Optimizer
+    # Optimizer (use base model parameters if multi-GPU)
+    enc_params = get_base_model(enc).parameters()
+    dec_params = get_base_model(dec).parameters()
     optimizer = torch.optim.Adam(
-        list(enc.parameters()) + list(dec.parameters()),
+        list(enc_params) + list(dec_params),
         lr=config["learning_rate"],
         betas=(config["beta1"], 0.999),
     )
@@ -160,6 +180,7 @@ def run_single_combined_experiment(
     train_elbos = []
     test_elbos = []
     test_accuracies = []
+    eval_frequency = config.get("eval_frequency", 1)
 
     pbar = tqdm(range(config["num_epochs"]), desc=f"Training (α={alpha:.2f})")
     for epoch in pbar:
@@ -186,32 +207,44 @@ def run_single_combined_experiment(
         train_end = time.time()
         train_elbos.append(train_elbo)
 
-        # Test
-        test_start = time.time()
-        test_elbo, test_accuracy = test_epoch(
-            test_loader,
-            enc,
-            dec,
-            num_samples=config["num_samples"],
-            num_batch=config["num_batch"],
-            num_pixels=config["num_pixels"],
-            device=str(device),
-            infer=True,
-            alpha=alpha,  # Pass alpha to testing
-        )
-        test_end = time.time()
+        # Test only at specified frequency or last epoch
+        should_evaluate = (epoch % eval_frequency == 0) or (epoch == config["num_epochs"] - 1)
+        
+        if should_evaluate:
+            test_start = time.time()
+            test_elbo, test_accuracy = test_epoch(
+                test_loader,
+                enc,
+                dec,
+                num_samples=config["num_samples"],
+                num_batch=config["num_batch"],
+                num_pixels=config["num_pixels"],
+                device=str(device),
+                infer=True,
+                alpha=alpha,  # Pass alpha to testing
+            )
+            test_end = time.time()
 
-        test_elbos.append(test_elbo)
-        test_accuracies.append(test_accuracy)
+            test_elbos.append(test_elbo)
+            test_accuracies.append(test_accuracy)
 
-        # Update progress bar with latest metrics
-        pbar.set_postfix(
-            {
-                "Train ELBO": f"{train_elbo:.3e}",
-                "Test Acc": f"{test_accuracy:.3f}",
-                "Test ELBO": f"{test_elbo:.3e}",
-            }
-        )
+            # Update progress bar with latest metrics
+            pbar.set_postfix(
+                {
+                    "Train ELBO": f"{train_elbo:.3e}",
+                    "Test Acc": f"{test_accuracy:.3f}",
+                    "Test ELBO": f"{test_elbo:.3e}",
+                }
+            )
+        else:
+            # If not evaluating, just update with training metrics
+            test_elbos.append(test_elbos[-1] if test_elbos else 0.0)
+            test_accuracies.append(test_accuracies[-1] if test_accuracies else 0.0)
+            pbar.set_postfix(
+                {
+                    "Train ELBO": f"{train_elbo:.3e}",
+                }
+            )
 
     # Final evaluation
     print("\nFinal evaluation...")
@@ -707,6 +740,13 @@ def main(args):
     if args.num_seeds:
         config["num_seeds"] = args.num_seeds
         config["random_seeds"] = list(range(42, 42 + args.num_seeds))
+    
+    # Performance and multi-GPU settings
+    config["num_workers"] = args.num_workers
+    config["use_multi_gpu"] = not args.no_multi_gpu
+    if args.gpu_ids:
+        config["gpu_ids"] = [int(x) for x in args.gpu_ids.split(",")]
+    config["eval_frequency"] = args.eval_frequency
 
     # Create directories
     os.makedirs(config["results_path"], exist_ok=True)
@@ -822,6 +862,28 @@ if __name__ == "__main__":
         "--num_seeds",
         type=int,
         help=f'Number of random seeds per configuration (default: {DEFAULT_CONFIG["num_seeds"]})',
+    )
+    parser.add_argument(
+        "--num_workers",
+        type=int,
+        default=4,
+        help="Number of data loading workers (default: 4)",
+    )
+    parser.add_argument(
+        "--no_multi_gpu",
+        action="store_true",
+        help="Disable multi-GPU training even if multiple GPUs are available",
+    )
+    parser.add_argument(
+        "--gpu_ids",
+        type=str,
+        help='Comma-separated GPU IDs to use (e.g., "0,1,2,3")',
+    )
+    parser.add_argument(
+        "--eval_frequency",
+        type=int,
+        default=1,
+        help="Evaluate every N epochs (default: 1). Set higher to speed up training.",
     )
 
     args = parser.parse_args()

@@ -19,6 +19,49 @@ def get_device():
         return torch.device("cpu")
 
 
+def setup_multi_gpu(model, device_ids=None):
+    """
+    Setup model for multi-GPU training using DataParallel
+    
+    Args:
+        model: PyTorch model to wrap
+        device_ids: List of GPU device IDs to use (None = all available)
+        
+    Returns:
+        model: Wrapped model (DataParallel if multiple GPUs available)
+        is_multi_gpu: Boolean indicating if multi-GPU is enabled
+    """
+    if torch.cuda.is_available():
+        gpu_count = torch.cuda.device_count()
+        if gpu_count > 1:
+            if device_ids is None:
+                device_ids = list(range(gpu_count))
+            print(f"Using {len(device_ids)} GPUs: {device_ids}")
+            model = nn.DataParallel(model, device_ids=device_ids)
+            return model, True
+        else:
+            print(f"Using single GPU")
+            return model, False
+    else:
+        print(f"No GPU available, using CPU")
+        return model, False
+
+
+def get_base_model(model):
+    """
+    Get the base model from a potentially wrapped model
+    
+    Args:
+        model: Model (possibly wrapped in DataParallel)
+        
+    Returns:
+        Base model
+    """
+    if isinstance(model, nn.DataParallel):
+        return model.module
+    return model
+
+
 class Encoder(nn.Module):
     """Encoder network for SSVAE"""
 

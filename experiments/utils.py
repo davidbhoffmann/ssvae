@@ -82,8 +82,9 @@ def get_data_loaders(
     dataset_name="MNIST",
     data_path="../data",
     batch_size=128,
-    num_workers=0,
+    num_workers=4,
     download=True,
+    pin_memory=True,
 ):
     """
     Get train and test data loaders for MNIST or FashionMNIST
@@ -92,8 +93,9 @@ def get_data_loaders(
         dataset_name: 'MNIST' or 'FashionMNIST'
         data_path: Path to store/load data
         batch_size: Batch size for dataloaders
-        num_workers: Number of workers for data loading
+        num_workers: Number of workers for data loading (default: 4)
         download: Whether to download data if not present
+        pin_memory: Whether to use pinned memory for faster GPU transfer
 
     Returns:
         train_loader, test_loader
@@ -115,6 +117,8 @@ def get_data_loaders(
         batch_size=batch_size,
         shuffle=True,
         num_workers=num_workers,
+        pin_memory=pin_memory,
+        persistent_workers=num_workers > 0,
     )
 
     test_loader = torch.utils.data.DataLoader(
@@ -124,6 +128,8 @@ def get_data_loaders(
         batch_size=batch_size,
         shuffle=False,
         num_workers=num_workers,
+        pin_memory=pin_memory,
+        persistent_workers=num_workers > 0,
     )
 
     return train_loader, test_loader

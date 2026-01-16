@@ -30,7 +30,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from tqdm import tqdm
 
-from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device
+from ssvae_model import Encoder, Decoder, elbo, move_tensors_to_device, get_device, setup_multi_gpu, get_base_model
 from utils import get_data_loaders, train_epoch, test_epoch, corrupt_labels
 from metrics import evaluate_all_metrics
 
@@ -50,6 +50,14 @@ DEFAULT_CONFIG = {
     "beta1": 0.90,
     "eps": 1e-9,
     "cuda": torch.cuda.is_available(),
+    # Multi-GPU settings
+    "use_multi_gpu": True,  # Enable multi-GPU if available
+    "gpu_ids": None,  # None = use all GPUs, or list like [0, 1, 2, 3]
+    # Data loading settings
+    "num_workers": 4,  # Number of data loading workers (increase for faster loading)
+    "pin_memory": True,  # Pin memory for faster GPU transfer
+    # Performance settings
+    "eval_frequency": 1,  # Evaluate every N epochs (set >1 to speed up training)
     # Experiment parameters
     "label_fractions": [0.1, 0.05, 0.02, 0.01, 0.005, 0.001],
     "corruption_rates": [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3],
@@ -80,12 +88,14 @@ def run_single_experiment(dataset_name, label_fraction, corruption_rate, config)
     )
     print(f"{'='*80}\n")
 
-    # Get data loaders
+    # Get data loaders with optimized settings
     train_loader, test_loader = get_data_loaders(
         dataset_name=dataset_name,
         data_path=config["data_path"],
         batch_size=config["num_batch"],
+        num_workers=config.get("num_workers", 4),
         download=True,
+        pin_memory=config.get("pin_memory", True),
     )
 
     # Initialize models
@@ -104,15 +114,26 @@ def run_single_experiment(dataset_name, label_fraction, corruption_rate, config)
         num_style=config["num_style"],
     )
 
-    if config["cuda"]:
-        enc.cuda()
-        dec.cuda()
-        cuda_tensors(enc)
-        cuda_tensors(dec)
+    # Determine device
+    device = get_device() if config["cuda"] else torch.device("cpu")
+    
+    # Move models to device
+    enc.to(device)
+    dec.to(device)
+    move_tensors_to_device(enc, device)
+    move_tensors_to_device(dec, device)
+    
+    # Setup multi-GPU if enabled and available
+    if config.get("use_multi_gpu", True) and torch.cuda.is_available():
+        gpu_ids = config.get("gpu_ids", None)
+        enc, _ = setup_multi_gpu(enc, gpu_ids)
+        dec, _ = setup_multi_gpu(dec, gpu_ids)
 
-    # Optimizer
+    # Optimizer (use base model parameters if multi-GPU)
+    enc_params = get_base_model(enc).parameters()
+    dec_params = get_base_model(dec).parameters()
     optimizer = torch.optim.Adam(
-        list(enc.parameters()) + list(dec.parameters()),
+        list(enc_params) + list(dec_params),
         lr=config["learning_rate"],
         betas=(config["beta1"], 0.999),
     )
@@ -426,6 +447,13 @@ def main(args):
         config["num_style"] = args.num_style
     if args.device:
         config["device"] = args.device
+    
+    # Performance and multi-GPU settings
+    config["num_workers"] = args.num_workers
+    config["use_multi_gpu"] = not args.no_multi_gpu
+    if args.gpu_ids:
+        config["gpu_ids"] = [int(x) for x in args.gpu_ids.split(",")]
+    config["eval_frequency"] = args.eval_frequency
 
     # Create directories
     os.makedirs(config["results_path"], exist_ok=True)
@@ -539,6 +567,28 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--noise_only", action="store_true", help="Run only label noise experiment"
+    )
+    parser.add_argument(
+        "--num_workers",
+        type=int,
+        default=4,
+        help="Number of data loading workers (default: 4)",
+    )
+    parser.add_argument(
+        "--no_multi_gpu",
+        action="store_true",
+        help="Disable multi-GPU training even if multiple GPUs are available",
+    )
+    parser.add_argument(
+        "--gpu_ids",
+        type=str,
+        help='Comma-separated GPU IDs to use (e.g., "0,1,2,3")',
+    )
+    parser.add_argument(
+        "--eval_frequency",
+        type=int,
+        default=1,
+        help="Evaluate every N epochs (default: 1). Set higher to speed up training.",
     )
 
     args = parser.parse_args()
