@@ -4,8 +4,8 @@
 #SBATCH --error=logs/combined_experiment_%j.err
 #SBATCH --time=96:00:00
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:p40:1
-#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:p40:4
+#SBATCH --cpus-per-task=16
 #SBATCH --mem=32G
 
 # Print job information
