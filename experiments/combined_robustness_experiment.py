@@ -792,9 +792,7 @@ def main(args):
         all_failed_configs[dataset_name] = failed_configs
 
         # Save results
-        results_file = os.path.join(
-            config["results_path"], f"{dataset_name}_combined_results.json"
-        )
+        results_file = os.path.join(config["results_path"], f"{args.name}.json")
         with open(results_file, "w") as f:
             # Convert numpy types to native Python types for JSON serialization
             serializable_results = []
@@ -905,6 +903,7 @@ if __name__ == "__main__":
         default=1,
         help="Evaluate every N epochs (default: 1). Set higher to speed up training.",
     )
+    parser.add_argument("--name", type=int, help=f"Experiment name", required=True)
 
     args = parser.parse_args()
 

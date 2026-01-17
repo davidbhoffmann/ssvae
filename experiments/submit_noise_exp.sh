@@ -47,9 +47,9 @@ python combined_robustness_experiment.py \
     --dataset MNIST --num_epochs 75 \
     --n_labels 100,600,1000,3000 \
     --corruption_rates 0.0,0.01,0.1,0.2,0.5 \
-    --alpha_values 50
+    --alpha_values 50 \
+    --name noise_0_experiment
 
-python combined_robustness_experiment.py --no_multi_gpu --eval_frequency 10
 
 echo ""
 echo "Experiment completed at: $(date)"
