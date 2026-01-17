@@ -209,4 +209,4 @@ __marimo__/
 # Other
 .DS_Store
 logs/
-results/
+checkpoints/
