@@ -721,13 +721,11 @@ def plot_combined_results(results, dataset_name, save_path):
 
     plt.tight_layout()
     plt.savefig(
-        os.path.join(save_path, f"{dataset_name}_combined_interactions.png"),
+        os.path.join(save_path, f"{args.name}.png"),
         dpi=300,
         bbox_inches="tight",
     )
-    print(
-        f"Saved interaction plots to {os.path.join(save_path, f'{dataset_name}_combined_interactions.png')}"
-    )
+    print(f"Saved interaction plots to {os.path.join(save_path, f'{args.name}.png')}")
     plt.close()
 
 
@@ -898,7 +896,7 @@ if __name__ == "__main__":
         default=1,
         help="Evaluate every N epochs (default: 1). Set higher to speed up training.",
     )
-    parser.add_argument("--name", type=int, help=f"Experiment name", required=True)
+    parser.add_argument("--name", type=str, help=f"Experiment name", required=True)
 
     args = parser.parse_args()
 
