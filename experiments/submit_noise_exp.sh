@@ -44,11 +44,12 @@ echo "Starting combined robustness experiment..."
 echo ""
 
 python combined_robustness_experiment.py \
-    --dataset MNIST --num_epochs 75 \
+    --dataset MNIST --num_epochs 40 \
     --n_labels 100,600,1000,3000 \
     --corruption_rates 0.0,0.01,0.1,0.2,0.5 \
     --alpha_values 50 \
-    --name noise_0_experiment
+    --name noise_0_experiment \
+    --no_multi_gpu
 
 
 echo ""

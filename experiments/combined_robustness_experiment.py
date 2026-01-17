@@ -79,19 +79,19 @@ DEFAULT_CONFIG = {
     # Training parameters
     "num_samples": 8,
     "num_batch": 256,
-    "num_epochs": 20,  # Moderate training for parameter sweep
+    "num_epochs": 40,  # Moderate training for parameter sweep
     "learning_rate": 1e-3,
     "beta1": 0.90,
     "eps": 1e-9,
     "device": "auto",  # 'auto', 'cuda', 'mps', or 'cpu'
     # Multi-GPU settings
-    "use_multi_gpu": True,  # Enable multi-GPU if available
+    "use_multi_gpu": False,  # Enable multi-GPU if available
     "gpu_ids": None,  # None = use all GPUs, or list like [0, 1, 2, 3]
     # Data loading settings
     "num_workers": 4,  # Number of data loading workers (increase for faster loading)
     "pin_memory": True,  # Pin memory for faster GPU transfer
     # Performance settings
-    "eval_frequency": 10,  # Evaluate every N epochs (set >1 to speed up training)
+    "eval_frequency": 5,  # Evaluate every N epochs (set >1 to speed up training)
     # Experiment parameters - 3D sweep
     "n_labels": [100, 600, 1000, 3000],  #
     "corruption_rates": [0.0],
@@ -198,7 +198,6 @@ def run_single_combined_experiment(
 
     pbar = tqdm(range(config["num_epochs"]), desc=f"Training (α={alpha:.2f})")
     for epoch in pbar:
-        train_start = time.time()
 
         # Train with specified alpha
         train_elbo, label_mask = train_epoch(
@@ -217,8 +216,6 @@ def run_single_combined_experiment(
             corruption_rate=corruption_rate,
             alpha=alpha,  # Pass alpha to training
         )
-
-        train_end = time.time()
         train_elbos.append(train_elbo)
 
         # Test only at specified frequency or last epoch
@@ -227,7 +224,6 @@ def run_single_combined_experiment(
         )
 
         if should_evaluate:
-            test_start = time.time()
             test_elbo, test_accuracy = test_epoch(
                 test_loader,
                 enc,
@@ -239,7 +235,6 @@ def run_single_combined_experiment(
                 infer=True,
                 alpha=alpha,  # Pass alpha to testing
             )
-            test_end = time.time()
 
             test_elbos.append(test_elbo)
             test_accuracies.append(test_accuracy)
