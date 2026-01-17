@@ -4,8 +4,8 @@
 #SBATCH --error=logs/combined_experiment_%j.err
 #SBATCH --time=96:00:00
 #SBATCH --partition=gpu
-#SBATCH --gres=gpu:p40:4
-#SBATCH --cpus-per-task=16
+#SBATCH --gres=gpu:p40:1
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=32G
 
 # Print job information
@@ -31,6 +31,10 @@ echo "Checking GPU availability..."
 nvidia-smi
 echo ""
 
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export MKL_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export NUMEXPR_NUM_THREADS=$SLURM_CPUS_PER_TASK
+
 # Navigate to experiment directory
 echo /usr/bin/nvidia-smi
 cd /scratch/shared/beegfs/dhoffmann/projects/ssvae/experiments
@@ -39,7 +43,13 @@ cd /scratch/shared/beegfs/dhoffmann/projects/ssvae/experiments
 echo "Starting combined robustness experiment..."
 echo ""
 
-python combined_robustness_experiment.py
+python combined_robustness_experiment.py \
+    --dataset MNIST --num_epochs 75 \
+    --n_labels 100,600,1000,3000 \
+    --corruption_rates 0.0,0.01,0.1,0.2,0.5 \
+    --alpha_values 50
+
+python combined_robustness_experiment.py --no_multi_gpu --eval_frequency 10
 
 echo ""
 echo "Experiment completed at: $(date)"
