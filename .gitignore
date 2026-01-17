@@ -208,9 +208,4 @@ __marimo__/
 
 # Other
 .DS_Store
-<<<<<<< HEAD
-logs/
-checkpoints/
-=======
 *.err
->>>>>>> origin/main
