@@ -10,11 +10,15 @@ from torchvision import datasets, transforms
 import os
 import json
 
+
 class UniversalEncoder(json.JSONEncoder):
     def default(self, obj):
-        if isinstance(obj, (np.floating, torch.DoubleTensor, torch.FloatTensor)): return float(obj)
-        if isinstance(obj, (np.integer, torch.LongTensor)): return int(obj)
-        if isinstance(obj, (np.ndarray, torch.Tensor)): return obj.tolist()
+        if isinstance(obj, (np.floating, torch.DoubleTensor, torch.FloatTensor)):
+            return float(obj)
+        if isinstance(obj, (np.integer, torch.LongTensor)):
+            return int(obj)
+        if isinstance(obj, (np.ndarray, torch.Tensor)):
+            return obj.tolist()
         return super().default(obj)
 
 
@@ -212,7 +216,7 @@ def train_epoch(
                 q = enc(images, num_samples=num_samples)
 
             p = dec(images, q, num_samples=num_samples, eps=eps)
-            loss = -elbo(q, p, num_samples)
+            loss = -elbo(q, p, num_samples, alpha)
             loss.backward()
             optimizer.step()
 
@@ -269,7 +273,7 @@ def test_epoch(
 
             q = enc(images, num_samples=num_samples)
             p = dec(images, q, num_samples=num_samples)
-            batch_elbo = elbo(q, p, num_samples)
+            batch_elbo = elbo(q, p, num_samples, alpha)
 
             if device != "cpu":
                 batch_elbo = batch_elbo.cpu()
