@@ -3,7 +3,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 42,
     "final_test_elbo": -0.41367855973732776,
     "final_test_accuracy": 0.4947916666666667,
@@ -162,14 +162,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -196,7 +199,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 43,
     "final_test_elbo": -0.4126823384028215,
     "final_test_accuracy": 0.3072916666666667,
@@ -355,14 +358,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -389,7 +395,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 44,
     "final_test_elbo": -0.41145918002495396,
     "final_test_accuracy": 0.4742588141025641,
@@ -548,14 +554,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -582,7 +591,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 45,
     "final_test_elbo": -0.42079564394095004,
     "final_test_accuracy": 0.037960737179487176,
@@ -741,14 +750,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -775,7 +787,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 46,
     "final_test_elbo": -0.4116116265455882,
     "final_test_accuracy": 0.3842147435897436,
@@ -934,14 +946,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -968,7 +983,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 47,
     "final_test_elbo": -0.41220718927872485,
     "final_test_accuracy": 0.3490584935897436,
@@ -1127,14 +1142,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -1161,7 +1179,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 48,
     "final_test_elbo": -0.411551833152771,
     "final_test_accuracy": 0.24799679487179488,
@@ -1320,14 +1338,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -1354,7 +1375,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 49,
     "final_test_elbo": -0.4180271274004227,
     "final_test_accuracy": 0.22045272435897437,
@@ -1513,14 +1534,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -1547,7 +1571,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 50,
     "final_test_elbo": -0.4116353744115585,
     "final_test_accuracy": 0.45292467948717946,
@@ -1706,14 +1730,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
@@ -1740,7 +1767,7 @@
     "dataset": "MNIST",
     "n_labels": 600,
     "corruption_rate": 0.0,
-    "alpha": 50.0,
+    "alpha": 10.0,
     "seed": 51,
     "final_test_elbo": -0.4116902137414003,
     "final_test_accuracy": 0.41586538461538464,
@@ -1899,14 +1926,17 @@
         3000
       ],
       "corruption_rates": [
-        0.0,
-        0.01,
-        0.1,
-        0.2,
-        0.5
+        0.0
       ],
       "alpha_values": [
-        50.0
+        0.1,
+        0.5,
+        1.0,
+        10.0,
+        25.0,
+        50.0,
+        75.0,
+        100.0
       ],
       "datasets": [
         "MNIST"
