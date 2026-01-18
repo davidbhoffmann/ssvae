@@ -22,11 +22,11 @@ def get_device():
 def setup_multi_gpu(model, device_ids=None):
     """
     Setup model for multi-GPU training using DataParallel
-    
+
     Args:
         model: PyTorch model to wrap
         device_ids: List of GPU device IDs to use (None = all available)
-        
+
     Returns:
         model: Wrapped model (DataParallel if multiple GPUs available)
         is_multi_gpu: Boolean indicating if multi-GPU is enabled
@@ -50,10 +50,10 @@ def setup_multi_gpu(model, device_ids=None):
 def get_base_model(model):
     """
     Get the base model from a potentially wrapped model
-    
+
     Args:
         model: Model (possibly wrapped in DataParallel)
-        
+
     Returns:
         Base model
     """
