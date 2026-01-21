@@ -312,6 +312,11 @@ def run_single_combined_experiment(
     print(f"  Factor-VAE Score: {disentanglement_metrics['factor_vae']:.4f}")
     print(f"  MIG Score: {disentanglement_metrics['mig']:.4f}")
 
+    # Clean up to prevent file descriptor leaks
+    del train_loader
+    del test_loader
+    torch.cuda.empty_cache() if torch.cuda.is_available() else None
+
     return results
 
 

@@ -1,0 +1,412 @@
+=========================================
+SSVAE Combined Robustness Experiment
+=========================================
+Job ID: 261030
+Node: c2-g4-02
+Start time: Tue 20 Jan 12:23:07 GMT 2026
+
+Python location: /scratch/shared/beegfs/dhoffmann/miniconda3/envs/vae/bin/python
+Python version: Python 3.10.19
+
+Checking GPU availability...
+Tue Jan 20 12:23:14 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.163.01             Driver Version: 550.163.01     CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla P40                      Off |   00000000:40:00.0 Off |                    0 |
+| N/A   31C    P8              9W /  250W |       0MiB /  23040MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+/usr/bin/nvidia-smi
+Starting combined robustness experiment...
+
+
+
+================================================================================
+STARTING COMBINED SWEEP FOR MNIST
+================================================================================
+
+
+################################################################################
+COMBINED 3D PARAMETER SWEEP - MNIST
+################################################################################
+
+Parameter Space:
+  Number of Labels: [100, 600, 1000, 3000]
+  Corruption Rates: [0.0]
+  Alpha Values: [0.1, 0.5, 1.0, 10.0, 25.0, 50.0, 75.0, 100.0]
+  Random Seeds: 10 seeds (42 to 51)
+  Total Experiments: 320
+
+
+Running 32 configurations, each with 10 seeds...
+
+
+Loading checkpoint for config: Labels=100%, Corruption=0.0%, Alpha=0.10
+
+Loading checkpoint for config: Labels=100%, Corruption=0.0%, Alpha=0.50
+
+Loading checkpoint for config: Labels=100%, Corruption=0.0%, Alpha=1.00
+
+Loading checkpoint for config: Labels=100%, Corruption=0.0%, Alpha=10.00
+
+Loading checkpoint for config: Labels=100%, Corruption=0.0%, Alpha=25.00
+
+Loading checkpoint for config: Labels=100%, Corruption=0.0%, Alpha=50.00
+
+================================================================================
+Dataset: MNIST | Labels: 100% | Corruption: 0.0% | Alpha: 75.00 | Seed: 42
+Device: cuda
+================================================================================
+
+
+ERROR: Configuration failed!
+   Labels=100%, Corruption=0.0%, Alpha=75.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=100%, Corruption=0.0%, Alpha=100.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=0.10
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=0.50
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=1.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=10.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=25.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=50.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=75.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=600%, Corruption=0.0%, Alpha=100.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=0.10
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=0.50
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=1.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=10.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=25.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=50.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=75.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=1000%, Corruption=0.0%, Alpha=100.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=0.10
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=0.50
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=1.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=10.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=25.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=50.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=75.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+ERROR: Configuration failed!
+   Labels=3000%, Corruption=0.0%, Alpha=100.00
+   Error: CUDA error: misaligned address
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+   See ../results/combined/MNIST_errors.log for details
+   Continuing with next configuration...
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: 26 configuration(s) failed:
+  - Labels=100%, Corruption=0.0%, Alpha=75.00 (RuntimeError)
+  - Labels=100%, Corruption=0.0%, Alpha=100.00 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=0.10 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=0.50 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=1.00 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=10.00 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=25.00 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=50.00 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=75.00 (RuntimeError)
+  - Labels=600%, Corruption=0.0%, Alpha=100.00 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=0.10 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=0.50 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=1.00 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=10.00 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=25.00 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=50.00 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=75.00 (RuntimeError)
+  - Labels=1000%, Corruption=0.0%, Alpha=100.00 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=0.10 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=0.50 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=1.00 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=10.00 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=25.00 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=50.00 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=75.00 (RuntimeError)
+  - Labels=3000%, Corruption=0.0%, Alpha=100.00 (RuntimeError)
+Check ../results/combined/MNIST_errors.log for details
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Saved results to ../results/combined/alpha_1_experiment.json
+Saved heatmaps to ../results/combined/MNIST_combined_heatmaps.png
+Saved interaction plots to ../results/combined/alpha_1_experiment.png
+
+
+================================================================================
+ALL COMBINED EXPERIMENTS COMPLETED!
+================================================================================
+
+Results saved to: ../results/combined
+Checkpoints saved to: ../results/combined/checkpoints
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+SUMMARY: 26 total configuration(s) failed across all datasets
+
+MNIST: 26 failed configuration(s)
+  See ../results/combined/MNIST_errors.log for details
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Experiment completed at: Tue 20 Jan 12:24:02 GMT 2026
