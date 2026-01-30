@@ -1,0 +1,245 @@
+\documentclass[12pt]{article}
+
+\usepackage[]{graphicx}
+\usepackage[]{color}
+\usepackage{alltt}
+
+\newcommand{\mytitle}{Learning Disentangled Representations with
+Semi-Supervised Deep Generative Models}
+\newcommand{\myname}{David B. Hoffmann}
+\newcommand{\mysupervisor}{M. Sc. Simon Rittel}
+
+\usepackage[a4paper, width = 160mm, top = 35mm, bottom = 30mm, 
+bindingoffset = 0mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage[round, comma]{natbib}
+\usepackage{fancyhdr}
+\usepackage{acronym}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{subcaption}
+
+\newcommand{\changefont}{%
+    \fontsize{8}{11}\selectfont
+}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  linkcolor = black,
+  urlcolor = black,
+  citecolor = black}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[R]{\changefont{\mytitle}}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
+\setlength{\headheight}{14.5pt}
+\setlength{\parindent}{0pt}
+\interfootnotelinepenalty = 10000
+
+
+% A C R O N Y M S ---------------------------------------------
+\acrodef{CCVAE}{Characteristic Capturing VAE}
+\acrodef{DLVM}{Deep Latent Variable Model}
+\acrodef{ELBO}{evidence lower bound}
+\acrodef{GPPVAE}{Gaussian Process Prior VAE}
+\acrodef{GAN}{Generative Adversarial Network}
+\acrodef{i.i.d.}{independent and identically distributed}
+\acrodef{M1}{latent-feature discriminative model}
+\acrodef{M1+M2}{stacked generative semi-supervised model}
+\acrodef{M2}{generative semi-supervised model}
+\acrodef{MIG}{Mutual Information Gap}
+\acrodef{MNIST}{Modified National Institute of Standards and Technology}
+\acrodef{SVHN}{Street View House Numbers}
+\acrodef{PoE}{Product-of-Experts}
+\acrodef{SHOT-VAE}{SmootH-ELBO Optimal InTerpolation VAE}
+\acrodef{SSVAE}{Semi-Supervised VAE}
+\acrodef{VAE}{Variational Auto-Encoder}
+\acrodef{ReLU}{Rectified Linear Units}
+
+
+
+% ------------------------------------------------------------------------------
+% MAIN -------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+% \begin{acronym}
+%   \acro{VAE}{Variational Auto Encoder}
+% \end{acronym}
+
+
+% FRONT PAGE -------------------------------------------------------------------
+ 
+\begin{titlepage}
+\begin{center}
+    
+\LARGE
+Seminar Thesis
+    
+\vspace{0.5cm}
+      
+\rule{\textwidth}{1.5pt}
+\LARGE
+\textbf{\mytitle}
+\rule{\textwidth}{1.5pt}
+   
+\vspace{0.5cm}
+      
+\large
+Department of Statistics \\
+Ludwig-Maximilians-Universität München 
+
+\vfill
+
+\Large
+\textbf{\myname}
+
+\vfill
+
+\large
+Munich, February 6\textsuperscript{th}, 2026
+      
+\vfill
+
+\includegraphics[width = 0.4\textwidth]{figures/sigillum.png}
+
+\vfill
+
+% \normalsize
+% Submitted in partial fulfillment of the requirements for the degree of M. Sc.
+% \\
+
+Supervised by \mysupervisor
+
+\end{center}
+\end{titlepage}
+
+% CONTENTS ---------------------------------------------------------------------
+
+\pagenumbering{Roman}
+\newpage
+
+\begin{abstract}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+culpa qui officia deserunt mollit anim id est laborum.
+
+\end{abstract}
+
+\newpage
+\tableofcontents
+
+%%%% if you would want to include material overview
+%%%% use one of the following in addition
+% \newpage
+% \listoffigures
+% \newpage
+% \listoftables
+\newpage
+
+% CHAPTERS ---------------------------------------------------------------------
+
+\pagenumbering{arabic}
+    
+\section{Introduction}
+\label{intro}
+\input{chapters/introduction}
+\newpage
+
+\section{Background and Formulation}
+\label{background}
+\input{chapters/background}
+\newpage
+
+\section{Semi-Supervised Disentanglement with Arbitrary Dependencies}
+\label{method}
+\input{chapters/method}
+\newpage
+
+\section{Extensions and Limitations}
+\label{extensions}
+\input{chapters/extensions}
+\newpage
+
+\section{Experiments}
+\label{experiments}
+\input{chapters/experiments}
+\newpage
+
+\section{Discussion}
+\label{discussion}
+\input{chapters/discussion}
+\newpage
+
+\section{Conclusion}
+\label{conclusion}
+\input{chapters/conclusion}
+
+\newpage
+
+% ------------------------------------------------------------------------------
+% APPENDIX ---------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+    
+\pagenumbering{Roman}
+
+\setcounter{page}{5} % CHANGE
+
+\appendix
+
+\input{chapters/appendix}
+\newpage
+
+    
+% ------------------------------------------------------------------------------
+% BIBLIOGRAPHY -----------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\RaggedRight
+\bibliography{bibliography}
+\bibliographystyle{dcu}
+\newpage
+
+% ------------------------------------------------------------------------------
+% DECLARATION OF AUTHORSHIP-----------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\Large
+\noindent
+\textbf{Declaration of authorship} 
+\vspace{0.5cm}
+\noindent
+\normalsize
+
+I hereby declare that the report submitted is my own unaided work. All direct 
+or indirect sources used are acknowledged as references. I am aware that the 
+Thesis in digital form can be examined for the use of unauthorized aid and in 
+order to determine whether the report as a whole or parts incorporated in it may 
+be deemed as plagiarism. For the comparison of my work with existing sources I 
+agree that it shall be entered in a database where it shall also remain after 
+examination, to enable comparison with future Theses submitted. Further rights 
+of reproduction and usage, however, are not granted here. This paper was not 
+previously presented to another examination board and has not been published.
+\\
+
+\vspace{1cm}
+\textcolor{orange}{Location, date} \\
+
+\vspace{3cm}
+
+\noindent\rule{0.5\textwidth}{0.4pt} \\
+
+\textcolor{orange}{Name}
+
+% ------------------------------------------------------------------------------
+
+\end{document}

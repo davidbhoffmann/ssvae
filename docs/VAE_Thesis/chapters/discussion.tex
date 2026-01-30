@@ -1,0 +1,20 @@
+% What does the literature think of ssvaes
+
+
+% What do my experiments think of ssvaes
+
+% Are they a relevant method
+
+\textbf{Accuracy and ELBO Results}: 
+\begin{itemize} 
+        \item Test accuracy stable up to $\approx$20\% corruption for MNIST digit label.
+        \item As corruption increases, accuracy drops below random chance (10\%).
+        \item ELBO drops slightly with increasing corruption, but overall remains stable.
+    \end{itemize}
+
+\textbf{Effect on Disentanglement Scores}: 
+\begin{itemize} 
+        \item Disentanglement is higher for smaller supervised set sizes.
+        \item Further, scores increase with label corruption. More pronounced for larger supervised set sizes.
+        \item Indicates that supervision harms disentanglement of the style latent $z$.
+    \end{itemize}

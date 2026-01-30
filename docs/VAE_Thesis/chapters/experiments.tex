@@ -1,0 +1,60 @@
+\subsection{Implementation Details} 
+\label{sec:implementation_details}
+Following previous work, our experiments where conducted with the \ac{MNIST} dataset \cite{deng2012mnist} using the digit label for partial supervision. We use the same fully connected feed forward architecture as \cite{narayanaswamy_learning_2017}, with \ac{ReLU} \cite{agarap2018deep} activations. The \ac{SSVAE} architecture used in the following experiments is detailed in \autoref{fig:architecture}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]{figures/architecture.pdf}
+    \caption{\ac{SSVAE} architecture used throughout all experiments. The network has $28*28=784$ inputs matching the \ac{MNIST} input, 256 hidden neurons, 10 style variables and 10 digit neurons.}
+    \label{fig:architecture}
+\end{figure}
+
+Following \cite{narayanaswamy_learning_2017} we use the Adam optimizer \citep{kingma2017adammethodstochasticoptimization} with default parameters, a learning rate of $10^{-3}$ and a batch size of 128. Unlike the original paper we train for 40 instead of 200 epochs due computational constraints. As shown in \autoref{apx:training} this is sufficient for all trained models to converge. Each experiment is repeated with 10 different random seeds.
+Experiments were run on a Nvidia Tesla P40 GPU and implemented with the ProbTorch package introduced by \cite{narayanaswamy_learning_2017}.
+To reproduce the experiments presented in this paper see the code at: \url{https://github.com/davidbhoffmann/ssvae}.
+
+\subsection{Supervision Weight} % Think of nice title
+\label{sec:alpha_exp}
+
+% Why is this interesting, motivation in related work and hole in paper
+While \cite{narayanaswamy_learning_2017} explore the supervision rate $\rho$ and therefore indirectly $\gamma$, the supervision weight $\alpha$ is not explored by the authors. Furthermore, the authors make conflicting statements about the value of $\alpha$ in the \ac{MNIST} experiments as critiqued in \autoref{sec:my_critique}. In the Yale-B experiment alpha is set to a different value without justification and in the Multi-\ac{MNIST} experiments the value of $\alpha$ is never mentioned.
+While \cite{narayanaswamy_learning_2017} change its value, indicating its importance, they leave the reader guessing at the effect of $\alpha$. 
+
+% Our setup
+To address this, we explore how robust the \ac{SSVAE} framework is with respect to the supervision weight $\alpha$ which we evaluate for eight different values: 0.1, 0.5, 1, 10, 25, 50, 75 and 100. The remaining configurations follow the setup explained in \autoref{sec:implementation_details}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{figures/combined_alpha_metrics.pdf}
+    \caption{\textbf{Supervision Weight} experiment results with varying $\alpha$ for supervised set sizes of 100, 600, 1000 and 3000. Error bars indicate variance across 10 random seeds. \textbf{Top Left:} final test \ac{ELBO} for varying $\alpha$ remains relatively stable. \textbf{Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha$. \textbf{Right:} disentanglement metrics ($\beta$-VAE \cite{Higgins2016betaVAELB}, Factor-VAE \cite{Kim2018DisentanglingBF}, Mutual Information Gap \cite{chen_isolating_2019}) decreases with increasing $\alpha$ across all three metrics.}
+    \label{fig:alpha_exp}
+\end{figure}
+
+% What are the results
+\autoref{fig:alpha_exp} shows that classification accuracy of the semi-supervised $y$ variable is sensitive to the supervision weight $\alpha$. As expected increasing $\alpha$ leads to better classification performance, although the effect of increasing the value beyond 10 only leads to marginal improvements. While we did not report final training accuracy in the experiments, we can still observe there is no overfitting for high $\alpha$ values to the point of decreasing test accuracy.
+
+The final test \ac{ELBO} remains relatively constant with respect to $\alpha$, which can also be seen in \autoref{apx:training}. A minor increase of the \ac{ELBO} can be observed wit increasing $\alpha$. The results further show that for the unsupervised $z$, stronger supervision decreases disentanglement. 
+
+
+
+\subsection{Label Corruption} % Think of nice title
+\label{sec:noise_exp}
+
+% Why is this interesting, motivation in related work and hole in paper
+The most frequent critique identified in our review process was the use of labels \citep{lin_infogan_2020, bouchacourt_multilevel_2017, ke_apgvae_2023, Kim2018DisentanglingBF} as explained in \autoref{sec:ext_weak_paradigm}. One aspect of these critiques is the potential for incorrect human annotations. 
+
+% What exactly is our setup
+To investigate the sensitivity of \acp{SSVAE} to potentially noisy labels, we use the setup as explained above and introduce a random corrupt labels into the training process. Specifically, in each epoch a specified amount of labels is flipped to a random class. We evaluate the \acp{SSVAE} for corruption rates of 0.0, 0.01, 0.1, 0.2, 0.5 and 1. The remaining configurations follow the setup explained in \autoref{sec:implementation_details}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{figures/combined_noise_metrics.pdf}
+    \caption{\textbf{Label Corruption} experiment results with varying label corruption rate for supervised set sizes of 100, 600, 1000 and 3000. Error bars indicate variance across 10 random seeds. \textbf{Top Left:} final test \ac{ELBO} for varying noise levels remains relatively stable. \textbf{Bottom Left:} while the final test accuracy of $y$ decreases for higher corruption rates it remains relatively high for up to 20\% noise. \textbf{Right:} disentanglement (as measured through $\beta$-VAE \cite{Higgins2016betaVAELB}, Factor-VAE \cite{Kim2018DisentanglingBF}, Mutual Information Gap \cite{chen_isolating_2019}) increase with a higher corruption rate across all three metrics.}
+    \label{fig:noise_exp}
+\end{figure}
+
+% What are the results
+The result of this experiment is shown in \autoref{fig:noise_exp}. As expected We find that classification accuracy of the latent $y$ variable decreases as the corruption rate of the labels increases. However, the accuracy does remain relatively stable up to a corruption rate of 20\%.
+
+Similar to the the supervision weight experiments, the final test \ac{ELBO} remains relatively constant. However, a marginal \ac{ELBO} drop with increased corruption rates is noticeable across configurations. The results further show that for the unsupervised $z$, more label corruption in $y$ decreases disentanglement. 
+

@@ -1,0 +1,39 @@
+\section{Systematic Review Process}
+\label{apx:systematic_review}
+
+To identify relevant extension and limitations of \cite{narayanaswamy_learning_2017} in the literature, the results of several retrieval methods where synthesized. Note that the papers identified through the different methods had some overlap. For any paper to be considered it had fulfil one of the following selection criteria: (1) directly critique \cite{narayanaswamy_learning_2017}, (2) cite the paper in the context of a more general critique, (3) extend the \ac{SSVAE} framework or (4) use it in an experiment. 
+
+
+Firstly, Connected Papers (\url{https://www.connectedpapers.com}) lead to a list of 10 derivative works, of which only one matched the selection criteria.
+
+
+Secondly, Google Scholar (\url{https://scholar.google.com}) was used to find results relevant literature in the list of 445 papers which cite \cite{narayanaswamy_learning_2017}. The first 150 citing papers sorted by relevance where checked for the selection criteria. For the first 80 results, all paragraphs that mentioned \cite{narayanaswamy_learning_2017} where reviewed in detail and for the remaining 70 papers only papers that mentioned one of the following keywords in the title where considered: \textit{semi-supervised}, \textit{weak-supervision} and \textit{label}. With this method 21 relevant papers where identified. 
+
+Additionally, the search functionality of Google Scholar was used to find results for the search terms \textit{semi-supervised disentanglement} and \textit{supervised disentanglement}. For each term the first 10 results where reviewed in detail leading to a total of 4 relevant papers.
+
+Lastly, Gemini-3-Pro was used to generate a report with relevant extensions and critiques which lead to 5 relevant papers.
+
+\section{SSVAE Training}
+\label{apx:training}
+
+\autoref{fig:train_alpha} and \autoref{fig:train_noise} show the training curve plots of all runs from both the supervision factor (alpha) and corruption rate experiments. The figures show that all runs converge without overfitting.
+
+\begin{figure}[htbp]
+     \centering
+     \begin{subfigure}[b]{0.48\textwidth}
+         \includegraphics[width=\textwidth]{figures/alpha_train.pdf}
+         \caption{All training runs of the \textbf{supervision factor $\pmb\alpha$ experiment} in \autoref{sec:alpha_exp}}
+         \label{fig:train_alpha}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.48\textwidth}
+         \includegraphics[width=\textwidth]{figures/noise_train.pdf}
+         \caption{All training runs of the \textbf{corruption rate experiment} in \autoref{sec:noise_exp}}
+         \label{fig:train_noise}
+     \end{subfigure}
+     
+\end{figure}
+
+
+
+

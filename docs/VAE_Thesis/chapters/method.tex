@@ -1,0 +1,104 @@
+% What we do. Why we do it. All described using the general Formalism introduced in the Problem Setting and building on top of the concepts / foundations introduced in Background.
+
+% How does semi supervised disentanglement work
+
+% Extension to arbitrary dependencies (detailed derivation with the steps they skip)
+
+% Computational graphs and ProbTorch
+
+% Their experiments with definition of all relevant variables.
+
+While the \textit{M2} model by \cite{kingma_semi-supervised_2014} provides a powerful framework for semi-supervised learning, it imposes a specific graphical structure: the latent variables $y$ (label) and $z$ (style) are assumed to be independent in the prior, and the recognition model is required to factorise as $q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)$. \cite{narayanaswamy_learning_2017} generalise this approach to a broader class of partially-specified graphical models.
+
+In this framework, the modeller specifies a graphical model where a subset of variables $y$ are semantically meaningful (and partially observed), while the remaining variables $z$ are left unstructured to capture nuisance variations. Unlike the \textit{M2} model, this framework allows for arbitrary dependency structures in both the generative model $p_\theta(x, y, z)$ and the approximate posterior $q_\phi(y, z|x)$. This flexibility enables the modelling of complex relationships, such as hierarchical dependencies or causal structures between labels and style variables, which are often necessary for disentanglement in real world datasets.
+
+\subsection{The Generalised Variational Objective}
+The core challenge in training these generalised models lies in the supervised objective as defined in \autoref{eq:sup_obj}. For the unsupervised term $\mathcal{L}_U$ (\autoref{eq:unsup_obj}), standard variational inference applies. However, for the supervised term $\mathcal{L}_S$, a difficulty arises when the recognition model $q_\phi(y, z|x)$ does not factorise conveniently. Specifically, evaluating the supervised lower bound requires sampling from the conditional posterior $q_\phi(z|x, y)$. For arbitrary graphical structures, this conditional distribution may not be available in closed form or easy to sample from directly.
+
+To address this, \cite{narayanaswamy_learning_2017} propose an importance sampling estimator that alleviates the need to sample from $q_\phi(z|x, y)$ directly. Instead, samples are drawn from an unconditioned proposal distribution, the marginal encoder $q_\phi(z|x)$), and reweighted. 
+
+They start by rewriting the supervised objective using the fact that $q_\phi(z|x,y)$ factorizes to $\frac{q_\phi(y, z|x)}{q_\phi(y|x)}$ as follows
+
+\begin{align}
+    \mathcal{L}_S(\theta,\phi; x, y) 
+    &= \alpha \log q_\phi(y|x)
+    + \mathbb{E}_{q_\phi(z|x,y)}\!\left[ \log \frac{p_\theta(x,y,z)}{q_\phi(z|x,y)} \right]\\
+    &= \alpha \log q_\phi(y|x)
+    + \mathbb{E}_{q_\phi(z|x,y)}\!\left[ \log \frac{p_\theta(x,y,z)}{q_\phi(y, z|x)} + \log q_\phi(y|x) \right]\\
+     &= (1+\alpha) \log q_\phi(y|x)
+    + \mathbb{E}_{q_\phi(z|x,y)}\!\left[ \log \frac{p_\theta(x,y,z)}{q_\phi(y, z|x)} \right]
+\end{align}
+
+This formulation removes the need to evaluate $q_\phi(z|x, y)$ directly. To approximate the expectation, they employ self-normalised importance sampling as introduced in \autoref{sec:imp_sampling}. Instead of sampling from the conditional $q_\phi(z|x, y)$, they sample proposals $z^s$ from the unconditioned encoder distribution $q_\phi(z|x)$. The unnormalised importance weights $w^s$ are defined as the ratio of the target joint distribution to the proposal
+
+\begin{equation}
+    w^s = \frac{q_\phi(y, z^s|x)}{q_\phi(z^s|x)}
+\end{equation}
+
+where $z^s \sim q_\phi(z|x)$. Using these weights, the expectation is approximated as
+
+\begin{equation}
+    \mathbb{E}_{q_\phi(z|x,y)}\!\left[ \log \frac{p_\theta(x,y,z)}{q_\phi(y, z|x)} \right] \approx \frac{1}{S} \sum_{s=1}^{S} \frac{w^s}{Z} \log \frac{p_\theta(x, y, z^s)}{q_\phi(y, z^s|x)}
+    \label{eq:expectation_est}
+\end{equation}
+
+where $Z = \frac{1}{S} \sum_{s=1}^S w^s$ is the normalisation constant.
+
+Furthermore, the term $\log q_\phi(y|x)$ is itself approximated using a Monte Carlo estimator of the lower bound normally used in maximum likelihood estimation
+
+\begin{equation}
+    \log q_\phi(y|x) \ge \mathbb{E}_{q_\phi(z|x)}\!\left[ \log \frac{q_\phi(y, z|x)}{q_\phi(z|x)} \right] \approx \frac{1}{S} \sum_{s=1}^S \log w^s \quad \text{}
+    \label{eq:disc_est}
+\end{equation}
+
+By combining the importance sampling estimator for the expectation (\autoref{eq:expectation_est}) and the lower bound estimator for the log-likelihood (\autoref{eq:disc_est}), they obtain the final estimator for the supervised objective
+
+\begin{equation}
+    \hat{\mathcal{L}}_S(\theta, \phi; x, y) := \frac{1}{S} \sum_{s=1}^{S} \frac{w^s}{Z} \log \frac{p_\theta(x, y, z^s)}{q_\phi(y, z^s|x)} + (1+\alpha) \log w^s
+\end{equation}
+
+This formulation ensures that the discriminative power of the model is maximised using the same samples $z^s$ and weights $w^s$ for both the generative and discriminative components.
+
+\subsection{Relation to Kingma's M2 Model}
+The framework by \cite{narayanaswamy_learning_2017} generalizes the \textit{M2} model. We can recover the exact \textit{M2} objective by restricting the dependency structure. If we enforce the factorisation:
+\begin{equation}
+    q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)
+\end{equation}
+then the importance weights simplify to constants with respect to $z$
+\begin{equation}
+    w^s = \frac{q_\phi(y|x)q_\phi(z^s|x, y)}{q_\phi(z^s|x, y)} = q_\phi(y|x)
+\end{equation}
+Substituting this back into the estimator yields the standard \textit{M2} objective. However, the generalised importance sampling formulation allows for alternative factorisations, such as $q_\phi(y, z|x) = q_\phi(y|x, z)q_\phi(z|x)$, where the label is predicted from the latent style $z$. This inverted structure effectively treats the latent variable $z$ as a sufficient statistic for the label, enforcing a stronger form of disentanglement where $z$ must contain all information necessary to predict $y$.
+
+\subsection{Graphical Model and Stochastic Implementation}
+
+To perform gradient ascent, the generative and recognition models are mapped onto a stochastic computation graph where each node forms a sub-graph. The generative model assumes a factorization $p_\theta(\mathbf{x}, \mathbf{y}, \mathbf{z}) = p_\theta(\mathbf{x} | \mathbf{y}, \mathbf{z})p(\mathbf{y})p(\mathbf{z})$, while the recognition model utilizes a conditional dependency structure $q_\phi(\mathbf{y}, \mathbf{z} | \mathbf{x}) = q_{\phi_z}(\mathbf{z} | \mathbf{y}, \mathbf{x})q_{\phi_y}(\mathbf{y}|\mathbf{x})$ to disentangle the digit label from the handwriting style.
+
+The implementation handles supervision through three specific node types. First, for the fully supervised variable $\mathbf{x}$, they compute the likelihood $p_\theta(\mathbf{x} | \mathbf{y}, \mathbf{z}) = \mathcal{N}(\mathbf{x}; \eta_\theta(\mathbf{y}, \mathbf{z}))$, where $\eta_\theta$ is a neural network returning the distribution parameters. Second, the unobserved latent variable $\mathbf{z}$ requires computing both the prior $p(\mathbf{z})$ and the conditional $q_\phi(\mathbf{z} | \mathbf{x}, \mathbf{y})$. This utilizes the Gaussian reparametrisation trick $\mathbf{z} = g(\epsilon, \lambda_{\phi_z}(\mathbf{x}, \mathbf{y}))$ where $\epsilon \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$ to ensure differentiability. Finally, the partially observed variable $\mathbf{y}$ is treated as observed when labels are available. When unavailable, it is sampled from $q_{\phi_y}(\mathbf{y}|\mathbf{x})$ using a Gumbel-Softmax relaxation to allow for gradient estimation on the discrete distribution.
+
+\cite{narayanaswamy_learning_2017} implement these different node types in a stochastic machine learning framework called ProbTorch which is available at: \url{https://github.com/probtorch/probtorch}.
+
+
+\subsection{Experiments and Findings}
+\label{sec:their_eperiments}
+\cite{narayanaswamy_learning_2017} evaluate the proposed framework across three distinct domains to demonstrate its ability to learn disentangled representations under partial supervision and varying structural complexity.
+
+The authors do not provide full details about the implementation of their experiments. However, they do state that they use a linear layers for \ac{MNIST}, a convolutional network for \ac{SVHN} and the Yale-B datasets and a gated recurrent unit for the Multi-\ac{MNIST} experiment. For the training process they use Adam with the "default learning rate and momentum correction terms". \cite{narayanaswamy_learning_2017} vaguely state that depending on the dataset a bach size between 100-700 is used. Experiment specific information is mentioned in the following subsections.
+
+\subsubsection{Benchmark Classification: MNIST and SVHN}
+\label{sec:mnist}
+To validate the generalised objective against the standard \textit{M2} model \citep{kingma_semi-supervised_2014}, the authors first applied the framework to the \ac{MNIST} \citep{deng2012mnist} and \ac{SVHN} \citep{netzer2011reading} datasets. The graphical model structure mirrored the \textit{M2} setup, where the latent space consists of a partially observed class label $y$ and an unobserved style variable $z$. They state that they use $\gamma=1$ and introduce a supervision rate $\rho=\frac{\gamma M}{N+\gamma M}$. The $\alpha$ parameter is not specified.
+
+On the \ac{MNIST} dataset classification performance is evaluated for supervised set sizes of 100, 600, 1000 and 3000 our of the 50.000 unsupervised samples, where they marginally outperform the baseline \textit{M2} model.  In the more complex \ac{SVHN} domain the authors compare classification results for 1000 and 3000 labels out of the 70,000 unsupervised samples. They find that their \ac{SSVAE} performs similar compared to the two-stage \textit{M1+M2} approach despite using a single-stage training process \citep{narayanaswamy_learning_2017}. Qualitatively, the results demonstrated a clean separation of style and content. By fixing the style latent $z$ and varying the label $y$, the model generated analogies where the same handwriting style was consistently applied to different digits. Conversely, fixing $y$ and varying $z$ produced variations in stroke width and slant while maintaining the digit identity. 
+
+Furthermore, the authors analysed the effect of the supervision weight $\gamma$ and found that for sparsely labelled datasets ($M \ll N$), over-weighting the supervised term ($\gamma > 1$) significantly improved generalisation on the test set, although excessive weighting eventually led to overfitting. Here they offer conflicting statements about $\alpha$ where the figure description states that $\alpha=50$ for \ac{MNIST} and $\alpha=70$ for \ac{SVHN} while the discussion of the results of the supervision rate mentions that they used $\alpha=0.1/\rho$ in line with \cite{kingma_semi-supervised_2014}. For a more detailed description of experimental results refer to Figure 3 of \cite{narayanaswamy_learning_2017}.
+
+\subsubsection{Intrinsic Faces: Disentangling Continuous Factors}
+\label{sec:exp_faces}
+Moving beyond categorical labels, the authors utilised the Yale-B dataset  \citep{GeBeKr01} to learn disentangled representations of \textit{Identity} (categorical) and \textit{Lighting} (continuous). The generative model defined latent variables for identity, lighting, shading, and reflectance, with partial supervision provided only for identity and lighting direction. The authors use a supervision rate of $\rho=0.5$ with 6 supervised and 32 unsupervised data points corresponding which implies $\gamma\approx5.33$. $\alpha$ is set to 10. 
+The authors demonstrate that the model disentangled identity from lighting conditions with qualitative samples where they manipulate lighting direction on a specific identity's face without altering facial features. Quantitatively, the framework outperformed an existing baseline on the identity classification task, achieving a semi-supervised error rate of $3.5\%$ compared to approximately $30\%$ for the baseline method by \cite{pmlr-v38-jampani15}. For the regression of the continuous lighting parameter, the semi-supervised model achieved an angular error of $17.6\%$, compared to approximately $10\%$ for the fully supervised baseline from \cite{pmlr-v38-jampani15}, demonstrating the efficacy of the objective for continuous latents even with limited supervision. For a more detailed description of experimental results refer to Figure 4 of \cite{narayanaswamy_learning_2017}.
+
+\subsubsection{Multi-MNIST: Stochastic Dimensionality and Compositionality}
+The final experiment addressed a complex counting task using a custom Multi-\ac{MNIST} dataset, where each image contained a varying number (1--3) of \ac{MNIST} digits. This required a model with stochastic dimensionality, where the number of latent variables is itself a random variable $K$. The authors proposed a recursive generative model that sequentially samples digits and places them on a canvas using Spatial Transformer Networks. Fir this experiment neither $\alpha$, $\gamma$ or $\rho$ are reported by the authors.
+The model learned to reliably predict the number of digits $K$ and successfully decomposed overlapping digits into their constituent parts and background. Additionally, the authors compared a flat model against a nested model that incorporated a pre-trained \ac{MNIST} auto-encoder as a sub-component. This nested configuration demonstrated the framework's capacity for modular model design and transfer learning. While the flat model achieved higher raw counting accuracy, the nested model still effectively leveraged the pre-learned constituent representations to reconstruct complex multi-digit scenes and decompose inputs into coherent individual digits. For a more detailed description of experimental results refer to Figure 6 of \cite{narayanaswamy_learning_2017}.
+

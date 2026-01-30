@@ -1,0 +1,197 @@
+Several works build on the results form \cite{narayanaswamy_learning_2017} and extend it to specific domains or in a general context. However, there are also some limitations and critiques in the subsequent literature. Both aspects are presented in the following sections. Relevant sources where systematically identified as outlined in \autoref{apx:systematic_review}.
+
+\subsection{Own Criticism}
+\label{sec:my_critique}
+In the following we present several issues in presentation \cite{narayanaswamy_learning_2017} as well as unverified claims and minor critiques.
+
+The presentation of the \ac{SSVAE} framework in \cite{narayanaswamy_learning_2017}, while correct, at points leaves the reader guessing at specific details, disrupting the reading flow. As such, some figures do not have captions and are never referenced. Other figures are referenced without explaining their interpretation such as the meaning of shading in the nodes of the computational graph in Figure 1 and 5 of \cite{narayanaswamy_learning_2017}. It is never explained that the shading corresponds to the degree to which the variables are supervised. Furthermore, some variables are never defined such as the $n$ in the relationship
+\begin{equation}
+    (n\cdot l)\times r +\epsilon
+    \label{eq:yaleb}
+\end{equation}
+
+of the supervised variables in the Yale-B dataset \citep{GeBeKr01} experiment we explain in \autoref{sec:exp_faces}. The meaning of this variable only becomes clear after reading the cited work of \cite{pmlr-v38-jampani15} which declares it as the normal map.
+
+Further, \cite{narayanaswamy_learning_2017} claim a number of properties and findings that are not shown theoretically or empirically. One example of this is their in the introduction that "a representation that has some factorisable structure, and consistent semantics associated to different parts, is more likely to generalise to a new task". This is not verified by their experiment or any cited source. In a later paper \cite{locatello_challenging_2018} investigate this claim and find no evidence to support it as further explained in \autoref{sec:impossibility_theorem}.
+
+The authors introduce \ac{SSVAE} as a framework for learning disentangled representations. \cite{narayanaswamy_learning_2017} claim that it provides the user with the ability to precisely specify axes of variation and their dependencies. Specifically, in their Yale-B dataset experiment they claim to learn the relationship between lighting, shading and reflectance from \autoref{eq:yaleb}. While they qualitatively demonstrate disentangling as well as classification and regression performance, the learning of this relationship is not shown.
+
+While the \ac{SSVAE} framework generalizes to arbitrary dependency structures, its practical application in real-world settings with multiple partially observed variables reveals significant limitations. The current formulation relies on a binary distinction between unsupervised data $\mathcal{D}_U$ and supervised data $\mathcal{D}_S$, assuming a consistent set of available labels for the supervised portion. However, in complex real-world datasets involving $K$ distinct supervised variables $\mathbf{y} = \{y_1, \dots, y_K\}$, supervision is often heterogeneous; a datapoint $x^{(n)}$ may possess annotations for a random subset of variables $O^{(n)} \subseteq \mathbf{y}$, while remaining variables $U^{(n)} = \mathbf{y} \setminus O^{(n)}$ are missing.
+
+Under the proposed framework, variables are treated as observed when available and sampled otherwise. Yet, implementing this dynamically in a batched stochastic gradient descent setting becomes non-trivial. The standard objective presented in \autoref{eq:combined_obj} breaks down because there is no single $\mathcal{L}_S$. Instead, the objective function effectively fractures into $2^K$ potential observation patterns. To handle this, the practitioner must manually specify unique loss components or intricate masking logic for each missingness pattern to correctly toggle between computing the likelihood $p(y_k)$ (for $y_k \in O^{(n)}$) and performing importance sampling using $q_\phi(y_k|x)$ (for $y_k \in U^{(n)}$). This combinatorial explosion necessitates a bespoke and brittle implementation of the stochastic computation graph, undermining the flexibility intended by the general framework.
+
+Additionally, while it is considered a good practice to reproduce experiments for methods presented in other papers instead of directly copying their results. This is not done by \cite{narayanaswamy_learning_2017}. For their \ac{MNIST}/\ac{SVHN} and Yale-B experiments (outlined in \autoref{sec:mnist} and \autoref{sec:exp_faces} respectively) they merely copy experimental result values from \cite{kingma_semi-supervised_2014} and \cite{pmlr-v38-jampani15} instead of confirming the performance in their own experiments. Moreover, the definition of hyperparameters such as $\alpha$ and $\gamma$ is not always clear as alluded to in \autoref{sec:their_eperiments}. Another minor error is the wrong column description in Figure 6 of \cite{narayanaswamy_learning_2017} which states that the table on the bottom right reports count error, while the table actually contains accuracy values as correctly pointed out in the corresponding caption.
+
+Lastly, in the same experiments, \cite{narayanaswamy_learning_2017} do not mention which exact values they report. They state that they report error rates but not which metric they use. This complicates comparability to other methods and isolated interpretation of their results.
+
+
+\subsection{General Critiques}
+\label{sec:general_critique}
+
+In the following the semi-supervised disentanglement approach from \cite{narayanaswamy_learning_2017} is confirmed by results from \cite{locatello_challenging_2018}, which demonstrate the impossibility of stable unsupervised disentanglement. \cite{casale_gaussian_2018} offer a general critique of the \ac{i.i.d.} assumption in \acp{VAE} directly mentioning \cite{narayanaswamy_learning_2017}. 
+
+\subsubsection{Impossibility of Unsupervised Disentanglement} 
+\label{sec:impossibility_theorem}
+% General Critique %
+In their paper, "Challenging Common Assumptions in the Unsupervised Learning of Disentangled Representations",  \cite{locatello_challenging_2018} presented a proof that unsupervised disentanglement is fundamentally impossible without inductive biases on both the model and the data.
+
+The proof relies on the geometry of the latent space and the properties of the Gaussian prior used in \acp{VAE}. Assuming a ground-truth generative process $x=f(z)$ where $z \sim P(z)$, then if $P(z)$ is a standard multivariate Gaussian, it is rotationally symmetric. That is, for any orthogonal rotation matrix $R$, the distribution of $Rz$ is identical to the distribution of $z$.
+
+Given a new generative function $f'(z)=f(R^Tz)$. The marginal distribution of observations $p(x)$ produced by this new model is identical to the original:
+$$ p(x)=\int p(x|z)p(z)dz=\int p(x|R^Tz)p(z)dz $$
+Since the unsupervised \ac{ELBO} only depends on the marginal likelihood of the data $p(x)$, it cannot distinguish between the true disentangled model $f(z)$ and the entangled model $f'(z)$. 
+
+In their experiments \cite{locatello_challenging_2018} "do not find any evidence that the considered models can be used to reliably learn disentangled representations in an unsupervised manner as random seeds and hyperparameters seem to matter more than the model choice. Furthermore, good trained models seemingly cannot be identified without access to ground-truth labels even if we are allowed to transfer good hyperparameter values across data sets". Furthermore, they state that for the considered models and data sets, "increased disentanglement does not seem to lead to a decreased sample complexity of learning for downstream tasks".
+
+This result confirms the necessity of some form of inductive bias for stable latent representations as proposed by \cite{narayanaswamy_learning_2017}. \cite{narayanaswamy_learning_2017} anchor the variable $y$ with labels, however, the variable $z$ is essentially learned in an unsupervised manner relative to the style factors. \cite{locatello_challenging_2018}'s proof implies that there is no guarantee that $z$ will factorize into meaningful sub-components purely based on the \ac{VAE} objective. The model is free to learn any rotation of these style factors that explains the data.
+
+\cite{locatello_challenging_2018} further highlight that they couldn't find any evidence that disentangled representation lead to better downstream performance, shifting the focus more towards interpretability and fairness. While \cite{narayanaswamy_learning_2017} claim the contrary, namely  that consistent and factorisable representation are more likely to generalise to a new task, they never formally prove or demonstrate this empirically in their paper. 
+
+
+\subsubsection{The Limitation of Isotropic Priors}
+% General Critique of simplistic priors%
+\cite{casale_gaussian_2018} critique the use of overly simplistic \ac{i.i.d.} Gaussian priors. While \cite{narayanaswamy_learning_2017} move away from such priors by composing latent graphical models with deep likelihoods, \cite{casale_gaussian_2018} argue that the framework still often relies on conditional independence assumptions that may induce excessive regularization. \cite{casale_gaussian_2018} point out that for many important datasets—such as time-series of images, medical scans of the same patient, or rotated views of an object—the samples exhibit structured correlations that are better captured through the prior's covariance.
+
+Using a prior that ignores these sample-to-sample correlations is a model misspecification that forces the encoder to discard the correlation structure. \cite{casale_gaussian_2018} introduced the \ac{GPPVAE}, which replaces the independent prior with a Gaussian Process:
+$$ \mathbf{z} \sim \mathcal{GP}(0, K(X, X')) $$
+Here, the covariance kernel $K$ explicitly models the correlation between samples (e.g., temporal proximity or identity). This allows the model to disentangle "object identity" from "view" by leveraging the kernel structure, a form of disentanglement that \cite{narayanaswamy_learning_2017}'s graphical approach typically handles through semi-supervised labels and specific message-passing variational families.
+
+\cite{esmaeili_structured_2018} also address the limitations of the isotropic Gaussian prior, arguing that it fails to exert sufficient regularizing pressure to force effective disentanglement. To resolve the common problem of disentangling discrete factors of variation from continuous variables—a task that remains problematic for many contemporary approaches—they propose a structured decomposition of the \ac{ELBO} objective. This modification allows for explicit control over the relative levels of disentanglement within different groups of latent variables. However, their analysis also highlights a significant optimization hurdle: discrete variables tend to exhibit higher likelihood values than continuous variables, which can introduce a bias that skews the optimization process in semi-supervised generative models.
+
+
+\subsubsection{Unbounded Likelihoods and Mode Collapse}
+% General Critique of of unrestricted variance%
+\cite{mattei_leveraging_2018} investigated the maximum likelihood estimation for \acp{DLVM}, the class of models to which \cite{narayanaswamy_learning_2017} semi-supervised \ac{VAE} belongs. They proved that for continuous data, if the variance of the decoder's output distribution is learned without constraints, the likelihood function is unbounded.
+
+Consider a decoder that outputs a Gaussian distribution $\mathcal{N}(\mu_\theta(z), \sigma^2_\theta(z))$. If the model can map a specific latent point $z_i$ to exactly match a data point $x_i$ (i.e., $\mu_\theta(z_i) \approx x_i$) and simultaneously drive the variance $\sigma^2_\theta(z_i)$ toward zero, the likelihood density $p(x_i \mid z_i)$ approaches infinity:
+$$ p(x_i|z_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x_i-\mu)^2}{2\sigma^2}\right) \to \infty \text{ as } \sigma \to 0 $$
+This creates a "hole" in the optimization landscape where the model collapses to storing data points (overfitting) rather than learning a generalized generative process. This is a severe limitation for \cite{narayanaswamy_learning_2017}s framework when applied to continuous data, as it can lead to numerical instability and meaningless latent representations where the "style" $z$ degenerates into a lookup table index rather than a semantic factor. \cite{mattei_leveraging_2018} suggest constraints on $\sigma$ or specific architectural choices to ensure the existence of generalized maximum likelihood estimates.
+
+
+\subsection{Disentanglement Implications and Limitations}
+
+In the following, disentanglement and its limitations are presented.
+
+\subsubsection{Semantic Conflation Problem}
+% Direct critique of labels for disentanglement. Also direct extension of the SSVAE %
+\cite{narayanaswamy_learning_2017}'s model feeds the label $y$ and the latent $z$ into the decoder: $p(x \mid y,z)$. The assumption is that $y$ handles the class-specific information and $z$ handles the rest. \cite{joy_capturing_2020} argue that this rigid separation is flawed because labels often imply continuous characteristics. Specifically they state that "Originally motivated by the desiderata of semi–supervised classification, each label is given a corresponding latent variable of the same type (e.g. categorical), whose value is fixed to that of the label when the label is observed and imputed by the encoder when it is not. Though natural, we argue that this assumption is not just unnecessary but actively harmful from a representation-learning perspective, particularly in the context of performing manipulations. To allow manipulations, we want to learn latent factors that capture the characteristic information associated with a label, which is typically much richer than just the label value itself."
+
+They provide an example pertaining to a dataset of face. Consider a face with the label "Young". \cite{joy_capturing_2020} argue that age is not inherently discrete and that youth correlates with a number of continuous features such as smooth skin, specific facial structures, and hair density. In a standard \ac{VAE}, the decoder sees $y=1$ ("Young") and learns to generate these features. Consequently, the latent $z$ is absolved of the responsibility to encode the degree of youth or the specific way youth manifests in that image. This is semantic conflation: the discrete label "steals" the semantic content from the continuous latent space.
+
+They state that this leads to a failure in disentanglement: if we want to manipulate the "age" of a face continuously, we cannot do so easily because the age information is locked inside the discrete variable $y$. Conversely, if we change the label $y$ from "Young" to "Old" while keeping $z$ fixed, the style $z$ (which might encode "smiling") might be ignored or misinterpreted by the decoder because, so \cite{joy_capturing_2020} argue, the correlations between style and age are broken.
+
+To resolve this, they proposed the \ac{CCVAE} which builds on the \ac{SSVAE} proposed by \cite{narayanaswamy_learning_2017}. They radically altered the graphical model. Instead of conditioning the generation on the label, they condition the inference of specific latents on the label. Specifically, they split the latent space into: (1) characteristic latents ($z_c$) which capture information correlated with the label and (2) salient latents ($z_s$) which capture the residual information.
+
+The generative model is $p(x \mid z_c, z_s)$. Note that $y$ is not an input to the decoder. Instead, an auxiliary classifier ensures that $z_c$ is predictive of $y$: $\mathbb{E}[\log p(y \mid z_c)]$. By forcing $z_c$ to predict $y$ but feeding $z_c$ (not $y$) to the decoder, the model must encode the semantic content of the label into the continuous space $z_c$. This avoids conflation. The label $y$ acts as a supervisor for the structure of the latent space rather than a crutch for the decoder.
+
+\cite{joy_capturing_2020} demonstrated that this leads to superior performance in "attribute traversal." For example, dealing with the attribute "Young," the \ac{CCVAE} could generate smooth transitions from young to old faces by interpolating in $z_c$, whereas the baseline models could only flip the binary switch $y$, resulting in discontinuous and often lower-quality transitions.
+
+\cite{nie_semi_supervised_2020} underline this critique by and state that "it still remains unclear how the use of supervision impacts the disentanglement learning". Which in part is also due to a lack of relevant metrics \citep{adel_discovering_2018}, making it hard to quantify how well disentanglement works and how the semi-supervised framework of \cite{narayanaswamy_learning_2017} impacts it.
+
+
+\subsubsection{Breaking the ELBO Bottleneck}
+% Direct critique of the loss functions utility for classification.
+\cite{feng_shot_vae_2021} identified a specific optimization pathology in loss function of \acp{SSVAE}  \citep{narayanaswamy_learning_2017}, termed the \textit{\ac{ELBO} Bottleneck} and proposed \ac{SHOT-VAE} as an extension of \ac{SSVAE} to mitigate this limitation.
+
+In \acp{SSVAE}, the objective combines the \ac{ELBO} and a classification loss. \cite{feng_shot_vae_2021} observed that as training progresses, the \ac{ELBO} term often plateaus before the inference accuracy is maximized. The standard \ac{ELBO} does not strictly penalize misclassifications in the latent space as long as the reconstruction is good. This leads to a disconnect: the model might reconstruct the image of a "9" perfectly well even if the latent code $z$ and label $y$ are slightly misaligned or ambiguous.
+
+In the \acp{SSVAE} framework proposed by \cite{narayanaswamy_learning_2017}, the latent space is explicitly partitioned into a discrete label $y$ and a continuous style variable $z$. While this separation is designed to "anchor" semantics, \cite{feng_shot_vae_2021} identify a fundamental optimization pathology in this joint objective: the \textit{\ac{ELBO} Bottleneck}. Because the generative term $p(x|y,z)$ can achieve high likelihood by absorbing label-relevant information into the "unspecified" style variable $z$, the model often reaches an \ac{ELBO} plateau where reconstruction is near-perfect despite poor classification accuracy. This indicates that the inductive bias intended by \cite{narayanaswamy_learning_2017} is often bypassed during training, as the standard \ac{ELBO} lacks the gradient pressure to prevent $z$ from "leaking" the information that should be exclusive to $y$. 
+
+\cite{feng_shot_vae_2021} introduce \ac{SHOT-VAE} with two key innovations (1) Smooth-\ac{ELBO} which is an approximation that integrates the label predictive loss directly into the \ac{ELBO} derivation, rather than treating it as an auxiliary loss. This aligns the generative and discriminative objectives more tightly. (2) Optimal Interpolation for which they utilized data augmentation in the latent space (mixup) to fill the gaps between class clusters. By enforcing linearity in the latent space (interpolating between a "1" and a "7" should yield a semantic blend), they break the \ac{ELBO} bottleneck and force the encoder to learn a more robust, disentangled structure.
+
+Empirically, \ac{SHOT-VAE} achieved significant error rate reductions on CIFAR-10 (6.11\% vs baseline) compared to standard \acp{SSVAE} from \cite{kingma_semi-supervised_2014}, demonstrating that optimization dynamics are as critical as model architecture for disentanglement.
+
+
+\subsubsection{Differentiating Consistency and Restrictiveness}
+% Direct critique of the disentanglement claim, also theoretical base for weak supervision %
+\cite{shu_weakly_2019} introduce a refined definition of disentanglement that is made up of consistency and restrictiveness. Here consistency is the degree to which a representation is deterministic with respect to the ground-truth factors. If we fix the ground-truth factor (e.g., color), the latent code should ideally be constant. On the other hand, restrictiveness is the degree to which a single dimension of the representation encodes only one ground-truth factor. This prevents a single latent dimension from encoding both color and shape.
+
+\cite{shu_weakly_2019} state that \cite{narayanaswamy_learning_2017} falsely claim that their method leads to disentangled results through semi-supervision. Instead is merely creates consistent representation which are not necessarily restrictive and hence not guaranteed to be disentangled. However, they relativise this by conceding that on real world data consistency and restrictiveness are often strongly correlated.
+
+These definitions provide a finer granularity than the mutual information metrics used previously. Critically, observational metrics (like the \ac{MIG} \citep{chen_isolating_2019} used in \cite{locatello_challenging_2018}) often fail to capture these causal properties accurately. The differentiation of disentanglement introduced by \cite{shu_weakly_2019} paves the way for researchers to formally prove which types of weak supervision (e.g., restricted labeling, match-pairing) guarantee consistency or restrictiveness. This represents a theoretical maturation from \cite{narayanaswamy_learning_2017}'s reliance on empirical validation via reconstruction. 
+
+
+\subsection{Extensions in Supervision: From Semi to Weak}
+% Move toward weak supervision %
+In response to the impossibility results from \cite{locatello_challenging_2018}, the research community pivoted. If pure unsupervised disentanglement is impossible, and full supervision is expensive, what is the minimal signal required? \cite{locatello_weakly_2020} proposed Weakly-Supervised Disentanglement as a robust extension to the semi-supervised paradigm. \cite{joy_learning_2021} further extend the concept of weakly-supervised \acp{VAE} to multimodal learning and inference.
+
+
+\subsubsection{The Weak Supervision Paradigm}
+\label{sec:ext_weak_paradigm}
+% Move toward weak supervision %
+While \cite{locatello_challenging_2018} highlight the need for an inductive bias to create stable representations. Several works \citep{lin_infogan_2020, bouchacourt_multilevel_2017, ke_apgvae_2023, Kim2018DisentanglingBF} also critique the use of labels in the framework of \cite{narayanaswamy_learning_2017}. These criticisms are summarized well by \cite{Kim2018DisentanglingBF} who note that "semi-supervised approaches that require implicit or explicit knowledge about the true underlying factors of the data have excelled at disentangling" referring to \cite{narayanaswamy_learning_2017}. However, they also point out that "ideally we would like to learn these in an unsupervised manner, due to the following reasons: 1. Humans are able to learn factors of variation unsupervised [\cite{perry2010continuous}]. 2. Labels are costly as obtaining them requires a human in the loop. 3. Labels assigned by humans might be inconsistent or leave out the factors that are difficult for humans to identify".
+
+Following these critiques and moving away from semi-supervision a number of weak-supervision frameworks emerged. 
+
+In "Weakly-Supervised Disentanglement Without Compromises," \cite{locatello_weakly_2020} model observations not as independent samples, but as pairs $(x_1, x_2)$ that share at least one underlying factor of variation, even if the label of that factor is unknown.
+
+For example, in a video of a moving arm, two adjacent frames might share the same "background color" and "object identity" but differ in "arm position." The weak label here is simply the knowledge that some factors are shared, without specifying what they are (unlike 
+\cite{narayanaswamy_learning_2017} who require the explicit label $y=$ "Digit 7").
+
+They proved theoretically that knowing how many factors have changed (or stayed the same) between pairs is sufficient to guarantee disentanglement. This relaxes the requirement of \cite{narayanaswamy_learning_2017} for expensive annotations for parts of the data while maintaining the capability of supervised disentanglement, only requiring a data collection process that provides paired samples (e.g., temporal coherence in video, or multi-camera setups).
+
+\cite{chen_weakly_2020} also critique the necessity for labels \cite{narayanaswamy_learning_2017} and take a similar approach to \cite{locatello_weakly_2020}, but focus more on the geometric structure of the latent space, utilizing a ranking-based loss to ensure that pairwise similarities in the data are preserved as proximity in specific latent dimensions. While \cite{locatello_weakly_2020} provide formal identifiability guarantees using \textit{rank-1} pairs, where exactly one factor is varied, \cite{chen_weakly_2020} rely on more flexible binary same/different judgments. This allows the model to learn from supervision that indicates whether any factor is shared, without requiring the explicit knowledge of which specific factor differs between the pair.
+
+\cite{yang_disentangling_2019} extend these principles to hand pose estimation and image synthesis, claiming the ability to learn interpretable disentangled representations without the necessity for additional weak labels. However, their framework still fundamentally relies on explicit pose annotations to supervise the partitioning of the latent space into pose and appearance components. This highlights a recurring theme in the literature where, despite claims of minimizing supervision, the underlying disentanglement mechanism remains dependent on the primary task's labels to maintain structural integrity bringing us back to the impossibility theorem from \cite{locatello_challenging_2018}.
+
+
+\subsubsection{Multimodal VAEs and Mutual Supervision}
+% From semi to weak supervision through multimodal training
+\cite{joy_learning_2021}, in "Learning Multimodal VAEs through Mutual Supervision," extended the semi-supervised framework to scenarios with multiple high-dimensional modalities (e.g., Image + Text).
+
+In \cite{narayanaswamy_learning_2017}, supervision comes from a low-dimensional label $y$. In Multimodal \acp{VAE}, supervision comes from another rich modality. \cite{joy_learning_2021} utilized a \ac{PoE} aggregation. The joint posterior is approximated as the product of individual posteriors:
+$$ q(z|x_{\text{img}}, x_{\text{text}}) \propto q(z|x_{\text{img}}) \cdot q(z|x_{\text{text}}) $$
+This structure enforces a form of inter-modality disentanglement. Similar to \cite{locatello_weakly_2020}, the shared information (semantics) must be encoded in the intersection of the posteriors, while modality-specific noise is filtered out. This mutual supervision allows the model to learn robust representations even when one modality is missing, extending the partial-specification idea of \cite{narayanaswamy_learning_2017} to complex, unstructured labels.
+
+
+\subsection{Applications and Integrations in the Literature}
+
+While multiple papers simply use \ac{SSVAE} as a baseline in their experiments \citep{gordon_meta_2019, kulinski_explaining_2023}, other apply various aspects of \cite{narayanaswamy_learning_2017}s framework to their method.
+\cite{vaze_representation_2023} critiques the prevalent use of synthetic data in the literature, several papers apply \acs{SSVAE} to real world problems.
+This section discusses several works that apply the concepts of \acp{SSVAE} or use it as a baseline in their benchmark, which provides perspective into the utility of the framework proposed by \cite{narayanaswamy_learning_2017} in real world conditions. 
+
+
+\subsubsection{Domain Adaptation in the Medical Domain}
+% Applies semi supervised disentanglement to the medical domain.
+\cite{yang_usupervised_2019} apply the framework of \acp{SSVAE} to the critical problem of unsupervised domain adaptation in medical imaging (e.g., segmenting livers in CT vs. MRI scans). Building on the latent decomposition proposed by \cite{narayanaswamy_learning_2017}, \cite{yang_usupervised_2019}s framework utilizes separate encoders ($E_c$ content code and $E_s$ style code) to partition representations into a shared content manifold for anatomical preservation and a domain-specific style subspace for modality features. This architecture facilitates many-to-many cross-domain translation via style-code swapping and adversarial alignment, forcing the content space to converge on a modality-agnostic representation suitable for unsupervised liver segmentation.
+
+By enforcing that the content code is shared while the style code is domain-specific, they could train a segmenter on labeled CT scans and apply it to unlabeled MRI scans by swapping the style codes. This effectively treats the "domain" (CT/MRI) as the specified factor $y$ in 
+\cite{narayanaswamy_learning_2017}'s framework, but extends the mechanism to allow for image-to-image translation via the disentangled latent space. 
+
+\cite{biswal_eva_2020} extend the semi-supervised generative framework to the medical domain through the development of EVA, a model designed for the generation of longitudinal electronic health records. Their approach builds upon the \ac{SSVAE} architecture by introducing hierarchically factorized latent variables to better capture the complex dependencies inherent in temporal patient data. In this hierarchical structure, the upper-level latent variables are shared across the entire population to represent common clinical characteristics and global trends, while the lower-level variables remain patient-specific to capture individual disease trajectories and variations. By incorporating this multi-level factorization, the model ensures semantic consistency across the population while simultaneously allowing for the fine-grained representation of individual patient histories.
+
+\cite{li_multi_2018} work on "multi‑objective de novo drug design with conditional graph generative models" and mention \acp{SSVAE} as a possible extension to improve their work
+
+
+\subsubsection{Causal Extension and Robustness}
+
+\cite{zhang_causal_2020} provide a causal extension to the graphical latent variable framework, applying it to the study of neural network robustness. By adopting a setup similar to the semi-supervised generative models in \cite{narayanaswamy_learning_2017}, they frame the relationship between latent factors and observed data through a structural causal model (SCM). This causal lens allows for a formal investigation into how perturbations and distribution shifts propagate through the model's representations. Their work demonstrates that leveraging a graphical latent model is not only useful for disentanglement but is also critical for analyzing and improving the robustness of neural networks against adversarial or environmental interventions.
+
+
+\subsubsection{Catastrophic Forgetting and Generative Replay}
+% Compare to our menthod but otherwise don't mention it or build on it%
+To address catastrophic forgetting in deep learning models trained sequentially, \cite{ye_learning_2020} introduced the Lifelong VAEGAN, which combines the inference capabilities of \acp{VAE} with the high-quality generation of \acp{GAN}. Instead of a standard teacher-student setup, the model employs a generative replay mechanism and a two-step "wake-dreaming" optimization. In the "wake" phase, the generator is updated to approximate the distribution of both current data and replayed samples from previous tasks. In the "dreaming" phase, the model maximizes the log-likelihood of these samples to learn shared, disentangled latent representations across multiple domains.
+
+Building on \cite{narayanaswamy_learning_2017}, \cite{ye_learning_2020} extend their Lifelong VAEGAN framework to the supervised setting and directly compare to \ac{SSVAE} in their experiments where it has the second lowest classification error after the \ac{M1+M2} model from \cite{kingma_semi-supervised_2014}.
+
+In a later paper, \cite{ye_lifelong_2022} extend the \ac{SSVAE} framework into the domain of continual learning by integrating it within a lifelong teacher-student network. Their method builds upon the generative principles established by \cite{narayanaswamy_learning_2017} to facilitate knowledge retention and transfer across sequential learning tasks, utilizing the original model as a primary baseline for experimental comparison. Notably, while the authors formally cite \cite{narayanaswamy_learning_2017}, they attribute the architectural foundations to the \cite{kingma_semi-supervised_2014} model in their technical descriptions, reflecting the shared heritage of these semi-supervised generative approaches. This extension demonstrates how the structured latent spaces of \acp{SSVAE} can be leveraged to mitigate catastrophic forgetting in dynamic data environments. Further, they find that the \ac{SSVAE} architecture performs well in an experiment comparing the semi-supervised classification results on MNIST data, when
+considering MNIST to MNIST-Fashion lifelong learning. Specifically, they compare ten architectures of which \ac{SSVAE} as the second lowest error.
+
+
+
+% \subsection{Summary of Key Data and Comparisons}
+% The following table synthesizes the evolution from the baseline semi-supervised model to the various extensions discussed.
+
+% \begin{table}[h!]
+% \centering
+% \small
+% \begin{tabular}{@{}lllll@{}}
+% \toprule
+% \textbf{Feature / Aspect} & \textbf{Siddharth et al. (2017)} & \textbf{Critique / Limitation} & \textbf{Extension / Solution} & \textbf{Key Researchers} \\ \midrule
+% Latent Structure & Split: Label $y$, Style $z$. & \begin{tabular}[c]{@{}l@{}}Semantic Conflation:\\ $y$ absorbs continuous traits.\end{tabular} & \begin{tabular}[c]{@{}l@{}}CCVAE: Split $z$ into\\ Characteristic \& Salient.\end{tabular} & Joy et al. (2021) \\
+% Supervision & Explicit Labels. & \begin{tabular}[c]{@{}l@{}}Impossibility:\\ $z$ is not guaranteed.\end{tabular} & \begin{tabular}[c]{@{}l@{}}Weak Supervision:\\ Pairwise similarity.\end{tabular} & Locatello (2020) \\
+% Dynamics & Static i.i.d. data. & Catastrophic Forgetting. & \begin{tabular}[c]{@{}l@{}}Lifelong Learning:\\ Teacher-Student.\end{tabular} & Ye \& Bors (2020) \\
+% Likelihood & Standard ELBO. & Unbounded Likelihood. & \begin{tabular}[c]{@{}l@{}}Constraints;\\ Smooth-ELBO.\end{tabular} & Mattei (2018) \\
+% Uncertainty & Point estimates. & Overconfidence. & \begin{tabular}[c]{@{}l@{}}Bayesian Uncertainty:\\ MC Dropweights.\end{tabular} & Ghoshal (2020) \\ \bottomrule
+% \end{tabular}
+% \end{table}
