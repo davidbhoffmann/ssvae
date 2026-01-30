@@ -5,16 +5,31 @@
 
 % Are they a relevant method
 
-\textbf{Accuracy and ELBO Results}: 
-\begin{itemize} 
-        \item Test accuracy stable up to $\approx$20\% corruption for MNIST digit label.
-        \item As corruption increases, accuracy drops below random chance (10\%).
-        \item ELBO drops slightly with increasing corruption, but overall remains stable.
-    \end{itemize}
+% \textbf{Accuracy and ELBO Results}: 
+% \begin{itemize} 
+%         \item Test accuracy stable up to $\approx$20\% corruption for MNIST digit label.
+%         \item As corruption increases, accuracy drops below random chance (10\%).
+%         \item ELBO drops slightly with increasing corruption, but overall remains stable.
+%     \end{itemize}
 
-\textbf{Effect on Disentanglement Scores}: 
-\begin{itemize} 
-        \item Disentanglement is higher for smaller supervised set sizes.
-        \item Further, scores increase with label corruption. More pronounced for larger supervised set sizes.
-        \item Indicates that supervision harms disentanglement of the style latent $z$.
-    \end{itemize}
+% \textbf{Effect on Disentanglement Scores}: 
+% \begin{itemize} 
+%         \item Disentanglement is higher for smaller supervised set sizes.
+%         \item Further, scores increase with label corruption. More pronounced for larger supervised set sizes.
+%         \item Indicates that supervision harms disentanglement of the style latent $z$.
+% \end{itemize}
+
+
+In this work, we presented a unified framework for learning disentangled representations by integrating deep generative models with partially-specified probabilistic graphical models. Unlike standard variational autoencoders that often assume a flat latent space, our approach allows for the injection of domain knowledge through structured dependencies while retaining the flexibility of neural networks for function approximation. By mapping these definitions onto stochastic computation graphs, we demonstrated that end-to-end semi-supervised learning is feasible even with complex, non-conjugate dependency structures.
+
+\subsection{Performance and Compositionality}
+[cite_start]The experimental results across \ac{MNIST}, \ac{SVHN}, and Multi-\ac{MNIST} confirm that imposing structural constraints significantly improves the model's ability to generalize from sparse supervision[cite: 264, 271]. [cite_start]In the classification tasks, our method performed on par with established baselines, demonstrating that the importance-sampled objective is an effective estimator for semi-supervised learning in structured models[cite: 271, 152]. Most notably, the Multi-\ac{MNIST} experiments highlighted an important trade-off between raw performance and model modularity. [cite_start]While the ``flat'' model achieved superior counting accuracy (up to $99.81\%$), the ``nested'' configuration—which incorporated a pre-trained \ac{MNIST} model—demonstrated the framework's capacity for compositional design[cite: 376, 381]. [cite_start]Although the nested model incurred a performance cost in counting accuracy ($84.79\%$), it successfully leveraged transfer learning to decompose complex scenes into coherent constituent parts without requiring end-to-end retraining of the component models[cite: 381, 383].
+
+\subsection{The Role of Structure in Disentanglement}
+A key finding of this study is that partial supervision, when combined with an explicit graphical structure, effectively enforces disentanglement where purely unsupervised methods often fail. [cite_start]By defining specific nodes for interpretable factors—such as the digit class $\mathbf{y}$ or the number of objects $K$—we constrain the remaining latent space $\mathbf{z}$ to capture residual variations like style or position[cite: 169, 170]. [cite_start]This was evident in the \ac{SVHN} and Intrinsic Faces experiments, where the model successfully disentangled identity from lighting conditions by treating lighting as a continuous supervised variable and identity as a categorical one[cite: 282, 286]. [cite_start]This validates the hypothesis that ``partially-specified'' models occupy a sweet spot between fully-specified graphical models (which require expensive engineering) and unstructured deep generative models (which yield entangled representations)[cite: 30, 38, 45].
+
+\subsection{Limitations in Heterogeneous Sparse Supervision}
+While the framework generalizes to arbitrary dependency structures, its practical application in real-world settings with multiple partially observed variables reveals significant limitations. [cite_start]The current formulation relies on a binary distinction between unsupervised data $\mathcal{D}$ and supervised data $\mathcal{D}^{sup}$, assuming a consistent set of available labels for the supervised portion[cite: 116]. However, in complex real-world datasets involving $K$ distinct supervised variables $\mathbf{y} = \{y_1, \dots, y_K\}$, supervision is often heterogeneous; a datapoint may possess annotations for a random subset of variables while others are missing. [cite_start]Under the proposed framework, variables are treated as observed when available and sampled otherwise[cite: 179]. Implementing this dynamically in a batched setting becomes non-trivial, as the objective function effectively fractures into $2^K$ potential observation patterns. This combinatorial explosion necessitates a bespoke and brittle implementation of the stochastic computation graph, undermining the flexibility intended by the general framework.
+
+\subsection{Future Directions}
+[cite_start]The current implementation relies on static graph definitions, but the natural evolution of this work lies in the integration with probabilistic programming languages[cite: 390]. [cite_start]Probabilistic programs would allow for more expressive models involving recursion and control flow, which are currently limited by the static nature of the underlying computation graph[cite: 391]. [cite_start]Future work will explore amortizing inference over these dynamic structures, enabling the learning of disentangled representations for increasingly complex, structured data domains such as video or language[cite: 392, 393].
