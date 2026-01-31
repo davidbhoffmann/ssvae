@@ -34,7 +34,8 @@
 \contentsline {subsection}{\numberline {5.2}Supervision Weight}{21}{subsection.5.2}%
 \contentsline {subsection}{\numberline {5.3}Label Corruption}{22}{subsection.5.3}%
 \contentsline {section}{\numberline {6}Discussion}{24}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Future Directions}{25}{subsection.6.1}%
-\contentsline {section}{\numberline {7}Conclusion}{26}{section.7}%
+\contentsline {section}{\numberline {7}Conclusion}{25}{section.7}%
 \contentsline {section}{\numberline {A}Systematic Review Process}{V}{appendix.A}%
 \contentsline {section}{\numberline {B}SSVAE Training}{V}{appendix.B}%
+\contentsline {section}{\numberline {C}Supervision Weight Results}{VI}{appendix.C}%
+\contentsline {section}{\numberline {D}Corruption Rate Results}{VI}{appendix.D}%

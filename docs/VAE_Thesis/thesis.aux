@@ -20,20 +20,34 @@
 \newacro{SSVAE}[SSVAE]{Semi-Supervised VAE}
 \newacro{VAE}[VAE]{Variational Auto-Encoder}
 \newacro{ReLU}[ReLU]{Rectified Linear Units}
+\citation{bengio2013representation}
+\citation{kingma_auto-encoding_2013}
+\citation{locatello_challenging_2018}
+\citation{narayanaswamy_learning_2017}
+\citation{kingma_semi-supervised_2014}
+\citation{narayanaswamy_learning_2017}
+\citation{narayanaswamy_learning_2017}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{intro}{{1}{1}{Introduction}{section.1}{}}
+\AC@undonewlabel{acro:VAE}
+\newlabel{acro:VAE}{{1}{1}{Introduction}{section*.2}{}}
+\acronymused{VAE}
+\AC@undonewlabel{acro:SSVAE}
+\newlabel{acro:SSVAE}{{1}{1}{Introduction}{section*.3}{}}
+\acronymused{SSVAE}
+\acronymused{SSVAE}
+\acronymused{VAE}
+\acronymused{SSVAE}
 \citation{kingma_auto-encoding_2013,rezende2014stochastic}
 \citation{bengio2013representation}
 \citation{Higgins2016betaVAELB}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Background and Formulation}{2}{section.2}\protected@file@percent }
 \newlabel{background}{{2}{2}{Background and Formulation}{section.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Disentanglement in Variational Auto-Encoders}{2}{subsection.2.1}\protected@file@percent }
-\AC@undonewlabel{acro:VAE}
-\newlabel{acro:VAE}{{2.1}{2}{Disentanglement in Variational Auto-Encoders}{section*.2}{}}
 \acronymused{VAE}
 \acronymused{VAE}
 \AC@undonewlabel{acro:ELBO}
-\newlabel{acro:ELBO}{{2.1}{2}{Disentanglement in Variational Auto-Encoders}{section*.3}{}}
+\newlabel{acro:ELBO}{{2.1}{2}{Disentanglement in Variational Auto-Encoders}{section*.4}{}}
 \acronymused{ELBO}
 \acronymused{VAE}
 \acronymused{VAE}
@@ -70,10 +84,10 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Experiments and Findings}{8}{subsection.3.4}\protected@file@percent }
 \newlabel{sec:their_eperiments}{{3.4}{8}{Experiments and Findings}{subsection.3.4}{}}
 \AC@undonewlabel{acro:MNIST}
-\newlabel{acro:MNIST}{{3.4}{8}{Experiments and Findings}{section*.4}{}}
+\newlabel{acro:MNIST}{{3.4}{8}{Experiments and Findings}{section*.5}{}}
 \acronymused{MNIST}
 \AC@undonewlabel{acro:SVHN}
-\newlabel{acro:SVHN}{{3.4}{8}{Experiments and Findings}{section*.5}{}}
+\newlabel{acro:SVHN}{{3.4}{8}{Experiments and Findings}{section*.6}{}}
 \acronymused{SVHN}
 \acronymused{MNIST}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}Benchmark Classification: MNIST and SVHN}{8}{subsubsection.3.4.1}\protected@file@percent }
@@ -89,8 +103,6 @@
 \citation{pmlr-v38-jampani15}
 \citation{narayanaswamy_learning_2017}
 \citation{narayanaswamy_learning_2017}
-\AC@undonewlabel{acro:SSVAE}
-\newlabel{acro:SSVAE}{{3.4.1}{9}{Benchmark Classification: MNIST and SVHN}{section*.6}{}}
 \acronymused{SSVAE}
 \acronymused{MNIST}
 \acronymused{SVHN}
@@ -172,6 +184,7 @@
 \acronymused{VAE}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Disentanglement Implications and Limitations}{14}{subsection.4.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Semantic Conflation Problem}{14}{subsubsection.4.3.1}\protected@file@percent }
+\newlabel{sec:semantic_conflation}{{4.3.1}{14}{Semantic Conflation Problem}{subsubsection.4.3.1}{}}
 \citation{joy_capturing_2020}
 \citation{joy_capturing_2020}
 \citation{narayanaswamy_learning_2017}
@@ -333,6 +346,7 @@
 \citation{Kim2018DisentanglingBF}
 \citation{chen_isolating_2019}
 \citation{lin_infogan_2020,bouchacourt_multilevel_2017,ke_apgvae_2023,Kim2018DisentanglingBF}
+\citation{narayanaswamy_learning_2017}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100, 600, 1000 and 3000. Error bars indicate variance across 10 random seeds. \textbf  {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf  {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf  {Right:} disentanglement metrics ($\beta $-VAE \cite  {Higgins2016betaVAELB}, Factor-VAE \cite  {Kim2018DisentanglingBF}, Mutual Information Gap \cite  {chen_isolating_2019}) decreases with increasing $\alpha $ across all three metrics.}}{22}{figure.caption.18}\protected@file@percent }
 \acronymused{ELBO}
 \newlabel{fig:alpha_exp}{{2}{22}{\textbf {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100, 600, 1000 and 3000. Error bars indicate variance across 10 random seeds. \textbf {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf {Right:} disentanglement metrics ($\beta $-VAE \cite {Higgins2016betaVAELB}, Factor-VAE \cite {Kim2018DisentanglingBF}, Mutual Information Gap \cite {chen_isolating_2019}) decreases with increasing $\alpha $ across all three metrics}{figure.caption.18}{}}
@@ -368,15 +382,28 @@
 \acronymused{SSVAE}
 \acronymused{SSVAE}
 \acronymused{ELBO}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Future Directions}{25}{subsection.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{26}{section.7}\protected@file@percent }
-\newlabel{conclusion}{{7}{26}{Conclusion}{section.7}{}}
+\acronymused{SSVAE}
+\acronymused{MNIST}
+\citation{narayanaswamy_learning_2017}
+\citation{locatello_challenging_2018}
+\citation{joy_learning_2021}
+\citation{locatello_weakly_2020}
+\citation{zhang_causal_2020}
+\citation{narayanaswamy_learning_2017}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{25}{section.7}\protected@file@percent }
+\newlabel{conclusion}{{7}{25}{Conclusion}{section.7}{}}
+\acronymused{SSVAE}
+\acronymused{SSVAE}
+\acronymused{SSVAE}
 \citation{narayanaswamy_learning_2017}
 \citation{narayanaswamy_learning_2017}
 \citation{narayanaswamy_learning_2017}
+\citation{narayanaswamy_learning_2017}
+\citation{kingma_semi-supervised_2014}
 \citation{narayanaswamy_learning_2017}
 \@writefile{toc}{\contentsline {section}{\numberline {A}Systematic Review Process}{V}{appendix.A}\protected@file@percent }
 \newlabel{apx:systematic_review}{{A}{V}{Systematic Review Process}{appendix.A}{}}
+\acronymused{SSVAE}
 \acronymused{SSVAE}
 \@writefile{toc}{\contentsline {section}{\numberline {B}SSVAE Training}{V}{appendix.B}\protected@file@percent }
 \newlabel{apx:training}{{B}{V}{SSVAE Training}{appendix.B}{}}
@@ -384,6 +411,8 @@
 \newlabel{sub@fig:train_alpha}{{a}{V}{All training runs of the \textbf {supervision factor $\pmb \alpha $ experiment} in \autoref {sec:alpha_exp}}{figure.caption.20}{}}
 \newlabel{fig:train_noise}{{4b}{V}{All training runs of the \textbf {corruption rate experiment} in \autoref {sec:noise_exp}}{figure.caption.20}{}}
 \newlabel{sub@fig:train_noise}{{b}{V}{All training runs of the \textbf {corruption rate experiment} in \autoref {sec:noise_exp}}{figure.caption.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Supervision Weight Results}{VI}{appendix.C}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {D}Corruption Rate Results}{VI}{appendix.D}\protected@file@percent }
 \bibdata{bibliography}
 \bibcite{adel_discovering_2018}{{1}{2018}{{Adel et~al.}}{{Adel, Ghahramani and\ Weller}}}
 \bibcite{agarap2018deep}{{2}{2018}{{Agarap}}{{}}}

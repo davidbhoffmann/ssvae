@@ -73,6 +73,7 @@ This creates a "hole" in the optimization landscape where the model collapses to
 In the following, disentanglement and its limitations are presented.
 
 \subsubsection{Semantic Conflation Problem}
+\label{sec:semantic_conflation}
 % Direct critique of labels for disentanglement. Also direct extension of the SSVAE %
 \cite{narayanaswamy_learning_2017}'s model feeds the label $y$ and the latent $z$ into the decoder: $p(x \mid y,z)$. The assumption is that $y$ handles the class-specific information and $z$ handles the rest. \cite{joy_capturing_2020} argue that this rigid separation is flawed because labels often imply continuous characteristics. Specifically they state that "Originally motivated by the desiderata of semi–supervised classification, each label is given a corresponding latent variable of the same type (e.g. categorical), whose value is fixed to that of the label when the label is observed and imputed by the encoder when it is not. Though natural, we argue that this assumption is not just unnecessary but actively harmful from a representation-learning perspective, particularly in the context of performing manipulations. To allow manipulations, we want to learn latent factors that capture the characteristic information associated with a label, which is typically much richer than just the label value itself."
 
