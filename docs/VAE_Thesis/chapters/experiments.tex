@@ -33,7 +33,7 @@ To address this, we explore how robust the \ac{SSVAE} framework is with respect 
 % What are the results
 \autoref{fig:alpha_exp} shows that classification accuracy of the semi-supervised $y$ variable is sensitive to the supervision weight $\alpha$. As expected increasing $\alpha$ leads to better classification performance, although the effect of increasing the value beyond 10 only leads to marginal improvements. While we did not report final training accuracy in the experiments, we can still observe there is no overfitting for high $\alpha$ values to the point of decreasing test accuracy.
 
-The final test \ac{ELBO} remains relatively constant with respect to $\alpha$, which can also be seen in \autoref{apx:training}. A minor increase of the \ac{ELBO} can be observed wit increasing $\alpha$. The results further show that for the unsupervised $z$, stronger supervision decreases disentanglement.
+The final test \ac{ELBO} remains relatively constant with respect to $\alpha$, which can also be seen in \autoref{apx:training}. A minor increase of the \ac{ELBO} can be observed wit increasing $\alpha$. The results further show that for the unsupervised $z$, stronger supervision decreases disentanglement. A table with detailed results can be found in \autoref{sec:results_alpha_exp}.
 
 
 \subsection{Label Corruption} % Think of nice title
@@ -55,5 +55,5 @@ To investigate the sensitivity of \acp{SSVAE} to potentially noisy labels, we us
 % What are the results
 The result of this experiment is shown in \autoref{fig:noise_exp}. As expected We find that classification accuracy of the latent $y$ variable decreases as the corruption rate of the labels increases. However, the accuracy does remain relatively stable up to a corruption rate of 20\%.
 
-Similar to the the supervision weight experiments, the final test \ac{ELBO} remains relatively constant. However, a marginal \ac{ELBO} drop with increased corruption rates is noticeable across configurations. The results further show that for the unsupervised $z$, more label corruption in $y$ decreases disentanglement. 
+Similar to the the supervision weight experiments, the final test \ac{ELBO} remains relatively constant. However, a marginal \ac{ELBO} drop with increased corruption rates is noticeable across configurations. The results further show that for the unsupervised $z$, more label corruption in $y$ decreases disentanglement. A table with detailed results can be found in \autoref{sec:results_corruption_exp}.
 
