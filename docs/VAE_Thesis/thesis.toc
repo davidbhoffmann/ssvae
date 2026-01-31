@@ -12,32 +12,29 @@
 \contentsline {subsubsection}{\numberline {3.4.1}Benchmark Classification: MNIST and SVHN}{8}{subsubsection.3.4.1}%
 \contentsline {subsubsection}{\numberline {3.4.2}Intrinsic Faces: Disentangling Continuous Factors}{9}{subsubsection.3.4.2}%
 \contentsline {subsubsection}{\numberline {3.4.3}Multi-MNIST: Stochastic Dimensionality and Compositionality}{9}{subsubsection.3.4.3}%
-\contentsline {section}{\numberline {4}Extensions and Limitations}{10}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Own Criticism}{10}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}General Critiques}{11}{subsection.4.2}%
-\contentsline {subsubsection}{\numberline {4.2.1}Impossibility of Unsupervised Disentanglement}{11}{subsubsection.4.2.1}%
-\contentsline {subsubsection}{\numberline {4.2.2}The Limitation of Isotropic Priors}{12}{subsubsection.4.2.2}%
-\contentsline {subsubsection}{\numberline {4.2.3}Unbounded Likelihoods and Mode Collapse}{13}{subsubsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.3}Disentanglement Implications and Limitations}{13}{subsection.4.3}%
-\contentsline {subsubsection}{\numberline {4.3.1}Semantic Conflation Problem}{13}{subsubsection.4.3.1}%
-\contentsline {subsubsection}{\numberline {4.3.2}Breaking the ELBO Bottleneck}{14}{subsubsection.4.3.2}%
-\contentsline {subsubsection}{\numberline {4.3.3}Differentiating Consistency and Restrictiveness}{15}{subsubsection.4.3.3}%
-\contentsline {subsection}{\numberline {4.4}Extensions in Supervision: From Semi to Weak}{15}{subsection.4.4}%
-\contentsline {subsubsection}{\numberline {4.4.1}The Weak Supervision Paradigm}{16}{subsubsection.4.4.1}%
-\contentsline {subsubsection}{\numberline {4.4.2}Multimodal VAEs and Mutual Supervision}{16}{subsubsection.4.4.2}%
-\contentsline {subsection}{\numberline {4.5}Applications and Integrations in the Literature}{17}{subsection.4.5}%
-\contentsline {subsubsection}{\numberline {4.5.1}Domain Adaptation in the Medical Domain}{17}{subsubsection.4.5.1}%
-\contentsline {subsubsection}{\numberline {4.5.2}Causal Extension and Robustness}{18}{subsubsection.4.5.2}%
-\contentsline {subsubsection}{\numberline {4.5.3}Catastrophic Forgetting and Generative Replay}{18}{subsubsection.4.5.3}%
-\contentsline {section}{\numberline {5}Experiments}{19}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Implementation Details}{19}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Supervision Weight}{19}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Label Corruption}{20}{subsection.5.3}%
-\contentsline {section}{\numberline {6}Discussion}{22}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Performance and Compositionality}{22}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}The Role of Structure in Disentanglement}{22}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}Limitations in Heterogeneous Sparse Supervision}{22}{subsection.6.3}%
-\contentsline {subsection}{\numberline {6.4}Future Directions}{23}{subsection.6.4}%
-\contentsline {section}{\numberline {7}Conclusion}{24}{section.7}%
+\contentsline {section}{\numberline {4}Extensions and Limitations}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Own Criticism}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}General Critiques}{12}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Impossibility of Unsupervised Disentanglement}{12}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}The Limitation of Isotropic Priors}{13}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Unbounded Likelihoods and Mode Collapse}{14}{subsubsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.3}Disentanglement Implications and Limitations}{14}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Semantic Conflation Problem}{14}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Breaking the ELBO Bottleneck}{15}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Differentiating Consistency and Restrictiveness}{16}{subsubsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.4}Extensions in Supervision: From Semi to Weak}{17}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}The Weak Supervision Paradigm}{17}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2}Multimodal VAEs and Mutual Supervision}{18}{subsubsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.5}Applications and Integrations in the Literature}{18}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}Domain Adaptation in the Medical Domain}{18}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Causal Extension and Robustness}{19}{subsubsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.3}Catastrophic Forgetting and Generative Replay}{19}{subsubsection.4.5.3}%
+\contentsline {section}{\numberline {5}Experiments}{21}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Implementation Details}{21}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Supervision Weight}{21}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Label Corruption}{22}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Discussion}{24}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Future Directions}{25}{subsection.6.1}%
+\contentsline {section}{\numberline {7}Conclusion}{26}{section.7}%
 \contentsline {section}{\numberline {A}Systematic Review Process}{V}{appendix.A}%
 \contentsline {section}{\numberline {B}SSVAE Training}{V}{appendix.B}%

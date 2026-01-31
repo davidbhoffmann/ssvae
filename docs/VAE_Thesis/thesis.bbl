@@ -1,0 +1,164 @@
+\begin{thebibliography}{xx}
+
+\harvarditem[Adel et~al.]{Adel, Ghahramani \harvardand\ Weller}{2018}{adel_discovering_2018}
+Adel, T., Ghahramani, Z. \harvardand\ Weller, A.  \harvardyearleft 2018\harvardyearright .
+\newblock Discovering interpretable representations for both deep generative and discriminative models, {\em in} J.~Dy \harvardand\ A.~Krause (eds), {\em Proceedings of the 35th International Conference on Machine Learning}, Vol.~80 of {\em Proceedings of Machine Learning Research}, PMLR, pp.~50--59.
+
+\harvarditem{Agarap}{2018}{agarap2018deep}
+Agarap, A.~F.  \harvardyearleft 2018\harvardyearright .
+\newblock Deep learning using rectified linear units (reli), {\em ArXiv Preprint} .
+
+\harvarditem[Bengio et~al.]{Bengio, Courville \harvardand\ Vincent}{2013}{bengio2013representation}
+Bengio, Y., Courville, A. \harvardand\ Vincent, P.  \harvardyearleft 2013\harvardyearright .
+\newblock Representation learning: A review and new perspectives, {\em IEEE transactions on pattern analysis and machine intelligence} {\bf 35}(8):~1798--1828.
+
+\harvarditem[Biswal et~al.]{Biswal, Ghosh, Duke, Malin, Stewart, Xiao \harvardand\ Sun}{2021}{biswal_eva_2020}
+Biswal, S., Ghosh, S., Duke, J., Malin, B., Stewart, W., Xiao, C. \harvardand\ Sun, J.  \harvardyearleft 2021\harvardyearright .
+\newblock Eva: Generating longitudinal electronic health records using conditional variational autoencoders, {\em Machine Learning for Healthcare Conference}, PMLR, pp.~260--282.
+
+\harvarditem[Bouchacourt et~al.]{Bouchacourt, Tomioka \harvardand\ Nowozin}{2018}{bouchacourt_multilevel_2017}
+Bouchacourt, D., Tomioka, R. \harvardand\ Nowozin, S.  \harvardyearleft 2018\harvardyearright .
+\newblock Multi-level variational autoencoder: Learning disentangled representations from grouped observations, {\em Proceedings of the AAAI Conference on Artificial Intelligence}, Vol.~32.
+
+\harvarditem[Casale et~al.]{Casale, Dalca, Saglietti, Listgarten \harvardand\ Fusi}{2018}{casale_gaussian_2018}
+Casale, F.~P., Dalca, A.~V., Saglietti, L., Listgarten, J. \harvardand\ Fusi, N.  \harvardyearleft 2018\harvardyearright .
+\newblock Gaussian process prior variational autoencoders, {\em Advances in Neural Information Processing Systems (NeurIPS 2018)}.
+
+\harvarditem{Chen \harvardand\ Batmanghelich}{2020}{chen_weakly_2020}
+Chen, J. \harvardand\ Batmanghelich, K.  \harvardyearleft 2020\harvardyearright .
+\newblock Weakly supervised disentanglement by pairwise similarities, {\em Proceedings of the AAAI Conference on Artificial Intelligence}, Vol.~34, pp.~3495--3502.
+
+\harvarditem[Chen et~al.]{Chen, Li, Grosse \harvardand\ Duvenaud}{2018}{chen_isolating_2019}
+Chen, R.~T., Li, X., Grosse, R.~B. \harvardand\ Duvenaud, D.~K.  \harvardyearleft 2018\harvardyearright .
+\newblock Isolating sources of disentanglement in variational autoencoders, {\em Advances in neural information processing systems} {\bf 31}.
+
+\harvarditem{Deng}{2012}{deng2012mnist}
+Deng, L.  \harvardyearleft 2012\harvardyearright .
+\newblock The mnist database of handwritten digit images for machine learning research, {\em IEEE Signal Processing Magazine} {\bf 29}(6):~141--142.
+
+\harvarditem[Esmaeili et~al.]{Esmaeili, Wu, Jain, Bozkurt, Siddharth, Paige, Brooks, Dy \harvardand\ Meent}{2019}{esmaeili_structured_2018}
+Esmaeili, B., Wu, H., Jain, S., Bozkurt, A., Siddharth, N., Paige, B., Brooks, D.~H., Dy, J. \harvardand\ Meent, J.-W.  \harvardyearleft 2019\harvardyearright .
+\newblock Structured disentangled representations, {\em The 22nd International Conference on Artificial Intelligence and Statistics}, PMLR, pp.~2525--2534.
+
+\harvarditem[Feng et~al.]{Feng, Kong, Chen, Zhang, Zhu \harvardand\ Chen}{2021}{feng_shot_vae_2021}
+Feng, H.-Z., Kong, K., Chen, M., Zhang, T., Zhu, M. \harvardand\ Chen, W.  \harvardyearleft 2021\harvardyearright .
+\newblock Shot-vae: Semi-supervised deep generative models with label-aware elbo approximations, {\em Proceedings of the AAAI Conference on Artificial Intelligence} {\bf 35}(8):~7413--7421.
+
+\harvarditem[Georghiades et~al.]{Georghiades, Belhumeur \harvardand\ Kriegman}{2001}{GeBeKr01}
+Georghiades, A., Belhumeur, P. \harvardand\ Kriegman, D.  \harvardyearleft 2001\harvardyearright .
+\newblock From few to many: Illumination cone models for face recognition under variable lighting and pose, {\em IEEE Trans. Pattern Anal. Mach. Intelligence} {\bf 23}(6):~643--660.
+
+\harvarditem[Gordon et~al.]{Gordon, Bronskill, Bauer, Nowozin \harvardand\ Turner}{2019}{gordon_meta_2019}
+Gordon, J., Bronskill, J., Bauer, M., Nowozin, S. \harvardand\ Turner, R.~E.  \harvardyearleft 2019\harvardyearright .
+\newblock Meta-learning probabilistic inference for prediction, {\em International Conference on Learning Representations (ICLR)}.
+
+\harvarditem[Higgins et~al.]{Higgins, Matthey, Pal, Burgess, Glorot, Botvinick, Mohamed \harvardand\ Lerchner}{2017}{Higgins2016betaVAELB}
+Higgins, I., Matthey, L., Pal, A., Burgess, C.~P., Glorot, X., Botvinick, M.~M., Mohamed, S. \harvardand\ Lerchner, A.  \harvardyearleft 2017\harvardyearright .
+\newblock Beta-vae: Learning basic visual concepts with a constrained variational framework, {\em International Conference on Learning Representations}.
+
+\harvarditem[Jampani et~al.]{Jampani, Eslami, Tarlow, Kohli \harvardand\ Winn}{2015}{pmlr-v38-jampani15}
+Jampani, V., Eslami, S. M.~A., Tarlow, D., Kohli, P. \harvardand\ Winn, J.  \harvardyearleft 2015\harvardyearright .
+\newblock {Consensus Message Passing for Layered Graphical Models}, {\em in} G.~Lebanon \harvardand\ S.~V.~N. Vishwanathan (eds), {\em Proceedings of the Eighteenth International Conference on Artificial Intelligence and Statistics}, Vol.~38 of {\em Proceedings of Machine Learning Research}, PMLR, San Diego, California, USA, pp.~425--433.
+\newline\harvardurl{https://proceedings.mlr.press/v38/jampani15.html}
+
+\harvarditem[Joy et~al.]{Joy, Schmon, Torr, Siddharth \harvardand\ Rainforth}{2021}{joy_capturing_2020}
+Joy, T., Schmon, S.~M., Torr, P. H.~S., Siddharth, N. \harvardand\ Rainforth, T.  \harvardyearleft 2021\harvardyearright .
+\newblock Capturing label characteristics in vaes, {\em International Conference on Learning Representations (ICLR)}.
+
+\harvarditem[Joy et~al.]{Joy, Shi, Torr, Rainforth, Schmon \harvardand\ Siddharth}{2022}{joy_learning_2021}
+Joy, T., Shi, Y., Torr, P.~H., Rainforth, T., Schmon, S.~M. \harvardand\ Siddharth, N.  \harvardyearleft 2022\harvardyearright .
+\newblock Learning multimodal vaes through mutual supervision, {\em ICLR} .
+
+\harvarditem[Ke et~al.]{Ke, Jing, Wo\'{z}niak, Xu, Liang \harvardand\ Zheng}{2024}{ke_apgvae_2023}
+Ke, Q., Jing, X., Wo\'{z}niak, M., Xu, S., Liang, Y. \harvardand\ Zheng, J.  \harvardyearleft 2024\harvardyearright .
+\newblock Apgvae: Adaptive disentangled representation learning with the graph-based structure information, {\em Inf. Sci.} {\bf 657}(C).
+
+\harvarditem{Kim \harvardand\ Mnih}{2018}{Kim2018DisentanglingBF}
+Kim, H. \harvardand\ Mnih, A.  \harvardyearleft 2018\harvardyearright .
+\newblock Disentangling by factorising, {\em International Conference on Machine Learning}.
+
+\harvarditem{Kingma \harvardand\ Ba}{2015}{kingma2017adammethodstochasticoptimization}
+Kingma, D.~P. \harvardand\ Ba, J.  \harvardyearleft 2015\harvardyearright .
+\newblock Adam: A method for stochastic optimization, {\em International Conference on Learning Representations (ICLR)}.
+
+\harvarditem[Kingma et~al.]{Kingma, Rezende, Mohamed \harvardand\ Welling}{2014}{kingma_semi-supervised_2014}
+Kingma, D.~P., Rezende, D.~J., Mohamed, S. \harvardand\ Welling, M.  \harvardyearleft 2014\harvardyearright .
+\newblock Semi-supervised {Learning} with {Deep} {Generative} {Models}, {\em Advances in {Neural} {Information} {Processing} {Systems}}, Vol.~27, Curran Associates, Inc.
+
+\harvarditem{Kingma \harvardand\ Welling}{2014}{kingma_auto-encoding_2013}
+Kingma, D.~P. \harvardand\ Welling, M.  \harvardyearleft 2014\harvardyearright .
+\newblock Auto-{Encoding} {Variational} {Bayes}, {\em 2nd {International} {Conference} on {Learning} {Representations}}.
+
+\harvarditem{Kulinski \harvardand\ Inouye}{2023}{kulinski_explaining_2023}
+Kulinski, S. \harvardand\ Inouye, D.~I.  \harvardyearleft 2023\harvardyearright .
+\newblock Towards explaining distribution shifts, {\em Proceedings of the 40th International Conference on Machine Learning (ICML)}.
+
+\harvarditem[Li et~al.]{Li, Zhang \harvardand\ Liu}{2018}{li_multi_2018}
+Li, Y., Zhang, L. \harvardand\ Liu, Z.  \harvardyearleft 2018\harvardyearright .
+\newblock Multi-objective de novo drug design with conditional graph generative model, {\em Journal of Cheminformatics} {\bf 10}(1):~33.
+
+\harvarditem[Lin et~al.]{Lin, Thekumparampil, Fanti \harvardand\ Oh}{2020}{lin_infogan_2020}
+Lin, Z., Thekumparampil, K., Fanti, G. \harvardand\ Oh, S.  \harvardyearleft 2020\harvardyearright .
+\newblock {I}nfo{GAN}-{CR} and {M}odel{C}entrality: Self-supervised model training and selection for disentangling {GAN}s, {\em in} H.~D. III \harvardand\ A.~Singh (eds), {\em Proceedings of the 37th International Conference on Machine Learning}, Vol. 119 of {\em Proceedings of Machine Learning Research}, PMLR, pp.~6127--6139.
+
+\harvarditem[Locatello et~al.]{Locatello, Bauer, Lucic, Gelly, Schoelkopf \harvardand\ Bachem}{2019}{locatello_challenging_2018}
+Locatello, F., Bauer, S., Lucic, M., Gelly, S., Schoelkopf, B. \harvardand\ Bachem, O.  \harvardyearleft 2019\harvardyearright .
+\newblock Challenging common assumptions in the unsupervised learning of disentangled representations, {\em Proceedings of the 36th International Conference on Machine Learning (ICML)}.
+
+\harvarditem[Locatello et~al.]{Locatello, Poole, Raetsch, Schoelkopf, Bachem \harvardand\ Tschannen}{2020}{locatello_weakly_2020}
+Locatello, F., Poole, B., Raetsch, G., Schoelkopf, B., Bachem, O. \harvardand\ Tschannen, M.  \harvardyearleft 2020\harvardyearright .
+\newblock Weakly-supervised disentanglement without compromises, {\em Proceedings of the 37th International Conference on Machine Learning (ICML)}.
+
+\harvarditem{Mattei \harvardand\ Frellsen}{2018}{mattei_leveraging_2018}
+Mattei, P.-A. \harvardand\ Frellsen, J.  \harvardyearleft 2018\harvardyearright .
+\newblock Leveraging the exact likelihood of deep latent variable models, {\em Advances in Neural Information Processing Systems} {\bf 31}.
+
+\harvarditem[Narayanaswamy et~al.]{Narayanaswamy, Paige, van~de Meent, Desmaison, Goodman, Kohli, Wood \harvardand\ Torr}{2017}{narayanaswamy_learning_2017}
+Narayanaswamy, S., Paige, B., van~de Meent, J.-W., Desmaison, A., Goodman, N., Kohli, P., Wood, F. \harvardand\ Torr, P.  \harvardyearleft 2017\harvardyearright .
+\newblock Learning {Disentangled} {Representations} with {Semi}-{Supervised} {Deep} {Generative} {Models}, {\em Advances in {Neural} {Information} {Processing} {Systems}}, Vol.~30, Curran Associates, Inc.
+
+\harvarditem[Netzer et~al.]{Netzer, Wang, Coates, Bissacco, Wu, Ng et~al.}{2011}{netzer2011reading}
+Netzer, Y., Wang, T., Coates, A., Bissacco, A., Wu, B., Ng, A.~Y. et~al.  \harvardyearleft 2011\harvardyearright .
+\newblock Reading digits in natural images with unsupervised feature learning, {\em NIPS workshop on deep learning and unsupervised feature learning}, Granada, p.~7.
+
+\harvarditem[Nie et~al.]{Nie, Karras, Garg, Debnath, Patney, Patel \harvardand\ Anandkumar}{2020}{nie_semi_supervised_2020}
+Nie, W., Karras, T., Garg, A., Debnath, S., Patney, A., Patel, A. \harvardand\ Anandkumar, A.  \harvardyearleft 2020\harvardyearright .
+\newblock Semi-supervised {S}tyle{GAN} for disentanglement learning, {\em in} H.~D. III \harvardand\ A.~Singh (eds), {\em Proceedings of the 37th International Conference on Machine Learning}, Vol. 119 of {\em Proceedings of Machine Learning Research}, PMLR, pp.~7360--7369.
+
+\harvarditem[Perry et~al.]{Perry, Rolls \harvardand\ Stringer}{2010}{perry2010continuous}
+Perry, G., Rolls, E. \harvardand\ Stringer, S.  \harvardyearleft 2010\harvardyearright .
+\newblock Continuous transformation learning of translation invariant representations, {\em Experimental brain research} {\bf 204}(2):~255--270.
+
+\harvarditem[Rezende et~al.]{Rezende, Mohamed \harvardand\ Wierstra}{2014}{rezende2014stochastic}
+Rezende, D.~J., Mohamed, S. \harvardand\ Wierstra, D.  \harvardyearleft 2014\harvardyearright .
+\newblock Stochastic backpropagation and approximate inference in deep generative models, {\em International conference on machine learning} pp.~1278--1286.
+
+\harvarditem[Shu et~al.]{Shu, Chen, Kumar, Ermon \harvardand\ Poole}{2020}{shu_weakly_2019}
+Shu, R., Chen, Y., Kumar, A., Ermon, S. \harvardand\ Poole, B.  \harvardyearleft 2020\harvardyearright .
+\newblock Weakly supervised disentanglement with guarantees, {\em International Conference on Learning Representations (ICLR)}.
+
+\harvarditem[Vaze et~al.]{Vaze, Vedaldi \harvardand\ Zisserman}{2023}{vaze_representation_2023}
+Vaze, S., Vedaldi, A. \harvardand\ Zisserman, A.  \harvardyearleft 2023\harvardyearright .
+\newblock No representation rules them all in category discovery, {\em Advances in Neural Information Processing Systems (NeurIPS)}.
+
+\harvarditem[Yang et~al.]{Yang, Dvornek, Zhang, Chapiro, Lin \harvardand\ Duncan}{2019}{yang_usupervised_2019}
+Yang, J., Dvornek, N.~C., Zhang, F., Chapiro, J., Lin, M. \harvardand\ Duncan, J.~S.  \harvardyearleft 2019\harvardyearright .
+\newblock Unsupervised domain adaptation via disentangled representations: Application to cross-modality liver segmentation, {\em International Conference on Medical Image Computing and Computer-Assisted Intervention}, Springer, pp.~255--263.
+
+\harvarditem{Yang \harvardand\ Yao}{2019}{yang_disentangling_2019}
+Yang, L. \harvardand\ Yao, A.  \harvardyearleft 2019\harvardyearright .
+\newblock Disentangling latent hands for image synthesis and pose estimation, {\em Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}.
+
+\harvarditem{Ye \harvardand\ Bors}{2020}{ye_learning_2020}
+Ye, F. \harvardand\ Bors, A.~G.  \harvardyearleft 2020\harvardyearright .
+\newblock Learning latent representations across multiple data domains using lifelong vaegan, {\em European Conference on Computer Vision (ECCV)}.
+
+\harvarditem{Ye \harvardand\ Bors}{2022}{ye_lifelong_2022}
+Ye, F. \harvardand\ Bors, A.~G.  \harvardyearleft 2022\harvardyearright .
+\newblock Lifelong teacher-student network learning, {\em IEEE Transactions on Pattern Analysis and Machine Intelligence} {\bf 44}(10):~6280--6296.
+
+\harvarditem[Zhang et~al.]{Zhang, Zhang \harvardand\ Li}{2020}{zhang_causal_2020}
+Zhang, C., Zhang, K. \harvardand\ Li, Y.  \harvardyearleft 2020\harvardyearright .
+\newblock A causal view on robustness of neural networks, {\em Advances in Neural Information Processing Systems (NeurIPS)}.
+
+\end{thebibliography}
