@@ -5,7 +5,7 @@
 \usepackage{alltt}
 
 \newcommand{\mytitle}{Learning Disentangled Representations with
-Semi-Supervised Deep Generative Models}
+Semi-Supervised Deep Generative Models: A Review}
 \newcommand{\myname}{David B. Hoffmann}
 \newcommand{\mysupervisor}{M. Sc. Simon Rittel}
 
@@ -19,7 +19,6 @@ bindingoffset = 0mm]{geometry}
 \usepackage{xcolor}
 \usepackage[round, comma]{natbib}
 \usepackage{fancyhdr}
-\usepackage{acronym}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{bm}
@@ -42,7 +41,7 @@ bindingoffset = 0mm]{geometry}
 \setlength{\headheight}{14.5pt}
 \setlength{\parindent}{0pt}
 \interfootnotelinepenalty = 10000
-
+\usepackage{acronym}
 
 % A C R O N Y M S ---------------------------------------------
 \acrodef{CCVAE}{Characteristic Capturing VAE}
@@ -129,14 +128,10 @@ Supervised by \mysupervisor
 
 \begin{abstract}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu 
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-culpa qui officia deserunt mollit anim id est laborum.
+The \ac{SSVAE} framework from \cite{narayanaswamy_learning_2017} bridges the gap between supervised graphical models and usupervised deep generative models. It allows the user to impose arbitrary dependence structures on the latent space of a \ac{VAE} through partial supervision. This work introduces the reader to the \ac{SSVAE} method and critically assesses its limitations. We identify key works in the related literature which point out the expensive use of labels, problems with disentanglement and the shift towards weak supervision. In our experiments, we address two limitations and identify a trade-off between disentanglement of the partially supervised latents and the remaining unsupervised varibles. Furthermore, we find that the supervised disentanglement in \acp{SSVAE} only marginally degrades when introducing up to 20\% of noise to the labels on the \acs{MNIST} dataset.
 
 \end{abstract}
+\acresetall
 
 \newpage
 \tableofcontents

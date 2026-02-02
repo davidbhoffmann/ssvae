@@ -2,9 +2,9 @@ Several works build on the results form \cite{narayanaswamy_learning_2017} and e
 
 \subsection{Own Criticism}
 \label{sec:my_critique}
-In the following we present several issues in presentation \cite{narayanaswamy_learning_2017} as well as unverified claims and minor critiques.
+In the following we present several issues in the presentation of \cite{narayanaswamy_learning_2017} as well as unverified claims and minor critiques.
 
-The presentation of the \ac{SSVAE} framework in \cite{narayanaswamy_learning_2017}, while correct, at points leaves the reader guessing at specific details, disrupting the reading flow. As such, some figures do not have captions and are never referenced. Other figures are referenced without explaining their interpretation such as the meaning of shading in the nodes of the computational graph in Figure 1 and 5 of \cite{narayanaswamy_learning_2017}. It is never explained that the shading corresponds to the degree to which the variables are supervised. Furthermore, some variables are never defined such as the $n$ in the relationship
+The presentation of the \ac{SSVAE} framework in \cite{narayanaswamy_learning_2017}, while correct, at points leaves the reader guessing at specific details, disrupting the reading flow. As such, some figures do not have captions and are never referenced. Other figures are referenced without explaining their interpretation such as the meaning of shading in the nodes of the computational graph in figure 1 and 5 of \cite{narayanaswamy_learning_2017}. It is never explained that the shading corresponds to the degree to which the variables are supervised. Furthermore, some variables are never defined such as the $n$ in the relationship
 \begin{equation}
     (n\cdot l)\times r +\epsilon
     \label{eq:yaleb}
@@ -12,15 +12,15 @@ The presentation of the \ac{SSVAE} framework in \cite{narayanaswamy_learning_201
 
 of the supervised variables in the Yale-B dataset \citep{GeBeKr01} experiment we explain in \autoref{sec:exp_faces}. The meaning of this variable only becomes clear after reading the cited work of \cite{pmlr-v38-jampani15} which declares it as the normal map.
 
-Further, \cite{narayanaswamy_learning_2017} claim a number of properties and findings that are not shown theoretically or empirically. One example of this is their in the introduction that "a representation that has some factorisable structure, and consistent semantics associated to different parts, is more likely to generalise to a new task". This is not verified by their experiment or any cited source. In a later paper \cite{locatello_challenging_2018} investigate this claim and find no evidence to support it as further explained in \autoref{sec:impossibility_theorem}.
+Further, \cite{narayanaswamy_learning_2017} claim a number of properties and findings that are not shown theoretically or empirically. One example of this in the introduction is that "a representation that has some factorisable structure, and consistent semantics associated to different parts, is more likely to generalise to a new task". This is not verified by their experiment or any cited source. In a later paper \cite{locatello_challenging_2018} investigate this claim and find no evidence to support it as further explained in \autoref{sec:impossibility_theorem}.
 
 The authors introduce \ac{SSVAE} as a framework for learning disentangled representations. \cite{narayanaswamy_learning_2017} claim that it provides the user with the ability to precisely specify axes of variation and their dependencies. Specifically, in their Yale-B dataset experiment they claim to learn the relationship between lighting, shading and reflectance from \autoref{eq:yaleb}. While they qualitatively demonstrate disentangling as well as classification and regression performance, the learning of this relationship is not shown.
 
-While the \ac{SSVAE} framework generalizes to arbitrary dependency structures, its practical application in real-world settings with multiple partially observed variables reveals significant limitations. The current formulation relies on a binary distinction between unsupervised data $\mathcal{D}_U$ and supervised data $\mathcal{D}_S$, assuming a consistent set of available labels for the supervised portion. However, in complex real-world datasets involving $K$ distinct supervised variables $\mathbf{y} = \{y_1, \dots, y_K\}$, supervision is often heterogeneous; a datapoint $x^{(n)}$ may possess annotations for a random subset of variables $O^{(n)} \subseteq \mathbf{y}$, while remaining variables $U^{(n)} = \mathbf{y} \setminus O^{(n)}$ are missing.
+Although, the \ac{SSVAE} framework generalizes to arbitrary dependency structures, its practical application in real-world settings with multiple partially observed variables reveals significant limitations. The current formulation relies on a binary distinction between unsupervised data $\mathcal{D}_U$ and supervised data $\mathcal{D}_S$, assuming a consistent set of available labels for the supervised portion. However, in complex real-world datasets involving $K$ distinct supervised variables $\mathbf{y} = \{y_1, \dots, y_K\}$, supervision is often heterogeneous; a datapoint $x^{(n)}$ may possess annotations for a random subset of variables $O^{(n)} \subseteq \mathbf{y}$, while remaining variables $U^{(n)} = \mathbf{y} \setminus O^{(n)}$ are missing.
 
 Under the proposed framework, variables are treated as observed when available and sampled otherwise. Yet, implementing this dynamically in a batched stochastic gradient descent setting becomes non-trivial. The standard objective presented in \autoref{eq:combined_obj} breaks down because there is no single $\mathcal{L}_S$. Instead, the objective function effectively fractures into $2^K$ potential observation patterns. To handle this, the practitioner must manually specify unique loss components or intricate masking logic for each missingness pattern to correctly toggle between computing the likelihood $p(y_k)$ (for $y_k \in O^{(n)}$) and performing importance sampling using $q_\phi(y_k|x)$ (for $y_k \in U^{(n)}$). This combinatorial explosion necessitates a bespoke and brittle implementation of the stochastic computation graph, undermining the flexibility intended by the general framework.
 
-Additionally, while it is considered a good practice to reproduce experiments for methods presented in other papers instead of directly copying their results. This is not done by \cite{narayanaswamy_learning_2017}. For their \ac{MNIST}/\ac{SVHN} and Yale-B experiments (outlined in \autoref{sec:mnist} and \autoref{sec:exp_faces} respectively) they merely copy experimental result values from \cite{kingma_semi-supervised_2014} and \cite{pmlr-v38-jampani15} instead of confirming the performance in their own experiments. Moreover, the definition of hyperparameters such as $\alpha$ and $\gamma$ is not always clear as alluded to in \autoref{sec:their_eperiments}. Another minor error is the wrong column description in Figure 6 of \cite{narayanaswamy_learning_2017} which states that the table on the bottom right reports count error, while the table actually contains accuracy values as correctly pointed out in the corresponding caption.
+Additionally, it is considered a good practice to reproduce experiments for methods presented in other papers instead of directly copying their results. This is not done by \cite{narayanaswamy_learning_2017}. For their \ac{MNIST}/\ac{SVHN} and Yale-B experiments (outlined in \autoref{sec:mnist} and \autoref{sec:exp_faces} respectively) they merely copy experimental result values from \cite{kingma_semi-supervised_2014} and \cite{pmlr-v38-jampani15} instead of confirming the performance in their own experiments. Moreover, the definition of hyperparameters such as $\alpha$ and $\gamma$ is not always clear as alluded to in \autoref{sec:their_eperiments}. Another minor error is the wrong column description in figure 6 of \cite{narayanaswamy_learning_2017} which states that the table on the bottom right reports count error, while the table actually contains accuracy values as correctly pointed out in the corresponding caption.
 
 Lastly, in the same experiments, \cite{narayanaswamy_learning_2017} do not mention which exact values they report. They state that they report error rates but not which metric they use. This complicates comparability to other methods and isolated interpretation of their results.
 
@@ -28,7 +28,7 @@ Lastly, in the same experiments, \cite{narayanaswamy_learning_2017} do not menti
 \subsection{General Critiques}
 \label{sec:general_critique}
 
-In the following the semi-supervised disentanglement approach from \cite{narayanaswamy_learning_2017} is confirmed by results from \cite{locatello_challenging_2018}, which demonstrate the impossibility of stable unsupervised disentanglement. \cite{casale_gaussian_2018} offer a general critique of the \ac{i.i.d.} assumption in \acp{VAE} directly mentioning \cite{narayanaswamy_learning_2017}. 
+In the following the semi-supervised disentanglement approach from \cite{narayanaswamy_learning_2017} is confirmed by results from \cite{locatello_challenging_2018}, which demonstrate the impossibility of stable unsupervised disentanglement. \cite{casale_gaussian_2018} offer a general critique of the \ac{i.i.d.} assumption in \acp{VAE} directly mentioning \cite{narayanaswamy_learning_2017}. Lastly, \cite{mattei_leveraging_2018} discuss a bias in using continuous versus discrete latents.
 
 \subsubsection{Impossibility of Unsupervised Disentanglement} 
 \label{sec:impossibility_theorem}
@@ -38,14 +38,18 @@ In their paper, "Challenging Common Assumptions in the Unsupervised Learning of 
 The proof relies on the geometry of the latent space and the properties of the Gaussian prior used in \acp{VAE}. Assuming a ground-truth generative process $x=f(z)$ where $z \sim P(z)$, then if $P(z)$ is a standard multivariate Gaussian, it is rotationally symmetric. That is, for any orthogonal rotation matrix $R$, the distribution of $Rz$ is identical to the distribution of $z$.
 
 Given a new generative function $f'(z)=f(R^Tz)$. The marginal distribution of observations $p(x)$ produced by this new model is identical to the original:
-$$ p(x)=\int p(x|z)p(z)dz=\int p(x|R^Tz)p(z)dz $$
+
+\begin{equation}
+    p(x)=\int p(x|z)p(z)dz=\int p(x|R^Tz)p(z)dz
+\end{equation}
+
 Since the unsupervised \ac{ELBO} only depends on the marginal likelihood of the data $p(x)$, it cannot distinguish between the true disentangled model $f(z)$ and the entangled model $f'(z)$. 
 
-In their experiments \cite{locatello_challenging_2018} "do not find any evidence that the considered models can be used to reliably learn disentangled representations in an unsupervised manner as random seeds and hyperparameters seem to matter more than the model choice. Furthermore, good trained models seemingly cannot be identified without access to ground-truth labels even if we are allowed to transfer good hyperparameter values across data sets". Furthermore, they state that for the considered models and data sets, "increased disentanglement does not seem to lead to a decreased sample complexity of learning for downstream tasks".
+In their experiments \cite{locatello_challenging_2018} "do not find any evidence that the considered models can be used to reliably learn disentangled representations in an unsupervised manner as random seeds and hyperparameters seem to matter more than the model choice. Furthermore, good trained models seemingly cannot be identified without access to ground-truth labels even if we are allowed to transfer good hyperparameter values across data sets".
 
 This result confirms the necessity of some form of inductive bias for stable latent representations as proposed by \cite{narayanaswamy_learning_2017}. \cite{narayanaswamy_learning_2017} anchor the variable $y$ with labels, however, the variable $z$ is essentially learned in an unsupervised manner relative to the style factors. \cite{locatello_challenging_2018}'s proof implies that there is no guarantee that $z$ will factorize into meaningful sub-components purely based on the \ac{VAE} objective. The model is free to learn any rotation of these style factors that explains the data.
 
-\cite{locatello_challenging_2018} further highlight that they couldn't find any evidence that disentangled representation lead to better downstream performance, shifting the focus more towards interpretability and fairness. While \cite{narayanaswamy_learning_2017} claim the contrary, namely  that consistent and factorisable representation are more likely to generalise to a new task, they never formally prove or demonstrate this empirically in their paper. 
+\cite{locatello_challenging_2018} further highlight that "increased disentanglement does not seem to lead to a decreased sample complexity of learning for downstream tasks", shifting the focus more towards interpretability and fairness. While \cite{narayanaswamy_learning_2017} claim the contrary, namely  that consistent and factorisable representation are more likely to generalise to a new task, they never formally prove or demonstrate this empirically in their paper as already pointed out in \autoref{sec:my_critique}. 
 
 
 \subsubsection{The Limitation of Isotropic Priors}
@@ -53,7 +57,11 @@ This result confirms the necessity of some form of inductive bias for stable lat
 \cite{casale_gaussian_2018} critique the use of overly simplistic \ac{i.i.d.} Gaussian priors. While \cite{narayanaswamy_learning_2017} move away from such priors by composing latent graphical models with deep likelihoods, \cite{casale_gaussian_2018} argue that the framework still often relies on conditional independence assumptions that may induce excessive regularization. \cite{casale_gaussian_2018} point out that for many important datasets—such as time-series of images, medical scans of the same patient, or rotated views of an object—the samples exhibit structured correlations that are better captured through the prior's covariance.
 
 Using a prior that ignores these sample-to-sample correlations is a model misspecification that forces the encoder to discard the correlation structure. \cite{casale_gaussian_2018} introduced the \ac{GPPVAE}, which replaces the independent prior with a Gaussian Process:
-$$ \mathbf{z} \sim \mathcal{GP}(0, K(X, X')) $$
+
+\begin{equation}
+   \mathbf{z} \sim \mathcal{GP}(0, K(X, X')) 
+\end{equation}
+
 Here, the covariance kernel $K$ explicitly models the correlation between samples (e.g., temporal proximity or identity). This allows the model to disentangle "object identity" from "view" by leveraging the kernel structure, a form of disentanglement that \cite{narayanaswamy_learning_2017}'s graphical approach typically handles through semi-supervised labels and specific message-passing variational families.
 
 \cite{esmaeili_structured_2018} also address the limitations of the isotropic Gaussian prior, arguing that it fails to exert sufficient regularizing pressure to force effective disentanglement. To resolve the common problem of disentangling discrete factors of variation from continuous variables—a task that remains problematic for many contemporary approaches—they propose a structured decomposition of the \ac{ELBO} objective. This modification allows for explicit control over the relative levels of disentanglement within different groups of latent variables. However, their analysis also highlights a significant optimization hurdle: discrete variables tend to exhibit higher likelihood values than continuous variables, which can introduce a bias that skews the optimization process in semi-supervised generative models.
@@ -64,13 +72,16 @@ Here, the covariance kernel $K$ explicitly models the correlation between sample
 \cite{mattei_leveraging_2018} investigated the maximum likelihood estimation for \acp{DLVM}, the class of models to which \cite{narayanaswamy_learning_2017} semi-supervised \ac{VAE} belongs. They proved that for continuous data, if the variance of the decoder's output distribution is learned without constraints, the likelihood function is unbounded.
 
 Consider a decoder that outputs a Gaussian distribution $\mathcal{N}(\mu_\theta(z), \sigma^2_\theta(z))$. If the model can map a specific latent point $z_i$ to exactly match a data point $x_i$ (i.e., $\mu_\theta(z_i) \approx x_i$) and simultaneously drive the variance $\sigma^2_\theta(z_i)$ toward zero, the likelihood density $p(x_i \mid z_i)$ approaches infinity:
-$$ p(x_i|z_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x_i-\mu)^2}{2\sigma^2}\right) \to \infty \text{ as } \sigma \to 0 $$
+
+\begin{equation}
+    p(x_i|z_i) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x_i-\mu)^2}{2\sigma^2}\right) \to \infty \text{ as } \sigma \to 0
+\end{equation}
+
 This creates a "hole" in the optimization landscape where the model collapses to storing data points (overfitting) rather than learning a generalized generative process. This is a severe limitation for \cite{narayanaswamy_learning_2017}s framework when applied to continuous data, as it can lead to numerical instability and meaningless latent representations where the "style" $z$ degenerates into a lookup table index rather than a semantic factor. \cite{mattei_leveraging_2018} suggest constraints on $\sigma$ or specific architectural choices to ensure the existence of generalized maximum likelihood estimates.
 
 
 \subsection{Disentanglement Implications and Limitations}
 
-In the following, disentanglement and its limitations are presented.
 
 \subsubsection{Semantic Conflation Problem}
 \label{sec:semantic_conflation}
@@ -141,7 +152,11 @@ They proved theoretically that knowing how many factors have changed (or stayed 
 \cite{joy_learning_2021}, in "Learning Multimodal VAEs through Mutual Supervision," extended the semi-supervised framework to scenarios with multiple high-dimensional modalities (e.g., Image + Text).
 
 In \cite{narayanaswamy_learning_2017}, supervision comes from a low-dimensional label $y$. In Multimodal \acp{VAE}, supervision comes from another rich modality. \cite{joy_learning_2021} utilized a \ac{PoE} aggregation. The joint posterior is approximated as the product of individual posteriors:
-$$ q(z|x_{\text{img}}, x_{\text{text}}) \propto q(z|x_{\text{img}}) \cdot q(z|x_{\text{text}}) $$
+
+\begin{equation}
+    q(z|x_{\text{img}}, x_{\text{text}}) \propto q(z|x_{\text{img}}) \cdot q(z|x_{\text{text}})
+\end{equation}
+
 This structure enforces a form of inter-modality disentanglement. Similar to \cite{locatello_weakly_2020}, the shared information (semantics) must be encoded in the intersection of the posteriors, while modality-specific noise is filtered out. This mutual supervision allows the model to learn robust representations even when one modality is missing, extending the partial-specification idea of \cite{narayanaswamy_learning_2017} to complex, unstructured labels.
 
 

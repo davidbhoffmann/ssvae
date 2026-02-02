@@ -86,6 +86,17 @@ For the unsupervised dataset $\mathcal{D}_U = \{x^n\}$, the label $y$ is treated
     \mathcal{L}_U(\theta, \phi; x) = \sum_{y} q_\phi(y|x) \left( \mathbb{E}_{q_\phi(z|x,y)}\!\left[ \log \frac{p_\theta(x,y,z)}{q_\phi(z|x,y)} \right] \right) + \mathcal{H}(q_\phi(y|x))
     \label{eq:unsup_obj}
 \end{equation}
+
+% \begin{align}
+%     \mathcal{L}_U(\theta, \phi; x) 
+%     &= \mathbb{E}_{q_\phi(y, z|x)} \left[ \log \frac{p_\theta(x, y, z)}{q_\phi(y, z|x)} \right] \label{eq:standard_elbo} \\
+%     &= \mathbb{E}_{q_\phi(y|x)q_\phi(z|x,y)} \left[ \log \frac{p_\theta(x, y, z)}{q_\phi(y|x)q_\phi(z|x, y)} \right] \notag \\
+%     &= \sum_{y} q_\phi(y|x) \mathbb{E}_{q_\phi(z|x,y)} \left[ \log \frac{p_\theta(x, y, z)}{q_\phi(z|x, y)} - \log q_\phi(y|x) \right] \notag \\
+%     &= \sum_{y} q_\phi(y|x) \left( \mathbb{E}_{q_\phi(z|x,y)} \left[ \log \frac{p_\theta(x, y, z)}{q_\phi(z|x, y)} \right] \right) - \sum_{y} q_\phi(y|x) \log q_\phi(y|x) \notag \\
+%     &= \sum_{y} q_\phi(y|x) \left( \mathbb{E}_{q_\phi(z|x,y)} \left[ \log \frac{p_\theta(x, y, z)}{q_\phi(z|x, y)} \right] \right) + \mathcal{H}(q_\phi(y|x)) 
+%     \label{eq:unsup_obj}
+% \end{align}
+
 where $q_\phi(y|x)$ is the recognition network acting as a discriminative classifier.
 
 The final training objective combines these bounds over both datasets:
