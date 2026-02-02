@@ -7,7 +7,7 @@ This folder contains experiments to evaluate the robustness of Semi-Supervised V
 
 ```bash
 # Python experiment
-python combined_robustness_experiment.py \
+python experiment_pipeline.py \
     --dataset MNIST --num_epochs 40 \
     --n_labels 100,600,1000,3000 \
     --corruption_rates 0.0 \

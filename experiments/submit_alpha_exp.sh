@@ -40,7 +40,7 @@ echo "Starting combined robustness experiment..."
 echo ""
 
 
-python combined_robustness_experiment.py \
+python experiment_pipeline.py \
     --dataset MNIST --num_epochs 40 \
     --n_labels 100,600,1000,3000 \
     --corruption_rates 0.0 \

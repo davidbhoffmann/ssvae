@@ -43,7 +43,7 @@ cd /scratch/shared/beegfs/dhoffmann/projects/ssvae/experiments
 echo "Starting combined robustness experiment..."
 echo ""
 
-python combined_robustness_experiment.py \
+python experiment_pipeline.py \
     --dataset MNIST --num_epochs 40 \
     --n_labels 100,600,1000,3000 \
     --corruption_rates 0.0,0.01,0.1,0.2,0.5,1 \
