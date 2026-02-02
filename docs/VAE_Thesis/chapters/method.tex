@@ -8,7 +8,7 @@
 
 % Their experiments with definition of all relevant variables.
 
-While the \textit{M2} model by \cite{kingma_semi-supervised_2014} provides a powerful framework for semi-supervised learning, it imposes a specific graphical structure: the latent variables $y$ (label) and $z$ (style) are assumed to be independent in the prior, and the recognition model is required to factorise as $q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)$. \cite{narayanaswamy_learning_2017} generalise this approach to a broader class of partially-specified graphical models.
+While the \textit{M2} model by \cite{kingma_semi-supervised_2014} provides a powerful framework for semi-supervised learning, it imposes a specific graphical structure: the latent variables $y$ (label) and $z$ (style) are assumed to be independent in the prior, and the recognition model is required to factorise as $q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)$. \cite{narayanaswamy_learning_2017} generalise this approach to a broader class of partially-specified graphical models as visualized in \autoref{fig:framework_obj}.
 
 In this framework, the modeller specifies a graphical model where a subset of variables $y$ are semantically meaningful (and partially observed), while the remaining variables $z$ are left unstructured to capture nuisance variations. Unlike the \textit{M2} model, this framework allows for arbitrary dependency structures in both the generative model $p_\theta(x, y, z)$ and the approximate posterior $q_\phi(y, z|x)$. This flexibility enables the modelling of complex relationships, such as hierarchical dependencies or causal structures between labels and style variables, which are often necessary for disentanglement in real world datasets \citep{yang_usupervised_2019, biswal_eva_2020}.
 
@@ -16,6 +16,7 @@ In this framework, the modeller specifies a graphical model where a subset of va
     \centering
     \includegraphics[width=\textwidth]{figures/Framework_Optimization_Green.pdf}
     \caption{\ac{SSVAE} framework with reformulated supervised (\autoref{eq:sup_obj_reformulated}) and unsupervised (\autoref{eq:unsup_obj}) loss functions.}
+    \label{fig:framework_obj}
 \end{figure}
 
 \subsection{The Generalised Variational Objective}
