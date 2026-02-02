@@ -1,24 +1,13 @@
-% What are semi-supervised vae's and what problem do they solve? 
-
-% Why are they still relevant now? Why is supervised disentanglement an important contribution? 
-
-% How does semi supervised disentanglement work? 
-
-% What are our contributions? 
-%   Explanation of the method
-%   Limitations and trends in the literature
-%   Own experiments
-
 The success of deep learning in discriminative tasks is largely attributed to its ability to automatically discover hierarchical feature representations from raw data. However, in the realm of generative modelling, simply approximating the data distribution is often insufficient. A central goal of modern representation learning is \textit{disentanglement}, the ability to learn latent representations where distinct dimensions correspond to interpretable, real-world factors of variation \citep{bengio2013representation}. While \acp{VAE} \citep{kingma_auto-encoding_2013} provide a powerful probabilistic framework for learning latent variables, standard unsupervised approaches often yield entangled representations that are difficult to interpret or manipulate.
 
-Recent theoretical work has suggested that learning disentangled representations from data alone, without any inductive bias or supervision, is fundamentally impossible \citep{locatello_challenging_2018} motivating the use of supervised and structured approaches that leverage limited domain knowledge. A pivotal contribution in this direction is the \ac{SSVAE} framework proposed by \cite{kingma_semi-supervised_2014}, which unifies the flexibility of deep neural networks with the interpretability of probabilistic graphical models. \cite{narayanaswamy_learning_2017} generalize the \ac{SSVAE} framework to allow for the specification of arbitrary dependency structures, incorporating symbolic labels and unstructured style variables within a single stochastic computation graph.
+Recent theoretical work has suggested that learning disentangled representations from data alone, without any inductive bias or supervision, is fundamentally impossible \citep{locatello_challenging_2018}, motivating the use of supervised and structured approaches that leverage limited domain knowledge. A pivotal contribution in this direction is the \ac{SSVAE} framework proposed by \cite{kingma_semi-supervised_2014}, which unifies the flexibility of deep neural networks with the interpretability of probabilistic graphical models. \cite{narayanaswamy_learning_2017} generalize the \ac{SSVAE} framework to allow for the specification of arbitrary dependency structures, incorporating symbolic labels and unstructured style variables within a single stochastic computation graph.
 
 In this work, we provide a comprehensive analysis of the generalized \ac{SSVAE} framework shown in \autoref{fig:formulation}. We aim to go beyond a mere summary by critically evaluating its theoretical foundations, its reception in the broader literature, and its empirical robustness. Specifically, we address a gap in the existing critiques by conducting novel experiments that quantify the model's sensitivity to two key practical constraints: the weight of the supervision signal and the presence of label noise.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=\linewidth]{figures/Framework_Formulation_Green.pdf}
-    \caption{Formulation of the \ac{SSVAE} framework. The latent space is split into supervised variables $y$ and unsupervised varibales $z$.} 
+    \caption{Formulation of the \ac{SSVAE} framework. The latent space is split into supervised variables $y$ and unsupervised variables $z$.} 
     \label{fig:formulation}
 \end{figure}
 

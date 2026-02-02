@@ -128,7 +128,7 @@ Supervised by \mysupervisor
 
 \begin{abstract}
 
-The \ac{SSVAE} framework from \cite{narayanaswamy_learning_2017} bridges the gap between supervised graphical models and usupervised deep generative models. It allows the user to impose arbitrary dependence structures on the latent space of a \ac{VAE} through partial supervision. This work introduces the reader to the \ac{SSVAE} method and critically assesses its limitations. We identify key works in the related literature which point out the expensive use of labels, problems with disentanglement and the shift towards weak supervision. In our experiments, we address two limitations and identify a trade-off between disentanglement of the partially supervised latents and the remaining unsupervised varibles. Furthermore, we find that the supervised disentanglement in \acp{SSVAE} only marginally degrades when introducing up to 20\% of noise to the labels on the \acs{MNIST} dataset.
+The \ac{SSVAE} framework from \cite{narayanaswamy_learning_2017} bridges the gap between supervised graphical models and unsupervised deep generative models. It allows the user to impose arbitrary dependence structures on the latent space of a \ac{VAE} through partial supervision. This work introduces the reader to the \ac{SSVAE} method and critically assesses its limitations. We identify key works in the related literature which point out the expensive use of labels, problems with disentanglement, and the shift towards weak supervision. In our experiments, we address two limitations and identify a trade-off between disentanglement of the partially supervised latents and the remaining unsupervised variables. Furthermore, we find that the supervised disentanglement in \acp{SSVAE} only marginally degrades when introducing up to 20\% noise to the labels on the \acs{MNIST} dataset.
 
 \end{abstract}
 \acresetall
@@ -210,6 +210,25 @@ The \ac{SSVAE} framework from \cite{narayanaswamy_learning_2017} bridges the gap
 % ------------------------------------------------------------------------------
 % DECLARATION OF AUTHORSHIP-----------------------------------------------------
 % ------------------------------------------------------------------------------
+
+\Large
+\noindent
+\textbf{AI Tools} 
+\vspace{0.5cm}
+\noindent
+\normalsize
+
+I hereby confirm that I have written all parts of this work myself. Additionally, I used Gemini-3-Pro
+as a tool for grammar checking and refining individual sentences throughout all sections to improve reading flow. 
+These suggestions were not adopted verbatim but were manually reviewed, adapted, and
+reformulated. The python code for \autoref{fig:alpha_exp} and \autoref{fig:noise_exp} was generated using Gemini-3-Pro. 
+The model was also used as part of the literature review process as further detailed in \autoref{apx:systematic_review}.
+
+Moreover, Microsoft Copilot was used for code optimization and to generate code for specific parts of the experiment implementation. Specifically, Microsoft Copilot was used to add multi-gpu support to my implementation as well as for moving the model implementation from the examples notebooks of \cite{narayanaswamy_learning_2017} to an importable python module. 
+
+The python code for \autoref{fig:alpha_exp} and \autoref{fig:noise_exp} was generated using Gemini-3-Pro. 
+\\
+\vspace{1cm}
 
 \Large
 \noindent

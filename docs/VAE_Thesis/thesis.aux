@@ -49,10 +49,10 @@
 \acronymused{SSVAE}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Formulation of the \ac {SSVAE} framework. The latent space is split into supervised variables $y$ and unsupervised varibales $z$.}}{1}{figure.caption.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Formulation of the \ac {SSVAE} framework. The latent space is split into supervised variables $y$ and unsupervised variables $z$.}}{1}{figure.caption.7}\protected@file@percent }
 \acronymused{SSVAE}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:formulation}{{1}{1}{Formulation of the \ac {SSVAE} framework. The latent space is split into supervised variables $y$ and unsupervised varibales $z$}{figure.caption.7}{}}
+\newlabel{fig:formulation}{{1}{1}{Formulation of the \ac {SSVAE} framework. The latent space is split into supervised variables $y$ and unsupervised variables $z$}{figure.caption.7}{}}
 \acronymused{VAE}
 \acronymused{SSVAE}
 \citation{kingma_auto-encoding_2013,rezende2014stochastic}
@@ -224,6 +224,7 @@
 \acronymused{SSVAE}
 \acronymused{CCVAE}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Breaking the ELBO Bottleneck}{16}{subsubsection.4.3.2}\protected@file@percent }
+\newlabel{sec:elbo_bottleneck}{{4.3.2}{16}{Breaking the ELBO Bottleneck}{subsubsection.4.3.2}{}}
 \acronymused{SSVAE}
 \acronymused{ELBO}
 \AC@undonewlabel{acro:SHOT-VAE}
@@ -343,8 +344,8 @@
 \citation{narayanaswamy_learning_2017}
 \citation{narayanaswamy_learning_2017}
 \citation{narayanaswamy_learning_2017}
-\citation{narayanaswamy_learning_2017}
-\citation{narayanaswamy_learning_2017}
+\citation{Higgins2016betaVAELB}
+\citation{Kim2018DisentanglingBF}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Experiments}{22}{section.5}\protected@file@percent }
 \newlabel{experiments}{{5}{22}{Experiments}{section.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Implementation Details}{22}{subsection.5.1}\protected@file@percent }
@@ -359,25 +360,25 @@
 \acronymused{MNIST}
 \newlabel{fig:architecture}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The network has $28*28=784$ inputs matching the \ac {MNIST} input, 256 hidden neurons, 10 style variables and 10 digit neurons}{figure.caption.22}{}}
 \acronymused{MNIST}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Supervision Weight}{22}{subsection.5.2}\protected@file@percent }
-\newlabel{sec:alpha_exp}{{5.2}{22}{Supervision Weight}{subsection.5.2}{}}
-\acronymused{MNIST}
+\citation{narayanaswamy_learning_2017}
+\citation{narayanaswamy_learning_2017}
 \citation{Higgins2016betaVAELB}
 \citation{Kim2018DisentanglingBF}
 \citation{chen_isolating_2019}
 \citation{Higgins2016betaVAELB}
 \citation{Kim2018DisentanglingBF}
 \citation{chen_isolating_2019}
-\citation{lin_infogan_2020,bouchacourt_multilevel_2017,ke_apgvae_2023,Kim2018DisentanglingBF}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100 ($0.001\bar  {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar  {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. \textbf  {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf  {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf  {Right:} disentanglement metrics ($\beta $-VAE \cite  {Higgins2016betaVAELB}, Factor-VAE \cite  {Kim2018DisentanglingBF}, Mutual Information Gap \cite  {chen_isolating_2019}) decreases with increasing $\alpha $ across all three metrics.}}{23}{figure.caption.23}\protected@file@percent }
 \acronymused{ELBO}
 \newlabel{fig:alpha_exp}{{4}{23}{\textbf {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100 ($0.001\bar {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. \textbf {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf {Right:} disentanglement metrics ($\beta $-VAE \cite {Higgins2016betaVAELB}, Factor-VAE \cite {Kim2018DisentanglingBF}, Mutual Information Gap \cite {chen_isolating_2019}) decreases with increasing $\alpha $ across all three metrics}{figure.caption.23}{}}
+\acronymused{MIG}
+\acronymused{ELBO}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Supervision Weight}{23}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:alpha_exp}{{5.2}{23}{Supervision Weight}{subsection.5.2}{}}
+\acronymused{MNIST}
 \acronymused{MNIST}
 \acronymused{SSVAE}
-\acronymused{ELBO}
-\acronymused{ELBO}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Label Corruption}{23}{subsection.5.3}\protected@file@percent }
-\newlabel{sec:noise_exp}{{5.3}{23}{Label Corruption}{subsection.5.3}{}}
+\citation{lin_infogan_2020,bouchacourt_multilevel_2017,ke_apgvae_2023,Kim2018DisentanglingBF}
 \citation{narayanaswamy_learning_2017}
 \citation{Higgins2016betaVAELB}
 \citation{Kim2018DisentanglingBF}
@@ -388,6 +389,10 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Label Corruption} experiment results with varying label corruption rate for supervised set sizes of 100 ($0.001\bar  {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar  {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. \textbf  {Top Left:} final test \ac {ELBO} for varying noise levels remains relatively stable. \textbf  {Bottom Left:} while the final test accuracy of $y$ decreases for higher corruption rates it remains relatively high for up to 20\% noise. \textbf  {Right:} disentanglement (as measured through $\beta $-VAE \cite  {Higgins2016betaVAELB}, Factor-VAE \cite  {Kim2018DisentanglingBF}, Mutual Information Gap \cite  {chen_isolating_2019}) increase with a higher corruption rate across all three metrics.}}{24}{figure.caption.24}\protected@file@percent }
 \acronymused{ELBO}
 \newlabel{fig:noise_exp}{{5}{24}{\textbf {Label Corruption} experiment results with varying label corruption rate for supervised set sizes of 100 ($0.001\bar {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. \textbf {Top Left:} final test \ac {ELBO} for varying noise levels remains relatively stable. \textbf {Bottom Left:} while the final test accuracy of $y$ decreases for higher corruption rates it remains relatively high for up to 20\% noise. \textbf {Right:} disentanglement (as measured through $\beta $-VAE \cite {Higgins2016betaVAELB}, Factor-VAE \cite {Kim2018DisentanglingBF}, Mutual Information Gap \cite {chen_isolating_2019}) increase with a higher corruption rate across all three metrics}{figure.caption.24}{}}
+\acronymused{ELBO}
+\acronymused{ELBO}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Label Corruption}{24}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:noise_exp}{{5.3}{24}{Label Corruption}{subsection.5.3}{}}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
 \acronymused{ELBO}
@@ -398,13 +403,17 @@
 \citation{narayanaswamy_learning_2017}
 \citation{locatello_challenging_2018}
 \citation{lin_infogan_2020,bouchacourt_multilevel_2017,ke_apgvae_2023,Kim2018DisentanglingBF}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{25}{section.6}\protected@file@percent }
-\newlabel{discussion}{{6}{25}{Discussion}{section.6}{}}
+\citation{feng_shot_vae_2021}
+\citation{joy_learning_2021}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{26}{section.6}\protected@file@percent }
+\newlabel{discussion}{{6}{26}{Discussion}{section.6}{}}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
+\acronymused{ELBO}
+\acronymused{ELBO}
 \acronymused{ELBO}
 \acronymused{SSVAE}
 \acronymused{MNIST}
@@ -414,8 +423,8 @@
 \citation{locatello_weakly_2020}
 \citation{zhang_causal_2020}
 \citation{narayanaswamy_learning_2017}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{26}{section.7}\protected@file@percent }
-\newlabel{conclusion}{{7}{26}{Conclusion}{section.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{28}{section.7}\protected@file@percent }
+\newlabel{conclusion}{{7}{28}{Conclusion}{section.7}{}}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
@@ -509,4 +518,5 @@
 \bibcite{ye_lifelong_2022}{{39}{2022}{{Ye and\ Bors}}{{}}}
 \bibcite{zhang_causal_2020}{{40}{2020}{{Zhang et~al.}}{{Zhang, Zhang and\ Li}}}
 \bibstyle{dcu}
-\gdef \@abspage@last{50}
+\citation{narayanaswamy_learning_2017}
+\gdef \@abspage@last{52}
