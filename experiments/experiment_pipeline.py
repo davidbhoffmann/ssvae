@@ -79,26 +79,26 @@ DEFAULT_CONFIG = {
     # Training parameters
     "num_samples": 8,
     "num_batch": 256,
-    "num_epochs": 40,  # Moderate training for parameter sweep
+    "num_epochs": 40,
     "learning_rate": 1e-3,
     "beta1": 0.90,
     "eps": 1e-9,
-    "device": "auto",  # 'auto', 'cuda', 'mps', or 'cpu'
+    "device": "auto",
     # Multi-GPU settings
-    "use_multi_gpu": False,  # Enable multi-GPU if available
-    "gpu_ids": None,  # None = use all GPUs, or list like [0, 1, 2, 3]
+    "use_multi_gpu": False,
+    "gpu_ids": None,
     # Data loading settings
-    "num_workers": 4,  # Number of data loading workers (increase for faster loading)
-    "pin_memory": True,  # Pin memory for faster GPU transfer
+    "num_workers": 4,
+    "pin_memory": True,
     # Performance settings
-    "eval_frequency": 5,  # Evaluate every N epochs (set >1 to speed up training)
+    "eval_frequency": 5,
     # Experiment parameters - 3D sweep
     "n_labels": [100, 600, 1000, 3000],  #
     "corruption_rates": [0.0],
     "alpha_values": [0.1, 0.5, 1, 50, 100],
     "datasets": ["MNIST"],  # , "FashionMNIST"
-    "num_seeds": 10,  # Number of random seeds per configuration
-    "random_seeds": list(range(42, 52)),  # Seeds: 42, 43, 44, ..., 51
+    "num_seeds": 10,
+    "random_seeds": list(range(42, 52)),
     # Path parameters
     "data_path": "../data",
     "results_path": "../results/combined",
@@ -206,7 +206,7 @@ def run_single_combined_experiment(
             dec,
             optimizer,
             label_mask,
-            label_fraction=n_labels / len(train_loader.dataset),  # Convert to fraction
+            label_fraction=n_labels / len(train_loader.dataset),
             num_samples=config["num_samples"],
             num_batch=config["num_batch"],
             num_pixels=config["num_pixels"],
@@ -233,13 +233,12 @@ def run_single_combined_experiment(
                 num_pixels=config["num_pixels"],
                 device=str(device),
                 infer=True,
-                alpha=alpha,  # Pass alpha to testing
+                alpha=alpha,
             )
 
             test_elbos.append(test_elbo)
             test_accuracies.append(test_accuracy)
 
-            # Update progress bar with latest metrics
             pbar.set_postfix(
                 {
                     "Train ELBO": f"{train_elbo:.3e}",
@@ -248,8 +247,6 @@ def run_single_combined_experiment(
                 }
             )
         else:
-            # If not evaluating, use placeholder (will be same length as train_elbos)
-            # Note: These are not actual evaluations, just placeholders for consistency
             test_elbos.append(test_elbos[-1] if test_elbos else 0.0)
             test_accuracies.append(test_accuracies[-1] if test_accuracies else 0.0)
             pbar.set_postfix(
@@ -354,11 +351,8 @@ def run_combined_sweep(dataset_name, config):
     results_list = []
     failed_configs = []
 
-    # Create checkpoints directory
     checkpoints_dir = os.path.join(config["results_path"], "checkpoints")
     os.makedirs(checkpoints_dir, exist_ok=True)
-
-    # Create error log file
     error_log_file = os.path.join(config["results_path"], f"{dataset_name}_errors.log")
 
     # Generate all combinations by configuration (not including seeds yet)
@@ -484,256 +478,6 @@ def run_combined_sweep(dataset_name, config):
     return results_list, failed_configs
 
 
-def plot_combined_results(results, dataset_name, save_path):
-    """
-    Create comprehensive visualizations for 3D parameter sweep
-    Aggregates results across random seeds (mean ± std)
-
-    Args:
-        results: List of results from all experiments
-        dataset_name: Name of the dataset
-        save_path: Path to save plots
-    """
-    # Group results by configuration (excluding seed) and compute statistics
-    from collections import defaultdict
-
-    config_results = defaultdict(list)
-    for r in results:
-        key = (r["n_labels"], r["corruption_rate"], r["alpha"])
-        config_results[key].append(r)
-
-    # Compute mean and std for each configuration
-    data = {
-        "n_labels": [],
-        "corruption_rate": [],
-        "alpha": [],
-        "accuracy_mean": [],
-        "accuracy_std": [],
-        "beta_vae_mean": [],
-        "beta_vae_std": [],
-        "mig_mean": [],
-        "mig_std": [],
-    }
-
-    for (lf, cr, alpha), runs in config_results.items():
-        data["n_labels"].append(lf)
-        data["corruption_rate"].append(cr)
-        data["alpha"].append(alpha)
-
-        accs = [r["final_test_accuracy"] for r in runs]
-        betas = [r["disentanglement_metrics"]["beta_vae"] for r in runs]
-        migs = [r["disentanglement_metrics"]["mig"] for r in runs]
-
-        data["accuracy_mean"].append(np.mean(accs))
-        data["accuracy_std"].append(np.std(accs))
-        data["beta_vae_mean"].append(np.mean(betas))
-        data["beta_vae_std"].append(np.std(betas))
-        data["mig_mean"].append(np.mean(migs))
-        data["mig_std"].append(np.std(migs))
-
-    # Create heatmaps for each alpha value
-    unique_alphas = sorted(set(data["alpha"]))
-
-    fig, axes = plt.subplots(
-        len(unique_alphas), 3, figsize=(18, 6 * len(unique_alphas))
-    )
-    if len(unique_alphas) == 1:
-        axes = axes.reshape(1, -1)
-
-    for i, alpha_val in enumerate(unique_alphas):
-        # Filter data for this alpha
-        mask = np.array(data["alpha"]) == alpha_val
-
-        # Get unique values
-        n_labels = sorted(set(np.array(data["n_labels"])[mask]))
-        corrupt_rates = sorted(set(np.array(data["corruption_rate"])[mask]))
-
-        # Create matrices for mean values
-        acc_matrix = np.zeros((len(corrupt_rates), len(n_labels)))
-        beta_matrix = np.zeros((len(corrupt_rates), len(n_labels)))
-        mig_matrix = np.zeros((len(corrupt_rates), len(n_labels)))
-
-        # Fill matrices with aggregated mean values
-        for idx in range(len(data["alpha"])):
-            if data["alpha"][idx] == alpha_val:
-                lf_idx = n_labels.index(data["n_labels"][idx])
-                cr_idx = corrupt_rates.index(data["corruption_rate"][idx])
-                acc_matrix[cr_idx, lf_idx] = data["accuracy_mean"][idx]
-                beta_matrix[cr_idx, lf_idx] = data["beta_vae_mean"][idx]
-                mig_matrix[cr_idx, lf_idx] = data["mig_mean"][idx]
-
-        # Plot heatmaps
-        # Accuracy
-        sns.heatmap(
-            acc_matrix,
-            ax=axes[i, 0],
-            annot=True,
-            fmt=".3f",
-            cmap="RdYlGn",
-            vmin=0,
-            vmax=1,
-            xticklabels=[f"{lf}%" for lf in n_labels],
-            yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
-        )
-        axes[i, 0].set_title(
-            f"{dataset_name}: Accuracy (α={alpha_val:.1f}) - Mean across seeds",
-            fontsize=12,
-            fontweight="bold",
-        )
-        axes[i, 0].set_xlabel("Label Fraction")
-        axes[i, 0].set_ylabel("Corruption Rate")
-
-        # Beta-VAE
-        sns.heatmap(
-            beta_matrix,
-            ax=axes[i, 1],
-            annot=True,
-            fmt=".3f",
-            cmap="viridis",
-            xticklabels=[f"{lf}%" for lf in n_labels],
-            yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
-        )
-        axes[i, 1].set_title(
-            f"{dataset_name}: Beta-VAE Score (α={alpha_val:.1f}) - Mean across seeds",
-            fontsize=12,
-            fontweight="bold",
-        )
-        axes[i, 1].set_xlabel("Label Fraction")
-        axes[i, 1].set_ylabel("Corruption Rate")
-
-        # MIG
-        sns.heatmap(
-            mig_matrix,
-            ax=axes[i, 2],
-            annot=True,
-            fmt=".3f",
-            cmap="plasma",
-            xticklabels=[f"{lf}%" for lf in n_labels],
-            yticklabels=[f"{cr*100:.1f}%" for cr in corrupt_rates],
-        )
-        axes[i, 2].set_title(
-            f"{dataset_name}: MIG Score (α={alpha_val:.1f}) - Mean across seeds",
-            fontsize=12,
-            fontweight="bold",
-        )
-        axes[i, 2].set_xlabel("Label Fraction")
-        axes[i, 2].set_ylabel("Corruption Rate")
-
-    plt.tight_layout()
-    plt.savefig(
-        os.path.join(save_path, f"{dataset_name}_combined_heatmaps.png"),
-        dpi=300,
-        bbox_inches="tight",
-    )
-    print(
-        f"Saved heatmaps to {os.path.join(save_path, f'{dataset_name}_combined_heatmaps.png')}"
-    )
-    plt.close()
-
-    # Create 3D interaction plots
-    fig = plt.figure(figsize=(20, 6))
-
-    # Plot 1: Alpha vs Accuracy for different corruption rates (at max label fraction)
-    ax1 = fig.add_subplot(131)
-    max_n_labels = max(data["n_labels"])
-    for cr in sorted(set(data["corruption_rate"])):
-        mask = (np.array(data["corruption_rate"]) == cr) & (
-            np.array(data["n_labels"]) == max_n_labels
-        )
-        alphas = np.array(data["alpha"])[mask]
-        accs_mean = np.array(data["accuracy_mean"])[mask]
-        accs_std = np.array(data["accuracy_std"])[mask]
-        ax1.errorbar(
-            alphas,
-            accs_mean,
-            yerr=accs_std,
-            fmt="o-",
-            label=f"Corrupt: {cr*100:.0f}%",
-            linewidth=2,
-            markersize=8,
-            capsize=5,
-        )
-    ax1.set_xlabel("Alpha", fontsize=12)
-    ax1.set_ylabel("Test Accuracy", fontsize=12)
-    ax1.set_title(
-        f"{dataset_name}: Alpha Effect on Accuracy\n(Number of Labels: {max_n_labels})",
-        fontsize=12,
-        fontweight="bold",
-    )
-    ax1.legend()
-    ax1.grid(True, alpha=0.3)
-
-    # Plot 2: Label Fraction vs Beta-VAE for different alphas (at zero corruption)
-    ax2 = fig.add_subplot(132)
-    for alpha_val in sorted(set(data["alpha"])):
-        mask = (np.array(data["alpha"]) == alpha_val) & (
-            np.array(data["corruption_rate"]) == 0.0
-        )
-        n_labels = np.array(data["n_labels"])[mask]
-        betas_mean = np.array(data["beta_vae_mean"])[mask]
-        betas_std = np.array(data["beta_vae_std"])[mask]
-        sort_idx = np.argsort(n_labels)
-        ax2.errorbar(
-            np.array(n_labels)[sort_idx] * 100,
-            np.array(betas_mean)[sort_idx],
-            yerr=np.array(betas_std)[sort_idx],
-            fmt="o-",
-            label=f"α={alpha_val:.1f}",
-            linewidth=2,
-            markersize=8,
-            capsize=5,
-        )
-    ax2.set_xlabel("Number of Labels", fontsize=12)
-    ax2.set_ylabel("Beta-VAE Score", fontsize=12)
-    ax2.set_title(
-        f"{dataset_name}: Number of Labels Effect on Disentanglement\n(No Corruption)",
-        fontsize=12,
-        fontweight="bold",
-    )
-    ax2.legend()
-    ax2.grid(True, alpha=0.3)
-    ax2.set_xscale("log")
-
-    # Plot 3: Corruption vs MIG for different alphas (at max number of labels)
-    ax3 = fig.add_subplot(133)
-    for alpha_val in sorted(set(data["alpha"])):
-        mask = (np.array(data["alpha"]) == alpha_val) & (
-            np.array(data["n_labels"]) == max_n_labels
-        )
-        crs = np.array(data["corruption_rate"])[mask]
-        migs_mean = np.array(data["mig_mean"])[mask]
-        migs_std = np.array(data["mig_std"])[mask]
-        sort_idx = np.argsort(crs)
-        ax3.errorbar(
-            np.array(crs)[sort_idx] * 100,
-            np.array(migs_mean)[sort_idx],
-            yerr=np.array(migs_std)[sort_idx],
-            fmt="o-",
-            label=f"α={alpha_val:.1f}",
-            linewidth=2,
-            markersize=8,
-            capsize=5,
-        )
-    ax3.set_xlabel("Corruption Rate (%)", fontsize=12)
-    ax3.set_ylabel("MIG Score", fontsize=12)
-    ax3.set_title(
-        f"{dataset_name}: Corruption Effect on MIG\n(Number of Labels: {max_n_labels})",
-        fontsize=12,
-        fontweight="bold",
-    )
-    ax3.legend()
-    ax3.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig(
-        os.path.join(save_path, f"{args.name}.png"),
-        dpi=300,
-        bbox_inches="tight",
-    )
-    print(f"Saved interaction plots to {os.path.join(save_path, f'{args.name}.png')}")
-    plt.close()
-
-
 def main(args):
     """Main function to run all combined experiments"""
 
@@ -802,9 +546,6 @@ def main(args):
                 serializable_results.append(r_copy)
             json.dump(serializable_results, f, indent=2, cls=UniversalEncoder)
         print(f"Saved results to {results_file}")
-
-        # Plot results
-        plot_combined_results(results, dataset_name, config["results_path"])
 
     print("\n\n" + "=" * 80)
     print("ALL COMBINED EXPERIMENTS COMPLETED!")
