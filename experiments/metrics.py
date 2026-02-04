@@ -40,7 +40,6 @@ def compute_beta_vae_metric(
     """
     enc.eval()
 
-    # Collect latent representations
     latents = []
     labels = []
 
@@ -66,35 +65,27 @@ def compute_beta_vae_metric(
     latents = np.concatenate(latents, axis=0)[:num_samples]
     labels = np.concatenate(labels, axis=0)[:num_samples]
 
-    # Normalize latents
     latents_mean = latents.mean(axis=0)
     latents_std = latents.std(axis=0) + 1e-8
     latents_normalized = (latents - latents_mean) / latents_std
 
-    # For each latent dimension, train a classifier to predict the label
-    # The metric measures how well individual latents capture class information
     accuracies = []
 
     for dim in range(num_style):
-        # Use single latent dimension to predict class
         X = latents_normalized[:, dim : dim + 1]
         y = labels
 
-        # Split into train/test
         n_train = int(0.8 * len(X))
         X_train, X_test = X[:n_train], X[n_train:]
         y_train, y_test = y[:n_train], y[n_train:]
 
-        # Train logistic regression
         clf = LogisticRegression(max_iter=1000, random_state=42)
         clf.fit(X_train, y_train)
         acc = clf.score(X_test, y_test)
         accuracies.append(acc)
 
-    # The metric is the difference between best and random performance
-    # normalized by the maximum possible improvement
     best_acc = max(accuracies)
-    random_acc = 1.0 / 10  # 10 classes
+    random_acc = 1.0 / 10
     metric_score = (best_acc - random_acc) / (1.0 - random_acc)
 
     return metric_score, accuracies
@@ -129,7 +120,6 @@ def compute_factor_vae_metric(
     """
     enc.eval()
 
-    # Collect latent representations per class
     latents_by_class = {i: [] for i in range(10)}
 
     with torch.no_grad():
@@ -149,7 +139,6 @@ def compute_factor_vae_metric(
                 z_np = z.numpy()
                 labels_np = labels.numpy()
 
-                # Group by class
                 for i in range(len(labels_np)):
                     latents_by_class[labels_np[i]].append(z_np[i])
 
@@ -158,16 +147,13 @@ def compute_factor_vae_metric(
             if total_samples >= num_samples:
                 break
 
-    # Convert to arrays
     for k in latents_by_class:
         if len(latents_by_class[k]) > 0:
             latents_by_class[k] = np.array(latents_by_class[k])
 
-    # Compute variance within each class and between classes for each dimension
     scores = []
 
     for dim in range(num_style):
-        # Variance within classes
         within_var = []
         for k in latents_by_class:
             if len(latents_by_class[k]) > 1:
@@ -176,16 +162,12 @@ def compute_factor_vae_metric(
 
         if len(within_var) > 0:
             avg_within_var = np.mean(within_var)
-
-            # Variance between class means
             class_means = [
                 np.mean(latents_by_class[k][:, dim])
                 for k in latents_by_class
                 if len(latents_by_class[k]) > 0
             ]
             between_var = np.var(class_means)
-
-            # Higher between-class variance and lower within-class variance is better
             if avg_within_var > 0:
                 score = between_var / (avg_within_var + 1e-8)
                 scores.append(score)
@@ -224,7 +206,6 @@ def compute_mutual_information_gap(
     """
     enc.eval()
 
-    # Collect latent representations
     latents = []
     labels = []
 
@@ -250,7 +231,6 @@ def compute_mutual_information_gap(
     latents = np.concatenate(latents, axis=0)[:num_samples]
     labels = np.concatenate(labels, axis=0)[:num_samples]
 
-    # Discretize latent dimensions into bins
     num_bins = 20
     latents_discrete = np.zeros_like(latents, dtype=int)
     for dim in range(num_style):
@@ -259,7 +239,6 @@ def compute_mutual_information_gap(
             bins=np.linspace(latents[:, dim].min(), latents[:, dim].max(), num_bins),
         )
 
-    # Compute mutual information between each latent dim and the labels
     mutual_infos = []
     for dim in range(num_style):
         mi = mutual_info(latents_discrete[:, dim], labels)
@@ -267,7 +246,6 @@ def compute_mutual_information_gap(
 
     mutual_infos = np.array(mutual_infos)
 
-    # Sort and compute gap
     sorted_mi = np.sort(mutual_infos)[::-1]
     if len(sorted_mi) >= 2:
         mig = sorted_mi[0] - sorted_mi[1]
@@ -288,17 +266,13 @@ def mutual_info(x, y):
     Returns:
         mi: Mutual information
     """
-    # Create contingency table
     contingency = np.histogram2d(x, y, bins=(len(np.unique(x)), len(np.unique(y))))[0]
 
-    # Normalize to get probabilities
     contingency = contingency / contingency.sum()
 
-    # Marginal probabilities
     px = contingency.sum(axis=1)
     py = contingency.sum(axis=0)
 
-    # Compute MI
     mi = 0.0
     for i in range(len(px)):
         for j in range(len(py)):
@@ -334,21 +308,18 @@ def evaluate_all_metrics(
     """
     metrics = {}
 
-    # Beta-VAE metric
     beta_score, beta_accs = compute_beta_vae_metric(
         enc, data_loader, num_samples, num_batch, num_pixels, device, num_style
     )
     metrics["beta_vae"] = beta_score
     metrics["beta_vae_accuracies"] = beta_accs
 
-    # Factor-VAE metric
     factor_score, factor_scores = compute_factor_vae_metric(
         enc, data_loader, num_samples, num_batch, num_pixels, device, num_style
     )
     metrics["factor_vae"] = factor_score
     metrics["factor_vae_scores"] = factor_scores
 
-    # MIG metric
     mig_score, mutual_infos = compute_mutual_information_gap(
         enc, data_loader, num_samples, num_batch, num_pixels, device, num_style
     )

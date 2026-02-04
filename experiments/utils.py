@@ -43,17 +43,14 @@ def corrupt_labels(labels, corruption_rate=0.1, num_classes=10):
     n_samples = len(labels_np)
     n_corrupt = int(n_samples * corruption_rate)
 
-    # Randomly select indices to corrupt
     corrupt_indices = np.random.choice(n_samples, n_corrupt, replace=False)
     corruption_mask = np.zeros(n_samples, dtype=bool)
     corruption_mask[corrupt_indices] = True
 
     corrupted_labels = labels_np.copy()
 
-    # For each corrupted index, assign a random wrong label
     for idx in corrupt_indices:
         original_label = labels_np[idx]
-        # Choose from all classes except the correct one
         wrong_classes = [c for c in range(num_classes) if c != original_label]
         corrupted_labels[idx] = np.random.choice(wrong_classes)
 
@@ -190,10 +187,8 @@ def train_epoch(
             N += num_batch
             images = images.view(-1, num_pixels)
 
-            # Convert labels to one-hot
             labels_onehot = torch.zeros(num_batch, num_digits)
 
-            # Corrupt labels if corruption_rate > 0
             if corruption_rate > 0:
                 labels, _ = corrupt_labels(labels, corruption_rate, num_digits)
 
@@ -206,7 +201,6 @@ def train_epoch(
 
             optimizer.zero_grad()
 
-            # Determine if this batch uses labels
             if b not in label_mask:
                 label_mask[b] = random() < label_fraction
 
