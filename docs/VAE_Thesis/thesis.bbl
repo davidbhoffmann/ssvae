@@ -20,6 +20,11 @@ Biswal, S., Ghosh, S., Duke, J., Malin, B., Stewart, W., Xiao, C. \harvardand\ S
 Bouchacourt, D., Tomioka, R. \harvardand\ Nowozin, S.  \harvardyearleft 2018\harvardyearright .
 \newblock Multi-level variational autoencoder: Learning disentangled representations from grouped observations, {\em Proceedings of the AAAI Conference on Artificial Intelligence}, Vol.~32.
 
+\harvarditem[Burda et~al.]{Burda, Grosse \harvardand\ Salakhutdinov}{2015}{Burda2015ImportanceWA}
+Burda, Y., Grosse, R.~B. \harvardand\ Salakhutdinov, R.  \harvardyearleft 2015\harvardyearright .
+\newblock Importance weighted autoencoders, {\em CoRR} {\bf abs/1509.00519}.
+\newline\harvardurl{https://api.semanticscholar.org/CorpusID:11383178}
+
 \harvarditem[Casale et~al.]{Casale, Dalca, Saglietti, Listgarten \harvardand\ Fusi}{2018}{casale_gaussian_2018}
 Casale, F.~P., Dalca, A.~V., Saglietti, L., Listgarten, J. \harvardand\ Fusi, N.  \harvardyearleft 2018\harvardyearright .
 \newblock Gaussian process prior variational autoencoders, {\em Advances in Neural Information Processing Systems (NeurIPS 2018)}.

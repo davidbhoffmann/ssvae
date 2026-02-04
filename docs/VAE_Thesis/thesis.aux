@@ -8,6 +8,7 @@
 \newacro{ELBO}[ELBO]{evidence lower bound}
 \newacro{GPPVAE}[GPPVAE]{Gaussian Process Prior VAE}
 \newacro{GAN}[GAN]{Generative Adversarial Network}
+\newacro{IWAE}[IWAE]{Importance Weighted Autoencoder}
 \newacro{i.i.d.}[i.i.d.]{independent and identically distributed}
 \newacro{M1}[M1]{latent-feature discriminative model}
 \newacro{M1+M2}[M1+M2]{stacked generative semi-supervised model}
@@ -80,15 +81,20 @@
 \newlabel{eq:combined_obj}{{10}{5}{Semi-Supervised Variational Auto-Encoders}{equation.10}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Importance Sampling}{5}{subsection.2.4}\protected@file@percent }
 \newlabel{sec:imp_sampling}{{2.4}{5}{Importance Sampling}{subsection.2.4}{}}
+\citation{Burda2015ImportanceWA}
+\acronymused{VAE}
+\AC@undonewlabel{acro:IWAE}
+\newlabel{acro:IWAE}{{2.4}{6}{Importance Sampling}{section*.9}{}}
+\acronymused{IWAE}
 \citation{kingma_semi-supervised_2014}
 \citation{narayanaswamy_learning_2017}
 \citation{yang_usupervised_2019,biswal_eva_2020}
 \citation{narayanaswamy_learning_2017}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Semi-Supervised Disentanglement with Arbitrary Dependencies}{7}{section.3}\protected@file@percent }
 \newlabel{method}{{3}{7}{Semi-Supervised Disentanglement with Arbitrary Dependencies}{section.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \ac {SSVAE} framework with reformulated supervised (\autoref {eq:sup_obj_reformulated}) and unsupervised (\autoref {eq:unsup_obj}) loss functions.}}{7}{figure.caption.9}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \ac {SSVAE} framework with reformulated supervised (\autoref {eq:sup_obj_reformulated}) and unsupervised (\autoref {eq:unsup_obj}) loss functions.}}{7}{figure.caption.10}\protected@file@percent }
 \acronymused{SSVAE}
-\newlabel{fig:framework_obj}{{2}{7}{\ac {SSVAE} framework with reformulated supervised (\autoref {eq:sup_obj_reformulated}) and unsupervised (\autoref {eq:unsup_obj}) loss functions}{figure.caption.9}{}}
+\newlabel{fig:framework_obj}{{2}{7}{\ac {SSVAE} framework with reformulated supervised (\autoref {eq:sup_obj_reformulated}) and unsupervised (\autoref {eq:unsup_obj}) loss functions}{figure.caption.10}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}The Generalised Variational Objective}{7}{subsection.3.1}\protected@file@percent }
 \citation{narayanaswamy_learning_2017}
 \newlabel{eq:sup_obj_reformulated}{{16}{8}{The Generalised Variational Objective}{equation.16}{}}
@@ -105,10 +111,10 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Experiments and Findings}{9}{subsection.3.4}\protected@file@percent }
 \newlabel{sec:their_eperiments}{{3.4}{9}{Experiments and Findings}{subsection.3.4}{}}
 \AC@undonewlabel{acro:MNIST}
-\newlabel{acro:MNIST}{{3.4}{9}{Experiments and Findings}{section*.10}{}}
+\newlabel{acro:MNIST}{{3.4}{9}{Experiments and Findings}{section*.11}{}}
 \acronymused{MNIST}
 \AC@undonewlabel{acro:SVHN}
-\newlabel{acro:SVHN}{{3.4}{9}{Experiments and Findings}{section*.11}{}}
+\newlabel{acro:SVHN}{{3.4}{9}{Experiments and Findings}{section*.12}{}}
 \acronymused{SVHN}
 \acronymused{MNIST}
 \citation{narayanaswamy_learning_2017}
@@ -167,7 +173,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}General Critiques}{13}{subsection.4.2}\protected@file@percent }
 \newlabel{sec:general_critique}{{4.2}{13}{General Critiques}{subsection.4.2}{}}
 \AC@undonewlabel{acro:i.i.d.}
-\newlabel{acro:i.i.d.}{{4.2}{13}{General Critiques}{section*.12}{}}
+\newlabel{acro:i.i.d.}{{4.2}{13}{General Critiques}{section*.13}{}}
 \acronymused{i.i.d.}
 \acronymused{VAE}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Impossibility of Unsupervised Disentanglement}{13}{subsubsection.4.2.1}\protected@file@percent }
@@ -191,7 +197,7 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}The Limitation of Isotropic Priors}{14}{subsubsection.4.2.2}\protected@file@percent }
 \acronymused{i.i.d.}
 \AC@undonewlabel{acro:GPPVAE}
-\newlabel{acro:GPPVAE}{{4.2.2}{14}{The Limitation of Isotropic Priors}{section*.13}{}}
+\newlabel{acro:GPPVAE}{{4.2.2}{14}{The Limitation of Isotropic Priors}{section*.14}{}}
 \acronymused{GPPVAE}
 \citation{mattei_leveraging_2018}
 \citation{narayanaswamy_learning_2017}
@@ -202,7 +208,7 @@
 \acronymused{ELBO}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Unbounded Likelihoods and Mode Collapse}{15}{subsubsection.4.2.3}\protected@file@percent }
 \AC@undonewlabel{acro:DLVM}
-\newlabel{acro:DLVM}{{4.2.3}{15}{Unbounded Likelihoods and Mode Collapse}{section*.14}{}}
+\newlabel{acro:DLVM}{{4.2.3}{15}{Unbounded Likelihoods and Mode Collapse}{section*.15}{}}
 \acronymused{DLVM}
 \acronymused{VAE}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Disentanglement Implications and Limitations}{15}{subsection.4.3}\protected@file@percent }
@@ -220,7 +226,7 @@
 \citation{feng_shot_vae_2021}
 \acronymused{VAE}
 \AC@undonewlabel{acro:CCVAE}
-\newlabel{acro:CCVAE}{{4.3.1}{16}{Semantic Conflation Problem}{section*.15}{}}
+\newlabel{acro:CCVAE}{{4.3.1}{16}{Semantic Conflation Problem}{section*.16}{}}
 \acronymused{CCVAE}
 \acronymused{SSVAE}
 \acronymused{CCVAE}
@@ -229,7 +235,7 @@
 \acronymused{SSVAE}
 \acronymused{ELBO}
 \AC@undonewlabel{acro:SHOT-VAE}
-\newlabel{acro:SHOT-VAE}{{4.3.2}{16}{Breaking the ELBO Bottleneck}{section*.16}{}}
+\newlabel{acro:SHOT-VAE}{{4.3.2}{16}{Breaking the ELBO Bottleneck}{section*.17}{}}
 \acronymused{SHOT-VAE}
 \acronymused{SSVAE}
 \citation{narayanaswamy_learning_2017}
@@ -260,7 +266,7 @@
 \acronymused{SSVAE}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3}Differentiating Consistency and Restrictiveness}{17}{subsubsection.4.3.3}\protected@file@percent }
 \AC@undonewlabel{acro:MIG}
-\newlabel{acro:MIG}{{4.3.3}{17}{Differentiating Consistency and Restrictiveness}{section*.17}{}}
+\newlabel{acro:MIG}{{4.3.3}{17}{Differentiating Consistency and Restrictiveness}{section*.18}{}}
 \acronymused{MIG}
 \citation{locatello_challenging_2018}
 \citation{locatello_weakly_2020}
@@ -300,7 +306,7 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Multimodal VAEs and Mutual Supervision}{19}{subsubsection.4.4.2}\protected@file@percent }
 \acronymused{VAE}
 \AC@undonewlabel{acro:PoE}
-\newlabel{acro:PoE}{{4.4.2}{19}{Multimodal VAEs and Mutual Supervision}{section*.18}{}}
+\newlabel{acro:PoE}{{4.4.2}{19}{Multimodal VAEs and Mutual Supervision}{section*.19}{}}
 \acronymused{PoE}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Applications and Integrations in the Literature}{19}{subsection.4.5}\protected@file@percent }
 \acronymused{SSVAE}
@@ -320,7 +326,7 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.3}Catastrophic Forgetting and Generative Replay}{20}{subsubsection.4.5.3}\protected@file@percent }
 \acronymused{VAE}
 \AC@undonewlabel{acro:GAN}
-\newlabel{acro:GAN}{{4.5.3}{20}{Catastrophic Forgetting and Generative Replay}{section*.19}{}}
+\newlabel{acro:GAN}{{4.5.3}{20}{Catastrophic Forgetting and Generative Replay}{section*.20}{}}
 \acronymused{GAN}
 \citation{narayanaswamy_learning_2017}
 \citation{ye_learning_2020}
@@ -331,7 +337,7 @@
 \citation{kingma_semi-supervised_2014}
 \acronymused{SSVAE}
 \AC@undonewlabel{acro:M1+M2}
-\newlabel{acro:M1+M2}{{4.5.3}{21}{Catastrophic Forgetting and Generative Replay}{section*.20}{}}
+\newlabel{acro:M1+M2}{{4.5.3}{21}{Catastrophic Forgetting and Generative Replay}{section*.21}{}}
 \acronymused{M1+M2}
 \acronymused{SSVAE}
 \acronymused{SSVAE}
@@ -339,6 +345,7 @@
 \acronymused{SSVAE}
 \citation{deng2012mnist}
 \citation{narayanaswamy_learning_2017}
+\citation{agarap2018deep}
 \citation{agarap2018deep}
 \citation{narayanaswamy_learning_2017}
 \citation{kingma2017adammethodstochasticoptimization}
@@ -351,27 +358,21 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Implementation Details}{22}{subsection.5.1}\protected@file@percent }
 \newlabel{sec:implementation_details}{{5.1}{22}{Implementation Details}{subsection.5.1}{}}
 \acronymused{MNIST}
+\acronymused{SSVAE}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep  {agarap2018deep} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process.}}{22}{figure.caption.22}\protected@file@percent }
+\acronymused{SSVAE}
+\acronymused{MNIST}
 \AC@undonewlabel{acro:ReLU}
-\newlabel{acro:ReLU}{{5.1}{22}{Implementation Details}{section*.21}{}}
+\newlabel{acro:ReLU}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep {agarap2018deep} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process}{section*.23}{}}
 \acronymused{ReLU}
-\acronymused{SSVAE}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \ac {SSVAE} architecture used throughout all experiments. The network has $28*28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input, 256 hidden neurons $\{h_i\}_{i=1}^{256}$, 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z' _i\}_{i=1}^{10}$ and $\{y'_i\}_{i=1}^{10}$ as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling. }}{22}{figure.caption.22}\protected@file@percent }
-\acronymused{SSVAE}
+\newlabel{fig:architecture}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep {agarap2018deep} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process}{figure.caption.22}{}}
 \acronymused{MNIST}
-\newlabel{fig:architecture}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The network has $28*28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input, 256 hidden neurons $\{h_i\}_{i=1}^{256}$, 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z' _i\}_{i=1}^{10}$ and $\{y'_i\}_{i=1}^{10}$ as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling}{figure.caption.22}{}}
-\acronymused{MNIST}
-\acronymused{MIG}
 \citation{narayanaswamy_learning_2017}
 \citation{narayanaswamy_learning_2017}
-\citation{Higgins2016betaVAELB}
-\citation{Kim2018DisentanglingBF}
-\citation{chen_isolating_2019}
-\citation{Higgins2016betaVAELB}
-\citation{Kim2018DisentanglingBF}
-\citation{chen_isolating_2019}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100 ($0.001\bar  {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar  {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf  {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf  {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf  {Right:} disentanglement metrics ($\beta $-VAE \cite  {Higgins2016betaVAELB}, Factor-VAE \cite  {Kim2018DisentanglingBF}, Mutual Information Gap \cite  {chen_isolating_2019}) decreases with increasing $\alpha $ across all three metrics.}}{23}{figure.caption.23}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100 ($0.001\bar  {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar  {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf  {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf  {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf  {Right:} disentanglement metrics decrease with increasing $\alpha $.}}{23}{figure.caption.24}\protected@file@percent }
 \acronymused{ELBO}
-\newlabel{fig:alpha_exp}{{4}{23}{\textbf {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100 ($0.001\bar {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf {Right:} disentanglement metrics ($\beta $-VAE \cite {Higgins2016betaVAELB}, Factor-VAE \cite {Kim2018DisentanglingBF}, Mutual Information Gap \cite {chen_isolating_2019}) decreases with increasing $\alpha $ across all three metrics}{figure.caption.23}{}}
+\newlabel{fig:alpha_exp}{{4}{23}{\textbf {Supervision Weight} experiment results with varying $\alpha $ for supervised set sizes of 100 ($0.001\bar {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf {Top Left:} final test \ac {ELBO} for varying $\alpha $ remains relatively stable. \textbf {Bottom Left:} final test accuracy of $y$ improves for higher values of $\alpha $. \textbf {Right:} disentanglement metrics decrease with increasing $\alpha $}{figure.caption.24}{}}
+\acronymused{MIG}
 \acronymused{ELBO}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Supervision Weight}{23}{subsection.5.2}\protected@file@percent }
 \newlabel{sec:alpha_exp}{{5.2}{23}{Supervision Weight}{subsection.5.2}{}}
@@ -380,15 +381,9 @@
 \acronymused{SSVAE}
 \citation{lin_infogan_2020,bouchacourt_multilevel_2017,ke_apgvae_2023,Kim2018DisentanglingBF}
 \citation{narayanaswamy_learning_2017}
-\citation{Higgins2016betaVAELB}
-\citation{Kim2018DisentanglingBF}
-\citation{chen_isolating_2019}
-\citation{Higgins2016betaVAELB}
-\citation{Kim2018DisentanglingBF}
-\citation{chen_isolating_2019}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Label Corruption} experiment results with varying label corruption rate for supervised set sizes of 100 ($0.001\bar  {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar  {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf  {Top Left:} final test \ac {ELBO} for varying noise levels remains relatively stable. \textbf  {Bottom Left:} while the final test accuracy of $y$ decreases for higher corruption rates it remains relatively high for up to 20\% noise. \textbf  {Right:} disentanglement (as measured through $\beta $-VAE \cite  {Higgins2016betaVAELB}, Factor-VAE \cite  {Kim2018DisentanglingBF}, Mutual Information Gap \cite  {chen_isolating_2019}) increase with a higher corruption rate across all three metrics.}}{24}{figure.caption.24}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Label Corruption} experiment results with varying label corruption rate for supervised set sizes of 100 ($0.001\bar  {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar  {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf  {Top Left:} final test \ac {ELBO} for varying noise levels remains relatively stable. \textbf  {Bottom Left:} while the final test accuracy of $y$ decreases for higher corruption rates it remains relatively high for up to 20\% noise. \textbf  {Right:} disentanglement increase with a higher corruption rate across all three metrics.}}{24}{figure.caption.25}\protected@file@percent }
 \acronymused{ELBO}
-\newlabel{fig:noise_exp}{{5}{24}{\textbf {Label Corruption} experiment results with varying label corruption rate for supervised set sizes of 100 ($0.001\bar {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf {Top Left:} final test \ac {ELBO} for varying noise levels remains relatively stable. \textbf {Bottom Left:} while the final test accuracy of $y$ decreases for higher corruption rates it remains relatively high for up to 20\% noise. \textbf {Right:} disentanglement (as measured through $\beta $-VAE \cite {Higgins2016betaVAELB}, Factor-VAE \cite {Kim2018DisentanglingBF}, Mutual Information Gap \cite {chen_isolating_2019}) increase with a higher corruption rate across all three metrics}{figure.caption.24}{}}
+\newlabel{fig:noise_exp}{{5}{24}{\textbf {Label Corruption} experiment results with varying label corruption rate for supervised set sizes of 100 ($0.001\bar {6}\%$), 600 ($0.01\%$), 1000 ($0.01\bar {6}\%$) and 3000 ($0.05\%$). Error bars indicate variance across 10 random seeds. Note that the y-scales vary and do not start at zero. \textbf {Top Left:} final test \ac {ELBO} for varying noise levels remains relatively stable. \textbf {Bottom Left:} while the final test accuracy of $y$ decreases for higher corruption rates it remains relatively high for up to 20\% noise. \textbf {Right:} disentanglement increase with a higher corruption rate across all three metrics}{figure.caption.25}{}}
 \acronymused{ELBO}
 \acronymused{ELBO}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Label Corruption}{24}{subsection.5.3}\protected@file@percent }
@@ -443,14 +438,14 @@
 \acronymused{SSVAE}
 \@writefile{toc}{\contentsline {section}{\numberline {B}SSVAE Training}{V}{appendix.B}\protected@file@percent }
 \newlabel{apx:training}{{B}{V}{SSVAE Training}{appendix.B}{}}
-\newlabel{fig:train_alpha}{{6a}{V}{All training runs of the \textbf {supervision factor $\pmb \alpha $ experiment} in \autoref {sec:alpha_exp}}{figure.caption.25}{}}
-\newlabel{sub@fig:train_alpha}{{a}{V}{All training runs of the \textbf {supervision factor $\pmb \alpha $ experiment} in \autoref {sec:alpha_exp}}{figure.caption.25}{}}
-\newlabel{fig:train_noise}{{6b}{V}{All training runs of the \textbf {corruption rate experiment} in \autoref {sec:noise_exp}}{figure.caption.25}{}}
-\newlabel{sub@fig:train_noise}{{b}{V}{All training runs of the \textbf {corruption rate experiment} in \autoref {sec:noise_exp}}{figure.caption.25}{}}
+\newlabel{fig:train_alpha}{{6a}{V}{All training runs of the \textbf {supervision factor $\pmb \alpha $ experiment} in \autoref {sec:alpha_exp}}{figure.caption.26}{}}
+\newlabel{sub@fig:train_alpha}{{a}{V}{All training runs of the \textbf {supervision factor $\pmb \alpha $ experiment} in \autoref {sec:alpha_exp}}{figure.caption.26}{}}
+\newlabel{fig:train_noise}{{6b}{V}{All training runs of the \textbf {corruption rate experiment} in \autoref {sec:noise_exp}}{figure.caption.26}{}}
+\newlabel{sub@fig:train_noise}{{b}{V}{All training runs of the \textbf {corruption rate experiment} in \autoref {sec:noise_exp}}{figure.caption.26}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {C}Supervision Weight Results}{VI}{appendix.C}\protected@file@percent }
 \newlabel{sec:results_alpha_exp}{{C}{VI}{Supervision Weight Results}{appendix.C}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Aggregated results for the supervision weight experiment.}}{VI}{table.caption.26}\protected@file@percent }
-\newlabel{tab:alpha_exp}{{1}{VI}{Aggregated results for the supervision weight experiment}{table.caption.26}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Aggregated results for the supervision weight experiment.}}{VI}{table.caption.27}\protected@file@percent }
+\newlabel{tab:alpha_exp}{{1}{VI}{Aggregated results for the supervision weight experiment}{table.caption.27}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Detailed results for the supervision weight experiment.}}{VI}{table.2}\protected@file@percent }
 \newlabel{tab:full_alpha_exp}{{2}{VI}{Detailed results for the supervision weight experiment}{table.2}{}}
 \gdef \LT@i {\LT@entry 
@@ -465,8 +460,8 @@
     {1}{0.0pt}}
 \@writefile{toc}{\contentsline {section}{\numberline {D}Corruption Rate Results}{XIV}{appendix.D}\protected@file@percent }
 \newlabel{sec:results_corruption_exp}{{D}{XIV}{Corruption Rate Results}{appendix.D}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Aggregated results for the corruption rate experiment.}}{XIV}{table.caption.27}\protected@file@percent }
-\newlabel{tab:corruption_exp}{{3}{XIV}{Aggregated results for the corruption rate experiment}{table.caption.27}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Aggregated results for the corruption rate experiment.}}{XIV}{table.caption.28}\protected@file@percent }
+\newlabel{tab:corruption_exp}{{3}{XIV}{Aggregated results for the corruption rate experiment}{table.caption.28}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Detailed results for the corruption rate experiment.}}{XIV}{table.4}\protected@file@percent }
 \newlabel{tab:full_corruption_exp}{{4}{XIV}{Detailed results for the corruption rate experiment}{table.4}{}}
 \gdef \LT@ii {\LT@entry 
@@ -485,41 +480,42 @@
 \bibcite{bengio2013representation}{{3}{2013}{{Bengio et~al.}}{{Bengio, Courville and\ Vincent}}}
 \bibcite{biswal_eva_2020}{{4}{2021}{{Biswal et~al.}}{{Biswal, Ghosh, Duke, Malin, Stewart, Xiao and\ Sun}}}
 \bibcite{bouchacourt_multilevel_2017}{{5}{2018}{{Bouchacourt et~al.}}{{Bouchacourt, Tomioka and\ Nowozin}}}
-\bibcite{casale_gaussian_2018}{{6}{2018}{{Casale et~al.}}{{Casale, Dalca, Saglietti, Listgarten and\ Fusi}}}
-\bibcite{chen_weakly_2020}{{7}{2020}{{Chen and\ Batmanghelich}}{{}}}
-\bibcite{chen_isolating_2019}{{8}{2018}{{Chen et~al.}}{{Chen, Li, Grosse and\ Duvenaud}}}
-\bibcite{deng2012mnist}{{9}{2012}{{Deng}}{{}}}
-\bibcite{esmaeili_structured_2018}{{10}{2019}{{Esmaeili et~al.}}{{Esmaeili, Wu, Jain, Bozkurt, Siddharth, Paige, Brooks, Dy and\ Meent}}}
-\bibcite{feng_shot_vae_2021}{{11}{2021}{{Feng et~al.}}{{Feng, Kong, Chen, Zhang, Zhu and\ Chen}}}
-\bibcite{GeBeKr01}{{12}{2001}{{Georghiades et~al.}}{{Georghiades, Belhumeur and\ Kriegman}}}
-\bibcite{gordon_meta_2019}{{13}{2019}{{Gordon et~al.}}{{Gordon, Bronskill, Bauer, Nowozin and\ Turner}}}
-\bibcite{Higgins2016betaVAELB}{{14}{2017}{{Higgins et~al.}}{{Higgins, Matthey, Pal, Burgess, Glorot, Botvinick, Mohamed and\ Lerchner}}}
-\bibcite{pmlr-v38-jampani15}{{15}{2015}{{Jampani et~al.}}{{Jampani, Eslami, Tarlow, Kohli and\ Winn}}}
-\bibcite{joy_capturing_2020}{{16}{2021}{{Joy et~al.}}{{Joy, Schmon, Torr, Siddharth and\ Rainforth}}}
-\bibcite{joy_learning_2021}{{17}{2022}{{Joy et~al.}}{{Joy, Shi, Torr, Rainforth, Schmon and\ Siddharth}}}
-\bibcite{ke_apgvae_2023}{{18}{2024}{{Ke et~al.}}{{Ke, Jing, Wo\'{z}niak, Xu, Liang and\ Zheng}}}
-\bibcite{Kim2018DisentanglingBF}{{19}{2018}{{Kim and\ Mnih}}{{}}}
-\bibcite{kingma2017adammethodstochasticoptimization}{{20}{2015}{{Kingma and\ Ba}}{{}}}
-\bibcite{kingma_semi-supervised_2014}{{21}{2014}{{Kingma et~al.}}{{Kingma, Rezende, Mohamed and\ Welling}}}
-\bibcite{kingma_auto-encoding_2013}{{22}{2014}{{Kingma and\ Welling}}{{}}}
-\bibcite{kulinski_explaining_2023}{{23}{2023}{{Kulinski and\ Inouye}}{{}}}
-\bibcite{li_multi_2018}{{24}{2018}{{Li et~al.}}{{Li, Zhang and\ Liu}}}
-\bibcite{lin_infogan_2020}{{25}{2020}{{Lin et~al.}}{{Lin, Thekumparampil, Fanti and\ Oh}}}
-\bibcite{locatello_challenging_2018}{{26}{2019}{{Locatello et~al.}}{{Locatello, Bauer, Lucic, Gelly, Schoelkopf and\ Bachem}}}
-\bibcite{locatello_weakly_2020}{{27}{2020}{{Locatello et~al.}}{{Locatello, Poole, Raetsch, Schoelkopf, Bachem and\ Tschannen}}}
-\bibcite{mattei_leveraging_2018}{{28}{2018}{{Mattei and\ Frellsen}}{{}}}
-\bibcite{narayanaswamy_learning_2017}{{29}{2017}{{Narayanaswamy et~al.}}{{Narayanaswamy, Paige, van~de Meent, Desmaison, Goodman, Kohli, Wood and\ Torr}}}
-\bibcite{netzer2011reading}{{30}{2011}{{Netzer et~al.}}{{Netzer, Wang, Coates, Bissacco, Wu, Ng et~al.}}}
-\bibcite{nie_semi_supervised_2020}{{31}{2020}{{Nie et~al.}}{{Nie, Karras, Garg, Debnath, Patney, Patel and\ Anandkumar}}}
-\bibcite{perry2010continuous}{{32}{2010}{{Perry et~al.}}{{Perry, Rolls and\ Stringer}}}
-\bibcite{rezende2014stochastic}{{33}{2014}{{Rezende et~al.}}{{Rezende, Mohamed and\ Wierstra}}}
-\bibcite{shu_weakly_2019}{{34}{2020}{{Shu et~al.}}{{Shu, Chen, Kumar, Ermon and\ Poole}}}
-\bibcite{vaze_representation_2023}{{35}{2023}{{Vaze et~al.}}{{Vaze, Vedaldi and\ Zisserman}}}
-\bibcite{yang_usupervised_2019}{{36}{2019}{{Yang et~al.}}{{Yang, Dvornek, Zhang, Chapiro, Lin and\ Duncan}}}
-\bibcite{yang_disentangling_2019}{{37}{2019}{{Yang and\ Yao}}{{}}}
-\bibcite{ye_learning_2020}{{38}{2020}{{Ye and\ Bors}}{{}}}
-\bibcite{ye_lifelong_2022}{{39}{2022}{{Ye and\ Bors}}{{}}}
-\bibcite{zhang_causal_2020}{{40}{2020}{{Zhang et~al.}}{{Zhang, Zhang and\ Li}}}
+\bibcite{Burda2015ImportanceWA}{{6}{2015}{{Burda et~al.}}{{Burda, Grosse and\ Salakhutdinov}}}
+\bibcite{casale_gaussian_2018}{{7}{2018}{{Casale et~al.}}{{Casale, Dalca, Saglietti, Listgarten and\ Fusi}}}
+\bibcite{chen_weakly_2020}{{8}{2020}{{Chen and\ Batmanghelich}}{{}}}
+\bibcite{chen_isolating_2019}{{9}{2018}{{Chen et~al.}}{{Chen, Li, Grosse and\ Duvenaud}}}
+\bibcite{deng2012mnist}{{10}{2012}{{Deng}}{{}}}
+\bibcite{esmaeili_structured_2018}{{11}{2019}{{Esmaeili et~al.}}{{Esmaeili, Wu, Jain, Bozkurt, Siddharth, Paige, Brooks, Dy and\ Meent}}}
+\bibcite{feng_shot_vae_2021}{{12}{2021}{{Feng et~al.}}{{Feng, Kong, Chen, Zhang, Zhu and\ Chen}}}
+\bibcite{GeBeKr01}{{13}{2001}{{Georghiades et~al.}}{{Georghiades, Belhumeur and\ Kriegman}}}
+\bibcite{gordon_meta_2019}{{14}{2019}{{Gordon et~al.}}{{Gordon, Bronskill, Bauer, Nowozin and\ Turner}}}
+\bibcite{Higgins2016betaVAELB}{{15}{2017}{{Higgins et~al.}}{{Higgins, Matthey, Pal, Burgess, Glorot, Botvinick, Mohamed and\ Lerchner}}}
+\bibcite{pmlr-v38-jampani15}{{16}{2015}{{Jampani et~al.}}{{Jampani, Eslami, Tarlow, Kohli and\ Winn}}}
+\bibcite{joy_capturing_2020}{{17}{2021}{{Joy et~al.}}{{Joy, Schmon, Torr, Siddharth and\ Rainforth}}}
+\bibcite{joy_learning_2021}{{18}{2022}{{Joy et~al.}}{{Joy, Shi, Torr, Rainforth, Schmon and\ Siddharth}}}
+\bibcite{ke_apgvae_2023}{{19}{2024}{{Ke et~al.}}{{Ke, Jing, Wo\'{z}niak, Xu, Liang and\ Zheng}}}
+\bibcite{Kim2018DisentanglingBF}{{20}{2018}{{Kim and\ Mnih}}{{}}}
+\bibcite{kingma2017adammethodstochasticoptimization}{{21}{2015}{{Kingma and\ Ba}}{{}}}
+\bibcite{kingma_semi-supervised_2014}{{22}{2014}{{Kingma et~al.}}{{Kingma, Rezende, Mohamed and\ Welling}}}
+\bibcite{kingma_auto-encoding_2013}{{23}{2014}{{Kingma and\ Welling}}{{}}}
+\bibcite{kulinski_explaining_2023}{{24}{2023}{{Kulinski and\ Inouye}}{{}}}
+\bibcite{li_multi_2018}{{25}{2018}{{Li et~al.}}{{Li, Zhang and\ Liu}}}
+\bibcite{lin_infogan_2020}{{26}{2020}{{Lin et~al.}}{{Lin, Thekumparampil, Fanti and\ Oh}}}
+\bibcite{locatello_challenging_2018}{{27}{2019}{{Locatello et~al.}}{{Locatello, Bauer, Lucic, Gelly, Schoelkopf and\ Bachem}}}
+\bibcite{locatello_weakly_2020}{{28}{2020}{{Locatello et~al.}}{{Locatello, Poole, Raetsch, Schoelkopf, Bachem and\ Tschannen}}}
+\bibcite{mattei_leveraging_2018}{{29}{2018}{{Mattei and\ Frellsen}}{{}}}
+\bibcite{narayanaswamy_learning_2017}{{30}{2017}{{Narayanaswamy et~al.}}{{Narayanaswamy, Paige, van~de Meent, Desmaison, Goodman, Kohli, Wood and\ Torr}}}
+\bibcite{netzer2011reading}{{31}{2011}{{Netzer et~al.}}{{Netzer, Wang, Coates, Bissacco, Wu, Ng et~al.}}}
+\bibcite{nie_semi_supervised_2020}{{32}{2020}{{Nie et~al.}}{{Nie, Karras, Garg, Debnath, Patney, Patel and\ Anandkumar}}}
+\bibcite{perry2010continuous}{{33}{2010}{{Perry et~al.}}{{Perry, Rolls and\ Stringer}}}
+\bibcite{rezende2014stochastic}{{34}{2014}{{Rezende et~al.}}{{Rezende, Mohamed and\ Wierstra}}}
+\bibcite{shu_weakly_2019}{{35}{2020}{{Shu et~al.}}{{Shu, Chen, Kumar, Ermon and\ Poole}}}
+\bibcite{vaze_representation_2023}{{36}{2023}{{Vaze et~al.}}{{Vaze, Vedaldi and\ Zisserman}}}
+\bibcite{yang_usupervised_2019}{{37}{2019}{{Yang et~al.}}{{Yang, Dvornek, Zhang, Chapiro, Lin and\ Duncan}}}
+\bibcite{yang_disentangling_2019}{{38}{2019}{{Yang and\ Yao}}{{}}}
+\bibcite{ye_learning_2020}{{39}{2020}{{Ye and\ Bors}}{{}}}
+\bibcite{ye_lifelong_2022}{{40}{2022}{{Ye and\ Bors}}{{}}}
+\bibcite{zhang_causal_2020}{{41}{2020}{{Zhang et~al.}}{{Zhang, Zhang and\ Li}}}
 \bibstyle{dcu}
 \citation{narayanaswamy_learning_2017}
 \gdef \@abspage@last{52}

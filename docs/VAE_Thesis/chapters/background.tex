@@ -121,7 +121,8 @@ The term $w(x) = \frac{p(x)}{q(x)}$ is known as the importance weight. In practi
 \begin{equation}
     \mathbb{E}_{p}[f(x)] \approx \frac{1}{K} \sum_{k=1}^K f(x^{(k)}) w(x^{(k)})
 \end{equation}
-This standard estimator is unbiased, provided $p(x)$ is a normalized density. 
+This standard estimator is unbiased, provided $p(x)$ is a normalized density. An example of importance sampling in the context of \acp{VAE} is the \ac{IWAE} \citep{Burda2015ImportanceWA} which employs importance sampling to derive a tighter lower bound on the marginal log-likelihood by averaging $K$ latent samples drawn from the approximate posterior. 
+Each sample is weighted by the importance ratio $w_i = p(x, z_i) / q(z_i|x)$, which reduces the bias of the variational approximation and improves the model's representative capacity.
 
 However, in many applications, the target distribution is only known up to an intractable normalizing constant $Z$, i.e., $p(x) = \frac{\tilde{p}(x)}{Z}$. In this scenario, self-normalized importance sampling is used. We calculate unnormalized weights $\tilde{w}(x) = \frac{\tilde{p}(x)}{q(x)}$ and approximate the expectation using the ratio of estimators:
 \begin{equation}
