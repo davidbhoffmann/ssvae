@@ -23,6 +23,7 @@ bindingoffset = 0mm]{geometry}
 \usepackage{amsfonts}
 \usepackage{bm}
 \usepackage{subcaption}
+\usepackage{xurl}
 
 \newcommand{\changefont}{%
     \fontsize{8}{11}\selectfont
@@ -70,6 +71,7 @@ bindingoffset = 0mm]{geometry}
 % ------------------------------------------------------------------------------
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
+\pagenumbering{alph}
 
 % \begin{acronym}
 %   \acro{VAE}{Variational Auto Encoder}
@@ -109,7 +111,7 @@ Munich, February 6\textsuperscript{th}, 2026
       
 \vfill
 
-\includegraphics[width = 0.4\textwidth]{figures/sigillum.png}
+\includegraphics[width = 0.4\textwidth]{figures/sigillum.pdf}
 
 \vfill
 
@@ -124,9 +126,9 @@ Supervised by \mysupervisor
 
 % CONTENTS ---------------------------------------------------------------------
 
-\pagenumbering{Roman}
-\newpage
 
+\newpage
+\pagenumbering{Roman}
 \begin{abstract}
 
 The \ac{SSVAE} framework from \cite{narayanaswamy_learning_2017} bridges the gap between supervised graphical models and unsupervised deep generative models. It allows the user to impose arbitrary dependence structures on the latent space of a \ac{VAE} through partial supervision. This work introduces the reader to the \ac{SSVAE} method and critically assesses its limitations. We identify key works in the related literature which point out the expensive use of labels, problems with disentanglement, and the shift towards weak supervision. In our experiments, we address two limitations and identify a trade-off between disentanglement of the partially supervised latents and the remaining unsupervised variables. Furthermore, we find that the supervised disentanglement in \acp{SSVAE} only marginally degrades when introducing up to 20\% noise to the labels on the \acs{MNIST} dataset.

@@ -5,42 +5,42 @@ The style file: dcu.bst
 Database file #1: bibliography.bib
 You've used 41 entries,
             2921 wiz_defined-function locations,
-            865 strings with 13722 characters,
-and the built_in function-call counts, 242317 in all, are:
-= -- 39643
-> -- 3838
-< -- 8
-+ -- 19545
-- -- 1191
-* -- 21440
-:= -- 47617
+            860 strings with 13687 characters,
+and the built_in function-call counts, 244087 in all, are:
+= -- 39920
+> -- 3861
+< -- 11
++ -- 19664
+- -- 1198
+* -- 21563
+:= -- 47890
 add.period$ -- 82
 call.type$ -- 41
 change.case$ -- 574
 chr.to.int$ -- 41
 cite$ -- 41
-duplicate$ -- 708
-empty$ -- 1414
-format.name$ -- 1339
-if$ -- 43744
+duplicate$ -- 745
+empty$ -- 1485
+format.name$ -- 1350
+if$ -- 44133
 int.to.chr$ -- 5
 int.to.str$ -- 0
 missing$ -- 41
-newline$ -- 169
+newline$ -- 168
 num.names$ -- 448
-pop$ -- 195
+pop$ -- 224
 preamble$ -- 1
 purify$ -- 615
 quote$ -- 0
-skip$ -- 620
+skip$ -- 630
 stack$ -- 0
-substring$ -- 56536
-swap$ -- 146
-text.length$ -- 582
+substring$ -- 56906
+swap$ -- 163
+text.length$ -- 585
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 164
 warning$ -- 0
-while$ -- 904
+while$ -- 908
 width$ -- 0
-write$ -- 625
+write$ -- 630

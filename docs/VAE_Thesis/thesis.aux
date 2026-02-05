@@ -81,7 +81,7 @@
 \newlabel{eq:combined_obj}{{10}{5}{Semi-Supervised Variational Auto-Encoders}{equation.10}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Importance Sampling}{5}{subsection.2.4}\protected@file@percent }
 \newlabel{sec:imp_sampling}{{2.4}{5}{Importance Sampling}{subsection.2.4}{}}
-\citation{Burda2015ImportanceWA}
+\citation{burda2015importance}
 \acronymused{VAE}
 \AC@undonewlabel{acro:IWAE}
 \newlabel{acro:IWAE}{{2.4}{6}{Importance Sampling}{section*.9}{}}
@@ -109,7 +109,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Relation to Kingma's M2 Model}{9}{subsection.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Graphical Model and Stochastic Implementation}{9}{subsection.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Experiments and Findings}{9}{subsection.3.4}\protected@file@percent }
-\newlabel{sec:their_eperiments}{{3.4}{9}{Experiments and Findings}{subsection.3.4}{}}
+\newlabel{sec:their_experiments}{{3.4}{9}{Experiments and Findings}{subsection.3.4}{}}
 \AC@undonewlabel{acro:MNIST}
 \newlabel{acro:MNIST}{{3.4}{9}{Experiments and Findings}{section*.11}{}}
 \acronymused{MNIST}
@@ -345,8 +345,8 @@
 \acronymused{SSVAE}
 \citation{deng2012mnist}
 \citation{narayanaswamy_learning_2017}
-\citation{agarap2018deep}
-\citation{agarap2018deep}
+\citation{nair2010rectified}
+\citation{nair2010rectified}
 \citation{narayanaswamy_learning_2017}
 \citation{kingma2017adammethodstochasticoptimization}
 \citation{narayanaswamy_learning_2017}
@@ -359,13 +359,13 @@
 \newlabel{sec:implementation_details}{{5.1}{22}{Implementation Details}{subsection.5.1}{}}
 \acronymused{MNIST}
 \acronymused{SSVAE}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep  {agarap2018deep} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process.}}{22}{figure.caption.22}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep  {nair2010rectified} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process.}}{22}{figure.caption.22}\protected@file@percent }
 \acronymused{SSVAE}
 \acronymused{MNIST}
 \AC@undonewlabel{acro:ReLU}
-\newlabel{acro:ReLU}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep {agarap2018deep} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process}{section*.23}{}}
+\newlabel{acro:ReLU}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep {nair2010rectified} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process}{section*.23}{}}
 \acronymused{ReLU}
-\newlabel{fig:architecture}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep {agarap2018deep} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process}{figure.caption.22}{}}
+\newlabel{fig:architecture}{{3}{22}{\ac {SSVAE} architecture used throughout all experiments. The encoder has $28\times 28=784$ inputs $\{x_i\}_{i=1}^{784}$ matching the \ac {MNIST} input and the decoder has the same number of output neurons with sigmoid activations and a binary cross entropy loss. Both encoder and decoder have 256 hidden neurons $\{h_i\}_{i=1}^{256}$ with \ac {ReLU} \citep {nair2010rectified} activations. The latent space has 10 style variables $\{z_i\}_{i=1}^{10}$ and 10 digit neurons $\{y_i\}_{i=1}^{10}$. The decoder uses sampled $\{z'_i\}_{i=1}^{10}$ from a Gaussian and $\{y'_i\}_{i=1}^{10}$ from a Gumbel-Softmax distribution as inputs. Note that the dots between the neurons of a layer symbolize the remaining not shown neurons. Dashed lines symbolize the reparametrization trick and sampling process}{figure.caption.22}{}}
 \acronymused{MNIST}
 \citation{narayanaswamy_learning_2017}
 \citation{narayanaswamy_learning_2017}
@@ -476,34 +476,34 @@
     {1}{0.0pt}}
 \bibdata{bibliography}
 \bibcite{adel_discovering_2018}{{1}{2018}{{Adel et~al.}}{{Adel, Ghahramani and\ Weller}}}
-\bibcite{agarap2018deep}{{2}{2018}{{Agarap}}{{}}}
-\bibcite{bengio2013representation}{{3}{2013}{{Bengio et~al.}}{{Bengio, Courville and\ Vincent}}}
-\bibcite{biswal_eva_2020}{{4}{2021}{{Biswal et~al.}}{{Biswal, Ghosh, Duke, Malin, Stewart, Xiao and\ Sun}}}
-\bibcite{bouchacourt_multilevel_2017}{{5}{2018}{{Bouchacourt et~al.}}{{Bouchacourt, Tomioka and\ Nowozin}}}
-\bibcite{Burda2015ImportanceWA}{{6}{2015}{{Burda et~al.}}{{Burda, Grosse and\ Salakhutdinov}}}
-\bibcite{casale_gaussian_2018}{{7}{2018}{{Casale et~al.}}{{Casale, Dalca, Saglietti, Listgarten and\ Fusi}}}
-\bibcite{chen_weakly_2020}{{8}{2020}{{Chen and\ Batmanghelich}}{{}}}
-\bibcite{chen_isolating_2019}{{9}{2018}{{Chen et~al.}}{{Chen, Li, Grosse and\ Duvenaud}}}
-\bibcite{deng2012mnist}{{10}{2012}{{Deng}}{{}}}
-\bibcite{esmaeili_structured_2018}{{11}{2019}{{Esmaeili et~al.}}{{Esmaeili, Wu, Jain, Bozkurt, Siddharth, Paige, Brooks, Dy and\ Meent}}}
-\bibcite{feng_shot_vae_2021}{{12}{2021}{{Feng et~al.}}{{Feng, Kong, Chen, Zhang, Zhu and\ Chen}}}
-\bibcite{GeBeKr01}{{13}{2001}{{Georghiades et~al.}}{{Georghiades, Belhumeur and\ Kriegman}}}
-\bibcite{gordon_meta_2019}{{14}{2019}{{Gordon et~al.}}{{Gordon, Bronskill, Bauer, Nowozin and\ Turner}}}
-\bibcite{Higgins2016betaVAELB}{{15}{2017}{{Higgins et~al.}}{{Higgins, Matthey, Pal, Burgess, Glorot, Botvinick, Mohamed and\ Lerchner}}}
-\bibcite{pmlr-v38-jampani15}{{16}{2015}{{Jampani et~al.}}{{Jampani, Eslami, Tarlow, Kohli and\ Winn}}}
-\bibcite{joy_capturing_2020}{{17}{2021}{{Joy et~al.}}{{Joy, Schmon, Torr, Siddharth and\ Rainforth}}}
-\bibcite{joy_learning_2021}{{18}{2022}{{Joy et~al.}}{{Joy, Shi, Torr, Rainforth, Schmon and\ Siddharth}}}
-\bibcite{ke_apgvae_2023}{{19}{2024}{{Ke et~al.}}{{Ke, Jing, Wo\'{z}niak, Xu, Liang and\ Zheng}}}
-\bibcite{Kim2018DisentanglingBF}{{20}{2018}{{Kim and\ Mnih}}{{}}}
-\bibcite{kingma2017adammethodstochasticoptimization}{{21}{2015}{{Kingma and\ Ba}}{{}}}
-\bibcite{kingma_semi-supervised_2014}{{22}{2014}{{Kingma et~al.}}{{Kingma, Rezende, Mohamed and\ Welling}}}
-\bibcite{kingma_auto-encoding_2013}{{23}{2014}{{Kingma and\ Welling}}{{}}}
-\bibcite{kulinski_explaining_2023}{{24}{2023}{{Kulinski and\ Inouye}}{{}}}
-\bibcite{li_multi_2018}{{25}{2018}{{Li et~al.}}{{Li, Zhang and\ Liu}}}
-\bibcite{lin_infogan_2020}{{26}{2020}{{Lin et~al.}}{{Lin, Thekumparampil, Fanti and\ Oh}}}
-\bibcite{locatello_challenging_2018}{{27}{2019}{{Locatello et~al.}}{{Locatello, Bauer, Lucic, Gelly, Schoelkopf and\ Bachem}}}
-\bibcite{locatello_weakly_2020}{{28}{2020}{{Locatello et~al.}}{{Locatello, Poole, Raetsch, Schoelkopf, Bachem and\ Tschannen}}}
-\bibcite{mattei_leveraging_2018}{{29}{2018}{{Mattei and\ Frellsen}}{{}}}
+\bibcite{bengio2013representation}{{2}{2013}{{Bengio et~al.}}{{Bengio, Courville and\ Vincent}}}
+\bibcite{biswal_eva_2020}{{3}{2021}{{Biswal et~al.}}{{Biswal, Ghosh, Duke, Malin, Stewart, Xiao and\ Sun}}}
+\bibcite{bouchacourt_multilevel_2017}{{4}{2018}{{Bouchacourt et~al.}}{{Bouchacourt, Tomioka and\ Nowozin}}}
+\bibcite{burda2015importance}{{5}{2016}{{Burda et~al.}}{{Burda, Grosse and\ Salakhutdinov}}}
+\bibcite{casale_gaussian_2018}{{6}{2018}{{Casale et~al.}}{{Casale, Dalca, Saglietti, Listgarten and\ Fusi}}}
+\bibcite{chen_weakly_2020}{{7}{2020}{{Chen and\ Batmanghelich}}{{}}}
+\bibcite{chen_isolating_2019}{{8}{2018}{{Chen et~al.}}{{Chen, Li, Grosse and\ Duvenaud}}}
+\bibcite{deng2012mnist}{{9}{2012}{{Deng}}{{}}}
+\bibcite{esmaeili_structured_2018}{{10}{2019}{{Esmaeili et~al.}}{{Esmaeili, Wu, Jain, Bozkurt, Siddharth, Paige, Brooks, Dy and\ Meent}}}
+\bibcite{feng_shot_vae_2021}{{11}{2021}{{Feng et~al.}}{{Feng, Kong, Chen, Zhang, Zhu and\ Chen}}}
+\bibcite{GeBeKr01}{{12}{2001}{{Georghiades et~al.}}{{Georghiades, Belhumeur and\ Kriegman}}}
+\bibcite{gordon_meta_2019}{{13}{2019}{{Gordon et~al.}}{{Gordon, Bronskill, Bauer, Nowozin and\ Turner}}}
+\bibcite{Higgins2016betaVAELB}{{14}{2017}{{Higgins et~al.}}{{Higgins, Matthey, Pal, Burgess, Glorot, Botvinick, Mohamed and\ Lerchner}}}
+\bibcite{pmlr-v38-jampani15}{{15}{2015}{{Jampani et~al.}}{{Jampani, Eslami, Tarlow, Kohli and\ Winn}}}
+\bibcite{joy_capturing_2020}{{16}{2021}{{Joy et~al.}}{{Joy, Schmon, Torr, Siddharth and\ Rainforth}}}
+\bibcite{joy_learning_2021}{{17}{2022}{{Joy et~al.}}{{Joy, Shi, Torr, Rainforth, Schmon and\ Siddharth}}}
+\bibcite{ke_apgvae_2023}{{18}{2024}{{Ke et~al.}}{{Ke, Jing, Wo\'{z}niak, Xu, Liang and\ Zheng}}}
+\bibcite{Kim2018DisentanglingBF}{{19}{2018}{{Kim and\ Mnih}}{{}}}
+\bibcite{kingma2017adammethodstochasticoptimization}{{20}{2015}{{Kingma and\ Ba}}{{}}}
+\bibcite{kingma_semi-supervised_2014}{{21}{2014}{{Kingma et~al.}}{{Kingma, Rezende, Mohamed and\ Welling}}}
+\bibcite{kingma_auto-encoding_2013}{{22}{2014}{{Kingma and\ Welling}}{{}}}
+\bibcite{kulinski_explaining_2023}{{23}{2023}{{Kulinski and\ Inouye}}{{}}}
+\bibcite{li_multi_2018}{{24}{2018}{{Li et~al.}}{{Li, Zhang and\ Liu}}}
+\bibcite{lin_infogan_2020}{{25}{2020}{{Lin et~al.}}{{Lin, Thekumparampil, Fanti and\ Oh}}}
+\bibcite{locatello_challenging_2018}{{26}{2019}{{Locatello et~al.}}{{Locatello, Bauer, Lucic, Gelly, Schoelkopf and\ Bachem}}}
+\bibcite{locatello_weakly_2020}{{27}{2020}{{Locatello et~al.}}{{Locatello, Poole, Raetsch, Schoelkopf, Bachem and\ Tschannen}}}
+\bibcite{mattei_leveraging_2018}{{28}{2018}{{Mattei and\ Frellsen}}{{}}}
+\bibcite{nair2010rectified}{{29}{2010}{{Nair and\ Hinton}}{{}}}
 \bibcite{narayanaswamy_learning_2017}{{30}{2017}{{Narayanaswamy et~al.}}{{Narayanaswamy, Paige, van~de Meent, Desmaison, Goodman, Kohli, Wood and\ Torr}}}
 \bibcite{netzer2011reading}{{31}{2011}{{Netzer et~al.}}{{Netzer, Wang, Coates, Bissacco, Wu, Ng et~al.}}}
 \bibcite{nie_semi_supervised_2020}{{32}{2020}{{Nie et~al.}}{{Nie, Karras, Garg, Debnath, Patney, Patel and\ Anandkumar}}}

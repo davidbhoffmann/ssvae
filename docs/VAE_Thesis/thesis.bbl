@@ -4,10 +4,6 @@
 Adel, T., Ghahramani, Z. \harvardand\ Weller, A.  \harvardyearleft 2018\harvardyearright .
 \newblock Discovering interpretable representations for both deep generative and discriminative models, {\em in} J.~Dy \harvardand\ A.~Krause (eds), {\em Proceedings of the 35th International Conference on Machine Learning}, Vol.~80 of {\em Proceedings of Machine Learning Research}, PMLR, pp.~50--59.
 
-\harvarditem{Agarap}{2018}{agarap2018deep}
-Agarap, A.~F.  \harvardyearleft 2018\harvardyearright .
-\newblock Deep learning using rectified linear units (reli), {\em ArXiv Preprint} .
-
 \harvarditem[Bengio et~al.]{Bengio, Courville \harvardand\ Vincent}{2013}{bengio2013representation}
 Bengio, Y., Courville, A. \harvardand\ Vincent, P.  \harvardyearleft 2013\harvardyearright .
 \newblock Representation learning: A review and new perspectives, {\em IEEE transactions on pattern analysis and machine intelligence} {\bf 35}(8):~1798--1828.
@@ -20,10 +16,9 @@ Biswal, S., Ghosh, S., Duke, J., Malin, B., Stewart, W., Xiao, C. \harvardand\ S
 Bouchacourt, D., Tomioka, R. \harvardand\ Nowozin, S.  \harvardyearleft 2018\harvardyearright .
 \newblock Multi-level variational autoencoder: Learning disentangled representations from grouped observations, {\em Proceedings of the AAAI Conference on Artificial Intelligence}, Vol.~32.
 
-\harvarditem[Burda et~al.]{Burda, Grosse \harvardand\ Salakhutdinov}{2015}{Burda2015ImportanceWA}
-Burda, Y., Grosse, R.~B. \harvardand\ Salakhutdinov, R.  \harvardyearleft 2015\harvardyearright .
-\newblock Importance weighted autoencoders, {\em CoRR} {\bf abs/1509.00519}.
-\newline\harvardurl{https://api.semanticscholar.org/CorpusID:11383178}
+\harvarditem[Burda et~al.]{Burda, Grosse \harvardand\ Salakhutdinov}{2016}{burda2015importance}
+Burda, Y., Grosse, R. \harvardand\ Salakhutdinov, R.  \harvardyearleft 2016\harvardyearright .
+\newblock Importance weighted autoencoders, {\em International Conference on Learning Representations}.
 
 \harvarditem[Casale et~al.]{Casale, Dalca, Saglietti, Listgarten \harvardand\ Fusi}{2018}{casale_gaussian_2018}
 Casale, F.~P., Dalca, A.~V., Saglietti, L., Listgarten, J. \harvardand\ Fusi, N.  \harvardyearleft 2018\harvardyearright .
@@ -35,7 +30,7 @@ Chen, J. \harvardand\ Batmanghelich, K.  \harvardyearleft 2020\harvardyearright 
 
 \harvarditem[Chen et~al.]{Chen, Li, Grosse \harvardand\ Duvenaud}{2018}{chen_isolating_2019}
 Chen, R.~T., Li, X., Grosse, R.~B. \harvardand\ Duvenaud, D.~K.  \harvardyearleft 2018\harvardyearright .
-\newblock Isolating sources of disentanglement in variational autoencoders, {\em Advances in neural information processing systems} {\bf 31}.
+\newblock Isolating sources of disentanglement in variational autoencoders, {\em Advances in Neural Information Processing Systems (NeurIPS)}, Vol.~31.
 
 \harvarditem{Deng}{2012}{deng2012mnist}
 Deng, L.  \harvardyearleft 2012\harvardyearright .
@@ -47,7 +42,7 @@ Esmaeili, B., Wu, H., Jain, S., Bozkurt, A., Siddharth, N., Paige, B., Brooks, D
 
 \harvarditem[Feng et~al.]{Feng, Kong, Chen, Zhang, Zhu \harvardand\ Chen}{2021}{feng_shot_vae_2021}
 Feng, H.-Z., Kong, K., Chen, M., Zhang, T., Zhu, M. \harvardand\ Chen, W.  \harvardyearleft 2021\harvardyearright .
-\newblock Shot-vae: Semi-supervised deep generative models with label-aware elbo approximations, {\em Proceedings of the AAAI Conference on Artificial Intelligence} {\bf 35}(8):~7413--7421.
+\newblock Shot-vae: Semi-supervised deep generative models with label-aware elbo approximations, {\em Proceedings of the AAAI Conference on Artificial Intelligence}, Vol.~35, pp.~7413--7421.
 
 \harvarditem[Georghiades et~al.]{Georghiades, Belhumeur \harvardand\ Kriegman}{2001}{GeBeKr01}
 Georghiades, A., Belhumeur, P. \harvardand\ Kriegman, D.  \harvardyearleft 2001\harvardyearright .
@@ -59,7 +54,7 @@ Gordon, J., Bronskill, J., Bauer, M., Nowozin, S. \harvardand\ Turner, R.~E.  \h
 
 \harvarditem[Higgins et~al.]{Higgins, Matthey, Pal, Burgess, Glorot, Botvinick, Mohamed \harvardand\ Lerchner}{2017}{Higgins2016betaVAELB}
 Higgins, I., Matthey, L., Pal, A., Burgess, C.~P., Glorot, X., Botvinick, M.~M., Mohamed, S. \harvardand\ Lerchner, A.  \harvardyearleft 2017\harvardyearright .
-\newblock Beta-vae: Learning basic visual concepts with a constrained variational framework, {\em International Conference on Learning Representations}.
+\newblock Beta-vae: Learning basic visual concepts with a constrained variational framework, {\em International Conference on Learning Representations (ICLR)}.
 
 \harvarditem[Jampani et~al.]{Jampani, Eslami, Tarlow, Kohli \harvardand\ Winn}{2015}{pmlr-v38-jampani15}
 Jampani, V., Eslami, S. M.~A., Tarlow, D., Kohli, P. \harvardand\ Winn, J.  \harvardyearleft 2015\harvardyearright .
@@ -72,7 +67,7 @@ Joy, T., Schmon, S.~M., Torr, P. H.~S., Siddharth, N. \harvardand\ Rainforth, T.
 
 \harvarditem[Joy et~al.]{Joy, Shi, Torr, Rainforth, Schmon \harvardand\ Siddharth}{2022}{joy_learning_2021}
 Joy, T., Shi, Y., Torr, P.~H., Rainforth, T., Schmon, S.~M. \harvardand\ Siddharth, N.  \harvardyearleft 2022\harvardyearright .
-\newblock Learning multimodal vaes through mutual supervision, {\em ICLR} .
+\newblock Learning multimodal {VAEs} through mutual supervision, {\em International Conference on Learning Representations (ICLR)}.
 
 \harvarditem[Ke et~al.]{Ke, Jing, Wo\'{z}niak, Xu, Liang \harvardand\ Zheng}{2024}{ke_apgvae_2023}
 Ke, Q., Jing, X., Wo\'{z}niak, M., Xu, S., Liang, Y. \harvardand\ Zheng, J.  \harvardyearleft 2024\harvardyearright .
@@ -116,7 +111,11 @@ Locatello, F., Poole, B., Raetsch, G., Schoelkopf, B., Bachem, O. \harvardand\ T
 
 \harvarditem{Mattei \harvardand\ Frellsen}{2018}{mattei_leveraging_2018}
 Mattei, P.-A. \harvardand\ Frellsen, J.  \harvardyearleft 2018\harvardyearright .
-\newblock Leveraging the exact likelihood of deep latent variable models, {\em Advances in Neural Information Processing Systems} {\bf 31}.
+\newblock Leveraging the exact likelihood of deep latent variable models, {\em Advances in Neural Information Processing Systems (NeurIPS)}, Vol.~31.
+
+\harvarditem{Nair \harvardand\ Hinton}{2010}{nair2010rectified}
+Nair, V. \harvardand\ Hinton, G.~E.  \harvardyearleft 2010\harvardyearright .
+\newblock Rectified linear units improve restricted boltzmann machines, {\em Proceedings of the 27th international conference on machine learning (ICML-10)}, pp.~807--814.
 
 \harvarditem[Narayanaswamy et~al.]{Narayanaswamy, Paige, van~de Meent, Desmaison, Goodman, Kohli, Wood \harvardand\ Torr}{2017}{narayanaswamy_learning_2017}
 Narayanaswamy, S., Paige, B., van~de Meent, J.-W., Desmaison, A., Goodman, N., Kohli, P., Wood, F. \harvardand\ Torr, P.  \harvardyearleft 2017\harvardyearright .
@@ -131,12 +130,12 @@ Nie, W., Karras, T., Garg, A., Debnath, S., Patney, A., Patel, A. \harvardand\ A
 \newblock Semi-supervised {S}tyle{GAN} for disentanglement learning, {\em in} H.~D. III \harvardand\ A.~Singh (eds), {\em Proceedings of the 37th International Conference on Machine Learning}, Vol. 119 of {\em Proceedings of Machine Learning Research}, PMLR, pp.~7360--7369.
 
 \harvarditem[Perry et~al.]{Perry, Rolls \harvardand\ Stringer}{2010}{perry2010continuous}
-Perry, G., Rolls, E. \harvardand\ Stringer, S.  \harvardyearleft 2010\harvardyearright .
-\newblock Continuous transformation learning of translation invariant representations, {\em Experimental brain research} {\bf 204}(2):~255--270.
+Perry, G., Rolls, E.~T. \harvardand\ Stringer, S.~M.  \harvardyearleft 2010\harvardyearright .
+\newblock Continuous transformation learning of translation invariant representations, {\em Experimental Brain Research} {\bf 204}(2):~255--270.
 
 \harvarditem[Rezende et~al.]{Rezende, Mohamed \harvardand\ Wierstra}{2014}{rezende2014stochastic}
 Rezende, D.~J., Mohamed, S. \harvardand\ Wierstra, D.  \harvardyearleft 2014\harvardyearright .
-\newblock Stochastic backpropagation and approximate inference in deep generative models, {\em International conference on machine learning} pp.~1278--1286.
+\newblock Stochastic backpropagation and approximate inference in deep generative models, {\em Proceedings of the 31st International Conference on Machine Learning (ICML)}, pp.~1278--1286.
 
 \harvarditem[Shu et~al.]{Shu, Chen, Kumar, Ermon \harvardand\ Poole}{2020}{shu_weakly_2019}
 Shu, R., Chen, Y., Kumar, A., Ermon, S. \harvardand\ Poole, B.  \harvardyearleft 2020\harvardyearright .
