@@ -133,10 +133,6 @@ Nie, W., Karras, T., Garg, A., Debnath, S., Patney, A., Patel, A. \harvardand\ A
 Perry, G., Rolls, E.~T. \harvardand\ Stringer, S.~M.  \harvardyearleft 2010\harvardyearright .
 \newblock Continuous transformation learning of translation invariant representations, {\em Experimental Brain Research} {\bf 204}(2):~255--270.
 
-\harvarditem[Rezende et~al.]{Rezende, Mohamed \harvardand\ Wierstra}{2014}{rezende2014stochastic}
-Rezende, D.~J., Mohamed, S. \harvardand\ Wierstra, D.  \harvardyearleft 2014\harvardyearright .
-\newblock Stochastic backpropagation and approximate inference in deep generative models, {\em Proceedings of the 31st International Conference on Machine Learning (ICML)}, pp.~1278--1286.
-
 \harvarditem[Shu et~al.]{Shu, Chen, Kumar, Ermon \harvardand\ Poole}{2020}{shu_weakly_2019}
 Shu, R., Chen, Y., Kumar, A., Ermon, S. \harvardand\ Poole, B.  \harvardyearleft 2020\harvardyearright .
 \newblock Weakly supervised disentanglement with guarantees, {\em International Conference on Learning Representations (ICLR)}.
