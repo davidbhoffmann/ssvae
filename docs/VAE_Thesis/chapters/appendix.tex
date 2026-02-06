@@ -1,19 +1,19 @@
 \section{Systematic Review Process}
 \label{apx:systematic_review}
 
-To identify relevant extensions and limitations of \cite{narayanaswamy_learning_2017} in the literature, the results of several retrieval methods were synthesized. Note that the papers identified through the different methods had some overlap. For any paper to be considered it had to fulfil one of the following selection criteria: (1) directly critique \cite{narayanaswamy_learning_2017}, (2) cite the paper in the context of a more general critique, (3) extend the \ac{SSVAE} framework or (4) use it in an experiment. 
+To identify relevant extensions and limitations of \cite{narayanaswamy_learning_2017} in the literature, the results of several retrieval methods were synthesized. Note that the papers identified through the different methods had some overlap. For any paper to be considered, it had to fulfil one of the following selection criteria: (1) directly critique \cite{narayanaswamy_learning_2017}, (2) cite the paper in the context of a more general critique, (3) extend the \ac{SSVAE} framework or (4) use it in an experiment. 
 
 
 Firstly, Connected Papers (\url{https://www.connectedpapers.com}) led to a list of 10 derivative works, of which only one matched the selection criteria.
 
 
-Secondly, Google Scholar (\url{https://scholar.google.com}) was used to find relevant literature in the list of 445 papers which cite \cite{narayanaswamy_learning_2017}. The first 150 citing papers sorted by relevance were checked for the selection criteria. For the first 80 results, all paragraphs that mentioned \cite{narayanaswamy_learning_2017} were reviewed in detail and for the remaining 70 papers only papers that mentioned one of the following keywords in the title were considered: \textit{semi-supervised}, \textit{weak-supervision} and \textit{label}. With this method 21 relevant papers were identified. 
+Secondly, Google Scholar (\url{https://scholar.google.com}) was used to find relevant literature in the list of 445 papers which cite \cite{narayanaswamy_learning_2017}. The first 150 citing papers sorted by relevance were checked for the selection criteria. For the first 80 results, all paragraphs that mentioned \cite{narayanaswamy_learning_2017} were reviewed in detail and for the remaining 70 papers, only papers that mentioned one of the following keywords in the title were considered: \textit{semi-supervised}, \textit{weak-supervision} and \textit{label}. With this method, 21 relevant papers were identified. 
 
-Additionally, the search functionality of Google Scholar was used to find results for the search terms \textit{semi-supervised disentanglement} and \textit{supervised disentanglement}. For each term the first 10 results were reviewed in detail leading to a total of 4 relevant papers.
+Additionally, the search functionality of Google Scholar was used to find results for the search terms \textit{semi-supervised disentanglement} and \textit{supervised disentanglement}. For each term, the first 10 results were reviewed in detail, leading to a total of 4 relevant papers.
 
 Lastly, Gemini-3-Pro was used to generate a report with relevant extensions and critiques which led to 5 relevant papers.
 
-Note, that during the review process we found that most derivate work builds on the original \ac{SSVAE} of \cite{kingma_semi-supervised_2014} with 4094 citations on google scholar while \cite{narayanaswamy_learning_2017} are cited 445 times.
+Note that during the review process we found that most derivative work builds on the original \ac{SSVAE} of \cite{kingma_semi-supervised_2014} with 4094 citations on Google Scholar while \cite{narayanaswamy_learning_2017} is cited 445 times.
 
 \section{SSVAE Training}
 \label{apx:training}
@@ -47,9 +47,9 @@ The following section contains tables with aggregated results for the supervisio
         \label{tab:alpha_exp}
     \begin{tabular}{llrrrrrrrrrr}
         \toprule
-        &  & \multicolumn{2}{r}{Beta-VAE} & \multicolumn{2}{r}{Factor-VAE} & \multicolumn{2}{r}{MIG} & \multicolumn{2}{r}{Test ELBO} & \multicolumn{2}{r}{Test Accuracy} \\
+        &  & \multicolumn{2}{r}{$\beta$-VAE} & \multicolumn{2}{r}{Factor-VAE} & \multicolumn{2}{r}{MIG} & \multicolumn{2}{r}{Test ELBO} & \multicolumn{2}{r}{Test Accuracy} \\
         &  & Mean & Std & Mean & Std & Mean & Std & Mean & Std & Mean & Std \\
-        \# Labels & Alpha &  &  &  &  &  &  &  &  &  &  \\
+        \# Labels & $\alpha$ &  &  &  &  &  &  &  &  &  &  \\
         \midrule
         \multirow[c]{8}{*}{100} & 0.1 & 0.18 & 0.02 & 0.55 & 0.06 & 0.08 & 0.06 & -0.42 & 0.01 & 0.19 & 0.14 \\
         & 0.5 & 0.17 & 0.02 & 0.53 & 0.08 & 0.08 & 0.07 & -0.42 & 0.01 & 0.23 & 0.18 \\
@@ -95,14 +95,14 @@ The following section contains tables with aggregated results for the supervisio
     \caption{Detailed results for the supervision weight experiment.} \label{tab:full_alpha_exp} \\
     % --- First Page Header ---
     \hline
-    Alpha & \# Labels & Seed & Beta-VAE & Factor-VAE & mig & Test ELBO & Test Accuracy \\
+    $\alpha$ & & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \hline
     \endfirsthead
 
     % --- Subsequent Page Headers ---
     \multicolumn{9}{c}{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
     \hline
-    Alpha & \# Labels & Seed & Beta-VAE & Factor-VAE & mig & Test ELBO & Test Accuracy \\
+    $\alpha$ & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \hline
     \endhead
 
@@ -450,7 +450,7 @@ The following section contains tables with aggregated results for the corruption
     \footnotesize
     \begin{tabular}{llrrrrrrrrrr}
         \toprule
-        &  & \multicolumn{2}{r}{Beta-VAE} & \multicolumn{2}{r}{Factor-VAE} & \multicolumn{2}{r}{MIG} & \multicolumn{2}{r}{Test ELBO} & \multicolumn{2}{r}{Test Accuracy} \\
+        &  & \multicolumn{2}{r}{$\beta$-VAE} & \multicolumn{2}{r}{Factor-VAE} & \multicolumn{2}{r}{MIG} & \multicolumn{2}{r}{Test ELBO} & \multicolumn{2}{r}{Test Accuracy} \\
         &  & Mean & Std & Mean & Std & Mean & Std & Mean & Std & Mean & Std \\
         \# Labels & Noise &  &  &  &  &  &  &  &  &  &  \\
         \midrule
@@ -491,13 +491,13 @@ The following section contains tables with aggregated results for the corruption
 
     % --- First Page Header ---
     \hline
-    \% Noise & \# Labels & Seed & Beta-VAE & Factor-VAE & NIG & Test ELBO & Test Accuracy \\
+    \% Noise & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \endfirsthead
 
     % --- Subsequent Page Headers ---
     \multicolumn{9}{c}{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
     \hline
-    \% Noise & \# Labels & Seed & Beta-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
+    \% Noise & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \endhead
 
     % --- Footer for all pages except the last ---

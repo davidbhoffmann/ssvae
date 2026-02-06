@@ -4,7 +4,7 @@ Recent theoretical work has suggested that learning disentangled representations
 
 In this work, we provide a comprehensive analysis of the generalized \ac{SSVAE} framework shown in \autoref{fig:formulation}. We aim to go beyond a mere summary by critically evaluating its theoretical foundations, its reception in the broader literature, and its empirical robustness. Specifically, we address a gap in the existing critiques by conducting experiments that quantify the model's sensitivity to two key practical constraints: the weight of the supervision signal and the presence of label noise.
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=\linewidth]{figures/Framework_Formulation_Green.pdf}
     \caption{Formulation of the \ac{SSVAE} framework. The graphical model partitions the latent space into explicitly supervised variables $y$ (e.g., digit class in \ac{MNIST}) and unsupervised variables $z$ (e.g., style), governed by arbitrary dependency structures.}

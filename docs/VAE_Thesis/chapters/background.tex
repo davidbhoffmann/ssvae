@@ -56,7 +56,7 @@ Here, $q_\phi(y|x)$ is modelled as a categorical distribution, which allows it t
 In the inference process, however, these variables are coupled. The approximate posterior for the continuous variable is defined as $q_\phi(z|x, y)$. By conditioning on $y$, the network encourages $z$ to capture residual variations orthogonal to class identity.
 
 
-For the supervised dataset $\mathcal{D}_S = \{(x^m, y^m)\}$, both $x$ and $y$ are observed. The supervised objective $\mathcal{L}_S(\theta, \phi; x, y)$ consists of two main components: a generative term which is the \ac{ELBO} on the joint distribution of $x$, $y$, and $z$ as well as a discriminative term weighted by $\alpha$. By expanding the generative term using the factorization $p_\theta(x,y,z) = p_\theta(x|y,z)p(y)p(z)$, we obtain a reconstruction term which encourages the decoder output to closely match the encoder input, a KL regularization that encourages the style latent $z$ to follow the prior, and the label prior $\log p(y)$:
+For the supervised dataset $\mathcal{D}_S = \{(x^m, y^m)\}$, both $x$ and $y$ are observed. The supervised objective $\mathcal{L}_S(\theta, \phi; x, y)$ consists of two main components: a generative term, which is the \ac{ELBO} on the joint distribution of $x$, $y$, and $z$, as well as a discriminative term weighted by $\alpha$. By expanding the generative term using the factorization $p_\theta(x,y,z) = p_\theta(x|y,z)p(y)p(z)$, we obtain a reconstruction term which encourages the decoder output to closely match the encoder input, a KL regularization that encourages the style latent $z$ to follow the prior, and the label prior $\log p(y)$:
 
 % \begin{align}
 %     \mathcal{L}_S(\theta, \phi; x, y) &= \underbrace{
