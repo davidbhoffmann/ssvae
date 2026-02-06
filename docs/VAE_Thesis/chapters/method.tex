@@ -55,7 +55,7 @@ where $Z = \frac{1}{S} \sum_{s=1}^S w^s$ is the normalisation constant.
 Furthermore, the term $\log q_\phi(y|x)$ is itself approximated using a Monte Carlo estimator of the lower bound normally used in maximum likelihood estimation
 
 \begin{equation}
-    \log q_\phi(y|x) \ge \mathbb{E}_{q_\phi(z|x)}\!\left[ \log \frac{q_\phi(y, z|x)}{q_\phi(z|x)} \right] \approx \frac{1}{S} \sum_{s=1}^S \log w^s \quad \text{}
+    \log q_\phi(y|x) \ge \mathbb{E}_{q_\phi(z|x)}\!\left[ \log \frac{q_\phi(y, z|x)}{q_\phi(z|x)} \right] \approx \frac{1}{S} \sum_{s=1}^S \log w^s
     \label{eq:disc_est}
 \end{equation}
 

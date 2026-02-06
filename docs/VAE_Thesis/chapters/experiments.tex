@@ -23,7 +23,6 @@ Together, these metrics ensure that the representation is not only consistent bu
 
 % Why is this interesting, motivation in related work and hole in paper
 While \cite{narayanaswamy_learning_2017} explore the supervision rate $\rho$ and therefore indirectly $\gamma$, the supervision weight $\alpha$ is not explored by the authors. Furthermore, the authors make conflicting statements about the value of $\alpha$ in the \ac{MNIST} experiments as critiqued in \autoref{sec:my_critique}. In the Yale-B experiment alpha is set to a different value without justification and in the Multi-\ac{MNIST} experiments the value of $\alpha$ is never mentioned.
-While \cite{narayanaswamy_learning_2017} change its value, indicating its importance, they leave the reader guessing at the effect of $\alpha$. 
 
 % Our setup
 To address this, we explore how robust the \ac{SSVAE} framework is with respect to the supervision weight $\alpha$ which we evaluate for eight different values: 0.1, 0.5, 1, 10, 25, 50, 75 and 100. The remaining configurations follow the setup explained in \autoref{sec:implementation_details}.
