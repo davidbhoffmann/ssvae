@@ -18,13 +18,13 @@ Note that during the review process we found that most derivative works build on
 \section{SSVAE Training}
 \label{apx:training}
 
-\autoref{fig:train_alpha} and \autoref{fig:train_noise} show the training curve plots of all runs from both the supervision factor (alpha) and corruption rate experiments. The figures show that all runs converge without overfitting.
+\autoref{fig:train_alpha} and \autoref{fig:train_noise} show the training curve plots of all runs from both the supervision weight ($\alpha$) and corruption rate experiments. The figures show that all runs converge without overfitting.
 
 \begin{figure}[htbp]
      \centering
      \begin{subfigure}[b]{0.48\textwidth}
          \includegraphics[width=\textwidth]{figures/alpha_train.pdf}
-         \caption{All training runs of the \textbf{supervision factor $\pmb\alpha$ experiment} in \autoref{sec:alpha_exp}}
+         \caption{All training runs of the \textbf{supervision weight experiment} in \autoref{sec:alpha_exp}}
          \label{fig:train_alpha}
      \end{subfigure}
      \hfill
@@ -49,7 +49,7 @@ The following section contains tables with aggregated results for the supervisio
         \toprule
         &  & \multicolumn{2}{r}{$\beta$-VAE} & \multicolumn{2}{r}{Factor-VAE} & \multicolumn{2}{r}{MIG} & \multicolumn{2}{r}{Test ELBO} & \multicolumn{2}{r}{Test Accuracy} \\
         &  & Mean & Std & Mean & Std & Mean & Std & Mean & Std & Mean & Std \\
-        \# Labels & $\alpha$ &  &  &  &  &  &  &  &  &  &  \\
+        M & $\alpha$ &  &  &  &  &  &  &  &  &  &  \\
         \midrule
         \multirow[c]{8}{*}{100} & 0.1 & 0.18 & 0.02 & 0.55 & 0.06 & 0.08 & 0.06 & -0.42 & 0.01 & 0.19 & 0.14 \\
         & 0.5 & 0.17 & 0.02 & 0.53 & 0.08 & 0.08 & 0.07 & -0.42 & 0.01 & 0.23 & 0.18 \\
@@ -95,14 +95,14 @@ The following section contains tables with aggregated results for the supervisio
     \caption{Detailed results for the supervision weight experiment.} \label{tab:full_alpha_exp} \\
     % --- First Page Header ---
     \hline
-    $\alpha$ & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
+    $\alpha$ & M & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \hline
     \endfirsthead
 
     % --- Subsequent Page Headers ---
     \multicolumn{9}{c}{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
     \hline
-    $\alpha$ & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
+    $\alpha$ & M & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \hline
     \endhead
 
@@ -452,7 +452,7 @@ The following section contains tables with aggregated results for the corruption
         \toprule
         &  & \multicolumn{2}{r}{$\beta$-VAE} & \multicolumn{2}{r}{Factor-VAE} & \multicolumn{2}{r}{MIG} & \multicolumn{2}{r}{Test ELBO} & \multicolumn{2}{r}{Test Accuracy} \\
         &  & Mean & Std & Mean & Std & Mean & Std & Mean & Std & Mean & Std \\
-        \# Labels & Noise &  &  &  &  &  &  &  &  &  &  \\
+        M & Noise &  &  &  &  &  &  &  &  &  &  \\
         \midrule
         \multirow[c]{6}{*}{100} & 0.0 & 0.15 & 0.04 & 0.39 & 0.21 & 0.07 & 0.05 & -0.42 & 0.01 & 0.39 & 0.35 \\
         & 0.0 & 0.15 & 0.04 & 0.40 & 0.21 & 0.07 & 0.05 & -0.42 & 0.01 & 0.38 & 0.34 \\
@@ -491,13 +491,13 @@ The following section contains tables with aggregated results for the corruption
 
     % --- First Page Header ---
     \hline
-    \% Noise & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
+    \% Noise & M & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \endfirsthead
 
     % --- Subsequent Page Headers ---
     \multicolumn{9}{c}{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
     \hline
-    \% Noise & \# Labels & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
+    \% Noise & M & Seed & $\beta$-VAE & Factor-VAE & MIG & Test ELBO & Test Accuracy \\
     \endhead
 
     % --- Footer for all pages except the last ---
