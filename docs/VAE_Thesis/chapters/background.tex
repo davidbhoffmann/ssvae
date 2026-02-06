@@ -11,9 +11,9 @@ Since the true posterior $p_\theta(z|x)$ is generally intractable, \acp{VAE} int
     \log p_\theta(x) \geq \mathcal{L}_{\text{ELBO}}(x; \theta, \phi) = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_{KL}(q_\phi(z|x) \| p(z))
 \end{equation}
 
-The first term is the reconstruction error, encouraging the decoder to recover the data from the latent code. The second term is the Kullback-Leibler (KL) divergence, which regularizes the approximate posterior to be close to the prior, typically assumed to be a standard multivariate Gaussian $p(z) = \mathcal{N}(0, I)$.
+The first term is the reconstruction error, encouraging the decoder to recover the data from the latent code. The second term is the Kullback-Leibler (KL) divergence, which regularises the approximate posterior to be close to the prior, typically assumed to be a standard multivariate Gaussian $p(z) = \mathcal{N}(0, I)$.
 
-To allow for backpropagation through the stochastic sampling process, \acp{VAE} utilize the reparametrisation trick. Instead of sampling $z$ directly from $q_\phi(z|x) = \mathcal{N}(\mu, \sigma^2)$, we sample an auxiliary noise variable $\epsilon \sim \mathcal{N}(0, I)$ and compute:
+To allow for backpropagation through the stochastic sampling process, \acp{VAE} utilise the reparametrisation trick. Instead of sampling $z$ directly from $q_\phi(z|x) = \mathcal{N}(\mu, \sigma^2)$, we sample an auxiliary noise variable $\epsilon \sim \mathcal{N}(0, I)$ and compute:
 
 \begin{equation}
     z = \mu_\phi(x) + \sigma_\phi(x) \odot \epsilon
@@ -21,7 +21,7 @@ To allow for backpropagation through the stochastic sampling process, \acp{VAE} 
 
 where $\odot$ denotes the element-wise product.
 
-A key goal in representation learning is disentanglement, where individual latent units are sensitive to changes in single generative factors of the data while being invariant to others \citep{bengio2013representation}. Formally, a representation is disentangled if it factorizes into independent subspaces corresponding to underlying factors of variation.
+A key goal in representation learning is disentanglement, where individual latent units are sensitive to changes in single generative factors of the data while being invariant to others \citep{bengio2013representation}. Formally, a representation is disentangled if it factorises into independent subspaces corresponding to underlying factors of variation.
 
 Standard \acp{VAE} often fail to learn disentangled representations due to the lack of explicit constraints on the latent structure. To address this, the $\beta$-\ac{VAE} framework \cite{Higgins2016betaVAELB} introduces a hyperparameter $\beta$ to weight the KL divergence term:
 
@@ -30,13 +30,13 @@ Standard \acp{VAE} often fail to learn disentangled representations due to the l
 \end{equation}
 
 Setting $\beta > 1$ imposes a stronger constraint on the latent bottleneck, encouraging the learned distribution $q_\phi(z|x)$ to align with the isotropic unit Gaussian prior. Since the prior has independent components, this pressure encourages the latent dimensions to become statistically independent, thereby promoting disentanglement, though often at the cost of reconstruction quality. 
-Building on this, $\beta$-TCVAE explicitly penalizes the total correlation of the aggregated posterior to encourage factorized latents and stronger disentanglement \citep{chen_isolating_2019}.
+Building on this, $\beta$-TCVAE explicitly penalises the total correlation of the aggregated posterior to encourage factorised latents and stronger disentanglement \citep{chen_isolating_2019}.
 
 
 
 \subsection{Degrees of Supervision}
 
-While standard supervised learning relies on a fully labelled dataset $\mathcal{D} = \{(x^{(i)}, y^{(i)})\}_{i=1}^N$, obtaining ground truth labels $y$ is often expensive. Semi-supervised learning addresses this by leveraging a small set of labelled data $\mathcal{D}_S$ alongside a much larger set of unlabelled data $\mathcal{D}_U = \{x^{(j)}\}_{j=1}^M$. The objective is to utilize the structural information inherent in $p(x)$ from $\mathcal{D}_U$ to improve the estimation of the conditional distribution $p(y|x)$, typically under the assumption that the decision boundary lies in low-density regions of the input space.
+While standard supervised learning relies on a fully labelled dataset $\mathcal{D} = \{(x^{(i)}, y^{(i)})\}_{i=1}^N$, obtaining ground truth labels $y$ is often expensive. Semi-supervised learning addresses this by leveraging a small set of labelled data $\mathcal{D}_S$ alongside a much larger set of unlabelled data $\mathcal{D}_U = \{x^{(j)}\}_{j=1}^M$. The objective is to utilise the structural information inherent in $p(x)$ from $\mathcal{D}_U$ to improve the estimation of the conditional distribution $p(y|x)$, typically under the assumption that the decision boundary lies in low-density regions of the input space.
 
 In contrast, weak supervision relaxes the requirement for exact ground truth labels, utilizing instead a dataset $\mathcal{D}_{W} = \{(x^{(i)}, \tilde{y}^{(i)})\}_{i=1}^N$ where $\tilde{y}$ represents a noisy, limited, or heuristic approximation of the true label $y$. A prominent subset is pair learning, where supervision is provided as pairwise constraints $\mathcal{D}_{P} = \{(x^{(i)}, x^{(j)}, r^{(ij)})\}$. Here, $r^{(ij)}$ denotes a binary relationship (e.g., must-link or cannot-link) between samples, guiding the model to learn a representation that respects these relative similarities rather than absolute class assignments.
 
@@ -44,13 +44,13 @@ In contrast, weak supervision relaxes the requirement for exact ground truth lab
 
 To leverage the generalization benefits of generative modelling for classification tasks, \cite{kingma_semi-supervised_2014} extend the \ac{VAE} framework to the semi-supervised setting. They propose three approaches: the \textit{M1} model, which separates feature learning from downstream classification; the \textit{M2} model, which integrates the class label directly into the latent generative process; and a stacked \textit{M1+M2} architecture. We focus here on the \textit{M2} model, where the data $x$ is generated by both a latent class variable $y$ and a continuous latent variable $z$.
 
-The generative process factorizes as:
+The generative process factorises as:
 \begin{equation}
     p_\theta(x, y, z) = p_\theta(x|y, z)p(y)p(z)
 \end{equation}
 where $p(y) = \text{Cat}(y|\pi)$ and $p(z) = \mathcal{N}(z|0, I)$. In this prior specification, $y$ and $z$ are marginally independent. The likelihood $p_\theta(x|y, z)$ is parametrised by a deep neural network that takes both $y$ and $z$ as inputs to generate the observation $x$.
 
-Crucially, the inference structure introduced to approximate the intractable posterior $p(z, y|x)$ utilizes a specific factorization that introduces a dependency between the latent variables. The recognition model is specified as:
+Crucially, the inference structure introduced to approximate the intractable posterior $p(z, y|x)$ utilises a specific factorization that introduces a dependency between the latent variables. The recognition model is specified as:
 \begin{equation}
     q_\phi(z, y|x) = q_\phi(z|x, y)q_\phi(y|x)
 \end{equation}
@@ -84,7 +84,7 @@ For the supervised dataset $\mathcal{D}_S = \{(x^m, y^m)\}$, both $x$ and $y$ ar
 \end{align}
 
 
-For the unsupervised dataset $\mathcal{D}_U = \{x^n\}$, the label $y$ is treated as a latent variable. We marginalize over all classes to derive the unsupervised bound $\mathcal{L}_U(\theta, \phi; x)$:
+For the unsupervised dataset $\mathcal{D}_U = \{x^n\}$, the label $y$ is treated as a latent variable. We marginalise over all classes to derive the unsupervised bound $\mathcal{L}_U(\theta, \phi; x)$:
 \begin{equation}
     \mathcal{L}_U(\theta, \phi; x) = \sum_{y} q_\phi(y|x) \left( \mathbb{E}_{q_\phi(z|x,y)}\!\left[ \log \frac{p_\theta(x,y,z)}{q_\phi(z|x,y)} \right] \right) + \mathcal{H}(q_\phi(y|x))
     \label{eq:unsup_obj}
@@ -124,13 +124,13 @@ The term $w(x) = \frac{p(x)}{q(x)}$ is known as the importance weight. In practi
 \begin{equation}
     \mathbb{E}_{p}[f(x)] \approx \frac{1}{K} \sum_{k=1}^K f(x^{(k)}) w(x^{(k)})
 \end{equation}
-This standard estimator is unbiased, provided $p(x)$ is a normalized density. An example of importance sampling in the context of \acp{VAE} is the \ac{IWAE} \citep{burda2015importance} which employs importance sampling to derive a tighter lower bound on the marginal log-likelihood by averaging $K$ latent samples drawn from the approximate posterior. 
+This standard estimator is unbiased, provided $p(x)$ is a normalised density. An example of importance sampling in the context of \acp{VAE} is the \ac{IWAE} \citep{burda2015importance} which employs importance sampling to derive a tighter lower bound on the marginal log-likelihood by averaging $K$ latent samples drawn from the approximate posterior. 
 Each sample is weighted by the importance ratio $w_i = p(x, z_i) / q(z_i|x)$, which reduces the bias of the variational approximation and improves the model's representative capacity.
 
-However, in many applications, the target distribution is only known up to an intractable normalizing constant $Z$, i.e., $p(x) = \frac{\tilde{p}(x)}{Z}$. In this scenario, self-normalized importance sampling is used. We calculate unnormalized weights $\tilde{w}(x) = \frac{\tilde{p}(x)}{q(x)}$ and approximate the expectation using the ratio of estimators:
+However, in many applications, the target distribution is only known up to an intractable normalizing constant $Z$, i.e., $p(x) = \frac{\tilde{p}(x)}{Z}$. In this scenario, self-normalised importance sampling is used. We calculate unnormalised weights $\tilde{w}(x) = \frac{\tilde{p}(x)}{q(x)}$ and approximate the expectation using the ratio of estimators:
 \begin{equation}
     \mathbb{E}_{p}[f(x)] \approx \frac{\sum_{k=1}^K \tilde{w}(x^{(k)}) f(x^{(k)})}{\sum_{k=1}^K \tilde{w}(x^{(k)})}
 \end{equation}
-Unlike the standard estimator, the self-normalized estimator is biased for finite $K$ (with bias of order $1/K$), but consistent, converging to the true expectation as $K \to \infty$.
+Unlike the standard estimator, the self-normalised estimator is biased for finite $K$ (with bias of order $1/K$), but consistent, converging to the true expectation as $K \to \infty$.
 
 % In the context of VAEs, importance sampling is often used to obtain tighter lower bounds on the log-likelihood (e.g., IWAE \cite{burda2015importance}) or to approximate expectations over complex posteriors where the normalization constant is unknown.

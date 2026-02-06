@@ -8,7 +8,7 @@
 
 % Their experiments with definition of all relevant variables.
 
-While the \textit{M2} model by \cite{kingma_semi-supervised_2014} provides a powerful framework for semi-supervised learning, it imposes a specific graphical structure: the latent variables $y$ (label) and $z$ (style) are assumed to be independent in the prior, and the recognition model is required to factorise as $q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)$. \cite{narayanaswamy_learning_2017} generalise this approach to a broader class of partially-specified graphical models as visualized in \autoref{fig:framework_obj}.
+While the \textit{M2} model by \cite{kingma_semi-supervised_2014} provides a powerful framework for semi-supervised learning, it imposes a specific graphical structure: the latent variables $y$ (label) and $z$ (style) are assumed to be independent in the prior, and the recognition model is required to factorise as $q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)$. \cite{narayanaswamy_learning_2017} generalise this approach to a broader class of partially-specified graphical models as visualised in \autoref{fig:framework_obj}.
 
 In this framework, the modeller specifies a graphical model where a subset of variables $y$ are semantically meaningful (and partially observed), while the remaining variables $z$ are left unstructured to capture nuisance variations. Unlike the \textit{M2} model, this framework allows for arbitrary dependency structures in both the generative model $p_\theta(x, y, z)$ and the approximate posterior $q_\phi(y, z|x)$. This flexibility enables the modelling of complex relationships, such as hierarchical dependencies or causal structures between labels and style variables, which are often necessary for disentanglement in real-world datasets \citep{yang_usupervised_2019, biswal_eva_2020}.
 
@@ -24,7 +24,7 @@ The core challenge in training these generalised models lies in the supervised o
 
 To address this, \cite{narayanaswamy_learning_2017} proposes an importance sampling estimator that alleviates the need to sample from $q_\phi(z|x, y)$ directly. Instead, samples are drawn from an unconditioned proposal distribution, the marginal encoder $q_\phi(z|x)$, and reweighted. 
 
-They start by rewriting the supervised objective using the fact that $q_\phi(z|x,y)$ factorizes to $\frac{q_\phi(y, z|x)}{q_\phi(y|x)}$ as follows:
+They start by rewriting the supervised objective using the fact that $q_\phi(z|x,y)$ factorises to $\frac{q_\phi(y, z|x)}{q_\phi(y|x)}$ as follows:
 
 \begin{align}
     \mathcal{L}_S(\theta,\phi; x, y) 
@@ -68,7 +68,7 @@ By combining the importance sampling estimator for the expectation (\autoref{eq:
 This formulation ensures that the discriminative power of the model is maximised using the same samples $z^s$ and weights $w^s$ for both the generative and discriminative components.
 
 \subsection{Relation to Kingma's M2 Model}
-The framework by \cite{narayanaswamy_learning_2017} generalizes the \textit{M2} model. We can recover the exact \textit{M2} objective by restricting the dependency structure. If we enforce the factorisation:
+The framework by \cite{narayanaswamy_learning_2017} generalises the \textit{M2} model. We can recover the exact \textit{M2} objective by restricting the dependency structure. If we enforce the factorisation:
 \begin{equation}
     q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)
 \end{equation}
@@ -83,7 +83,7 @@ Substituting this back into the estimator yields the standard \textit{M2} object
 To perform gradient ascent, the generative and recognition models are mapped onto a stochastic computation graph where each node forms a sub-graph. 
 % The generative model assumes a factorization $p_\theta(\mathbf{x}, \mathbf{y}, \mathbf{z}) = p_\theta(\mathbf{x} | \mathbf{y}, \mathbf{z})p(\mathbf{y})p(\mathbf{z})$, while the recognition model utilizes a conditional dependency structure $q_\phi(\mathbf{y}, \mathbf{z} | \mathbf{x}) = q_{\phi_z}(\mathbf{z} | \mathbf{y}, \mathbf{x})q_{\phi_y}(\mathbf{y}|\mathbf{x})$ to disentangle the digit label from the handwriting style.
 
-The implementation handles supervision through three specific node types. First, for the fully supervised variable $\mathbf{x}$, they compute the likelihood $p_\theta(\mathbf{x} | \mathbf{y}, \mathbf{z}) = \mathcal{N}(\mathbf{x}; \eta_\theta(\mathbf{y}, \mathbf{z}))$, where $\eta_\theta$ is a neural network returning the distribution parameters. Second, the unobserved latent variable $\mathbf{z}$ requires computing both the prior $p(\mathbf{z})$ and the conditional $q_\phi(\mathbf{z} | \mathbf{x}, \mathbf{y})$. This utilizes the Gaussian reparametrisation trick $\mathbf{z} = g(\epsilon, \lambda_{\phi_z}(\mathbf{x}, \mathbf{y}))$ where $\epsilon \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$ to ensure differentiability. Finally, the partially observed variable $\mathbf{y}$ is treated as observed when labels are available. When unavailable, it is sampled from $q_{\phi_y}(\mathbf{y}|\mathbf{x})$ using a Gumbel-Softmax relaxation to allow for gradient estimation on the discrete distribution.
+The implementation handles supervision through three specific node types. First, for the fully supervised variable $\mathbf{x}$, they compute the likelihood $p_\theta(\mathbf{x} | \mathbf{y}, \mathbf{z}) = \mathcal{N}(\mathbf{x}; \eta_\theta(\mathbf{y}, \mathbf{z}))$, where $\eta_\theta$ is a neural network returning the distribution parameters. Second, the unobserved latent variable $\mathbf{z}$ requires computing both the prior $p(\mathbf{z})$ and the conditional $q_\phi(\mathbf{z} | \mathbf{x}, \mathbf{y})$. This utilises the Gaussian reparametrisation trick $\mathbf{z} = g(\epsilon, \lambda_{\phi_z}(\mathbf{x}, \mathbf{y}))$ where $\epsilon \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$ to ensure differentiability. Finally, the partially observed variable $\mathbf{y}$ is treated as observed when labels are available. When unavailable, it is sampled from $q_{\phi_y}(\mathbf{y}|\mathbf{x})$ using a Gumbel-Softmax relaxation to allow for gradient estimation on the discrete distribution.
 
 \cite{narayanaswamy_learning_2017} implement these different node types in a stochastic machine learning framework called ProbTorch which is available at: \url{https://github.com/probtorch/probtorch}.
 
