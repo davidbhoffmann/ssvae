@@ -29,7 +29,10 @@ Standard \acp{VAE} often fail to learn disentangled representations due to the l
     \mathcal{L}_{\beta\text{-VAE}} = \mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)] - \beta D_{KL}(q_\phi(z|x) \| p(z))
 \end{equation}
 
-Setting $\beta > 1$ imposes a stronger constraint on the latent bottleneck, encouraging the learned distribution $q_\phi(z|x)$ to align with the isotropic unit Gaussian prior. Since the prior has independent components, this pressure encourages the latent dimensions to become statistically independent, thereby promoting disentanglement, though often at the cost of reconstruction quality.
+Setting $\beta > 1$ imposes a stronger constraint on the latent bottleneck, encouraging the learned distribution $q_\phi(z|x)$ to align with the isotropic unit Gaussian prior. Since the prior has independent components, this pressure encourages the latent dimensions to become statistically independent, thereby promoting disentanglement, though often at the cost of reconstruction quality. 
+Building on this, $\beta$-TCVAE explicitly penalizes the total correlation of the aggregated posterior to encourage factorized latents and stronger disentanglement \citep{chen_isolating_2019}.
+
+
 
 \subsection{Degrees of Supervision}
 
