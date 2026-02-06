@@ -24,7 +24,7 @@ The core challenge in training these generalised models lies in the supervised o
 
 To address this, \cite{narayanaswamy_learning_2017} proposes an importance sampling estimator that alleviates the need to sample from $q_\phi(z|x, y)$ directly. Instead, samples are drawn from an unconditioned proposal distribution, the marginal encoder $q_\phi(z|x)$, and reweighted. 
 
-They start by rewriting the supervised objective using the fact that $q_\phi(z|x,y)$ factorises to $\frac{q_\phi(y, z|x)}{q_\phi(y|x)}$ as follows:
+They start by rewriting the supervised objective using the fact that $q_\phi(z|x,y)$ factorises to $\frac{q_\phi(y, z|x)}{q_\phi(y|x)}$ as follows
 
 \begin{align}
     \mathcal{L}_S(\theta,\phi; x, y) 
@@ -68,7 +68,7 @@ By combining the importance sampling estimator for the expectation (\autoref{eq:
 This formulation ensures that the discriminative power of the model is maximised using the same samples $z^s$ and weights $w^s$ for both the generative and discriminative components.
 
 \subsection{Relation to Kingma's M2 Model}
-The framework by \cite{narayanaswamy_learning_2017} generalises the \textit{M2} model. We can recover the exact \textit{M2} objective by restricting the dependency structure. If we enforce the factorisation:
+The framework by \cite{narayanaswamy_learning_2017} generalises the \textit{M2} model. We can recover the exact \textit{M2} objective by restricting the dependency structure. If we enforce the factorisation
 \begin{equation}
     q_\phi(y, z|x) = q_\phi(y|x)q_\phi(z|x, y)
 \end{equation}
