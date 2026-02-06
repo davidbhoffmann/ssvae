@@ -119,7 +119,7 @@ Empirically, \ac{SHOT-VAE} achieved significant error rate reductions on CIFAR-1
 
 \subsubsection{Differentiating Consistency and Restrictiveness}
 % Direct critique of the disentanglement claim, also theoretical base for weak supervision %
-\cite{shu_weakly_2019} introduce a refined definition of disentanglement that is made up of consistency and restrictiveness. Here, consistency is the degree to which a representation is deterministic with respect to the ground-truth factors. If we fix the ground-truth factor (e.g., color), the latent code should ideally be constant. On the other hand, restrictiveness is the degree to which a single dimension of the representation encodes only one ground-truth factor. This prevents a single latent dimension from encoding both color and shape.
+\cite{shu_weakly_2019} introduces a refined definition of disentanglement that is made up of consistency and restrictiveness. Here, consistency is the degree to which a representation is deterministic with respect to the ground-truth factors. If we fix the ground-truth factor (e.g., color), the latent code should ideally be constant. On the other hand, restrictiveness is the degree to which a single dimension of the representation encodes only one ground-truth factor. This prevents a single latent dimension from encoding both color and shape.
 
 \cite{shu_weakly_2019} state that \cite{narayanaswamy_learning_2017} falsely claim that their method leads to disentangled results through semi-supervision. Instead, it merely creates consistent representations, which are not necessarily restrictive and hence not guaranteed to be disentangled. However, they relativise this by conceding that on real-world data consistency and restrictiveness are often strongly correlated.
 
